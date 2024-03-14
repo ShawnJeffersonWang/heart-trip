@@ -1,0 +1,70 @@
+syntax = "v1"
+
+info(
+    title: "民宿服务"
+    desc: "民宿服务"
+    author: "Mikael"
+    email: "13247629622@163.com"
+    version: "v1"
+)
+
+type Homestay {
+    Id int64 `json:"id"`
+    Title string `json:"title"`
+    Cover string `json:"cover"`
+    Intro string `json:"intro"`
+    Location string `json:"location"`
+    HomestayBusinessId int64 `json:"homestayBusinessId"`  //店铺id
+    UserId int64 `json:"userId"`                          //房东id
+    RowState int64 `json:"rowState"`                      //0:下架 1:上架
+    RatingStars float64 `json:"ratingStars"`
+    PriceBefore int64 `json:"priceBefore"`                //民宿价格
+    PriceAfter int64 `json:"priceAfter"`
+}
+
+type (
+    AddHomestayReq {
+        homestay Homestay `json:"homestay"`
+    }
+    AddHomestayResp {
+        Success bool `json:"success"`
+    }
+)
+
+type (
+    BusinessListReq {
+        LastId int64 `json:"lastId"`
+        PageSize int64 `json:"pageSize"`
+        HomestayBusinessId int64 `json:"homestayBusinessId"`
+    }
+    BusinessListResp {
+        List []Homestay `json:"list"`
+    }
+)
+
+type (
+    HomestayListReq {
+        Page int64 `json:"page"`
+        PageSize int64 `json:"pageSize"`
+    }
+    HomestayListResp {
+        List []Homestay `json:"list"`
+    }
+)
+
+type (
+    GuessListReq {
+    }
+    GuessListResp {
+        List []Homestay `json:"list"`
+    }
+)
+
+type (
+    HomestayDetailReq {
+        Id int64 `json:"id"`
+    }
+    HomestayDetailResp {
+        Homestay Homestay `json:"homestay"`
+    }
+)

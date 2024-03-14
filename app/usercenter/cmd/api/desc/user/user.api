@@ -1,0 +1,153 @@
+syntax = "v1"
+
+info(
+    title: "用户实例"
+    desc: "用户实例"
+    author: "Mikael"
+    email: "13247629622@163.com"
+)
+
+type User {
+    Id int64 `json:"id"`
+    Mobile string `json:"mobile"`
+    Nickname string `json:"nickname"`
+    Sex int64 `json:"sex"`
+    Avatar string `json:"avatar"`
+    Info string `json:"info"`
+    HomeStayIds []int64 `json:"homestayIds"`
+}
+
+type Homestay {
+    Id int64 `json:"id"`
+    Title string `json:"title"`
+    Cover string `json:"cover"`
+    Intro string `json:"intro"`
+    Location string `json:"location"`
+    HomestayBusinessId int64 `json:"homestayBusinessId"`  //店铺id
+    UserId int64 `json:"userId"`                          //房东id
+    RowState int64 `json:"rowState"`                      //0:下架 1:上架
+    RatingStars float64 `json:"ratingStars"`
+    PriceBefore int64 `json:"priceBefore"`                //民宿价格
+    PriceAfter int64 `json:"priceAfter"`
+}
+
+type HistoryHomestay {
+    Id int64 `json:"id"`
+    Title string `json:"title"`
+    Cover string `json:"cover"`
+    Intro string `json:"intro"`
+    Location string `json:"location"`
+    RowState int64 `json:"rowState"`                      //0:下架 1:上架
+    PriceBefore int64 `json:"priceBefore"`                //民宿价格
+    PriceAfter int64 `json:"priceAfter"`
+    LastBrowingTime int64 `json:"lastBrowingTime"`
+}
+
+type (
+    RegisterReq {
+        Mobile string `json:"mobile"`
+        Password string `json:"password"`
+    }
+    RegisterResp {
+        AccessToken string `json:"accessToken"`
+        AccessExpire int64 `json:"accessExpire"`
+        RefreshAfter int64 `json:"refreshAfter"`
+    }
+)
+
+type (
+    LoginReq {
+        Mobile string `json:"mobile"`
+        Password string `json:"password"`
+    }
+    LoginResp {
+        AccessToken string `json:"accessToken"`
+        AccessExpire int64 `json:"accessExpire"`
+        RefreshAfter int64 `json:"refreshAfter"`
+    }
+)
+
+type (
+    WXMiniAuthReq {
+        Code string `json:"code"`
+        IV string `json:"iv"`
+        EncryptedData string `json:"encryptedData"`
+    }
+    WXMiniAuthResp {
+        AccessToken string `json:"accessToken"`
+        AccessExpire int64 `json:"accessExpire"`
+        RefreshAfter int64 `json:"refreshAfter"`
+    }
+)
+
+type (
+    UserInfoReq {
+    }
+    UserInfoResp {
+        UserInfo User `json:"userInfo"`
+    }
+)
+
+type (
+    UpdateUserInfoReq {
+        UserInfo User `json:"userInfo"`
+    }
+    UpdateUserInfoResp {
+        Success bool `json:"success"`
+    }
+)
+
+type (
+    WishListReq {
+    }
+    WishListResp {
+        List []Homestay `json:"list"`
+    }
+)
+
+type (
+    AddWishListReq {
+        Id int64 `json:"id"`
+    }
+    AddWishListResp {
+        homestay Homestay `json:"homestay"`
+    }
+)
+
+type (
+    RemoveWishListReq {
+        Id int64 `json:"id"`
+    }
+    RemoveWishListResp {
+        Success bool `json:"success"`
+    }
+)
+
+type (
+    HistoryListReq {
+    }
+    HistoryListResp {
+        HistoryList []HistoryHomestay `json:"historyList"`
+    }
+)
+
+type (
+    ClearHistoryReq {
+    }
+    ClearHistoryResp {
+        Success bool `json:"success"`
+    }
+)
+
+type (
+    RemoveHistoryReq {
+        HomestayId int64 `json:"homestayId"`
+    }
+    RemoveHistoryResp {
+        Success bool `json:"success"`
+    }
+)
+
+type FileUploadResp {
+    URL string `json:"url"`
+}

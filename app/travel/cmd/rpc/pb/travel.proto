@@ -1,0 +1,108 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+package pb;
+
+
+//model
+message Homestay {
+  int64   id = 1;
+  string  title = 2;
+  string  cover = 3;
+  string  intro = 4;
+  string location = 5;
+  int64   homestayBusinessId = 6;   //店铺id
+  int64   userId = 7;               //房东id
+  int64   rowState = 8;             //0:下架 1:上架
+  float   ratingStars = 9;
+  int64   priceBefore = 10;       //民宿价格(分)
+  int64   priceAfter = 11;
+}
+
+
+//req 、resp
+message HomestayDetailReq {
+  int64   id = 1;
+  int64 userId = 2;
+}
+message HomestayDetailResp {
+  Homestay homestay = 1;
+}
+
+message AddHomestayReq {
+  Homestay homestay = 1;
+}
+message AddHomestayResp {
+}
+
+message WishListReq {
+  int64 id = 1;
+}
+message WishListResp {
+  repeated Homestay list = 1;
+}
+
+message AddWishListReq {
+  int64 userId = 1;
+  int64 homestayId = 2;
+}
+message AddWishListResp {
+  Homestay homestay = 1;
+}
+
+message RemoveWishListReq {
+  int64 userId = 1;
+  int64 homestayId = 2;
+}
+message RemoveWishListResp {
+  bool success = 1;
+}
+
+message HistoryHomestay {
+  int64   id = 1;
+  string  title = 2;
+  string  cover = 3;
+  string  intro = 4;
+  string location = 5;
+  int64   homestayBusinessId = 6;   //店铺id
+  int64   userId = 7;               //房东id
+  int64   rowState = 8;             //0:下架 1:上架
+  float   ratingStars = 9;
+  int64   priceBefore = 10;       //民宿价格(分)
+  int64   priceAfter = 11;
+  int64   lastBrowsingTime = 12;
+}
+
+message HistoryListReq {
+  int64 userId = 1;
+}
+message HistoryListResp {
+  repeated HistoryHomestay historyList = 1;
+}
+
+message RemoveHistoryReq {
+  int64 HomestayId = 1;
+}
+message RemoveHistoryResp {
+  bool Success = 1;
+}
+
+message ClearHistoryReq {
+}
+message ClearHistoryResp {
+  bool Success = 1;
+}
+
+//service
+service travel {
+  //homestayDetail
+  rpc homestayDetail(HomestayDetailReq) returns(HomestayDetailResp);
+  rpc addHomestay(AddHomestayReq) returns (AddHomestayResp);
+  rpc WishList(WishListReq) returns (WishListResp);
+  rpc AddWishList(AddWishListReq) returns (AddWishListResp);
+  rpc RemoveWishList(RemoveWishListReq) returns (RemoveWishListResp);
+  rpc HistoryList(HistoryListReq) returns (HistoryListResp);
+  rpc RemoveHistory(RemoveHistoryReq) returns (RemoveHistoryResp);
+  rpc ClearHistory(ClearHistoryReq) returns (ClearHistoryResp);
+}

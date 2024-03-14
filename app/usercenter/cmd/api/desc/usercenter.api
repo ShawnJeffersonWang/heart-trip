@@ -1,0 +1,78 @@
+syntax = "v1"
+
+info (
+	title:   "用户中心服务"
+	desc:    "用户中心服务"
+	author:  "Mikael"
+	email:   "13247629622@163.com"
+	version: "v1"
+)
+
+import (
+	"user/user.api"
+)
+
+//============================> usercenter v1 <============================
+//no need login
+@server (
+	prefix: usercenter/v1
+	group:  user
+)
+service usercenter {
+	@doc "register"
+	@handler register
+	post /user/register (RegisterReq) returns (RegisterResp)
+
+	@doc "login"
+	@handler login
+	post /user/login (LoginReq) returns (LoginResp)
+}
+
+//need login
+@server (
+	prefix: usercenter/v1
+	group:  user
+	jwt:    JwtAuth
+)
+service usercenter {
+	@doc "get user info"
+	@handler detail
+	post /user/detail (UserInfoReq) returns (UserInfoResp)
+
+	@doc "update user info"
+	@handler updateUserInfo
+	post /user/updateUserInfo (UpdateUserInfoReq) returns (UpdateUserInfoResp)
+
+	@doc "wechat mini auth"
+	@handler wxMiniAuth
+	post /user/wxMiniAuth (WXMiniAuthReq) returns (WXMiniAuthResp)
+
+	@doc "wishList"
+	@handler wishList
+	post /user/wishList (WishListReq) returns (WishListResp)
+
+	@doc "add wish list"
+	@handler addWishList
+	post /user/addWishList (AddWishListReq) returns (AddWishListResp)
+
+	@doc "remove wish list"
+	@handler removeWishList
+	post /user/removeWishList (RemoveWishListReq) returns (RemoveWishListResp)
+
+	@doc "browing history list"
+	@handler historyList
+	post /user/browinghistory (HistoryListReq) returns (HistoryListResp)
+
+	@doc "remove history"
+	@handler removeHistory
+	post /user/removeHistory (RemoveHistoryReq) returns (RemoveHistoryResp)
+
+	@doc "clear history"
+	@handler clearHistory
+	post /user/clearHistory (ClearHistoryReq) returns (ClearHistoryResp)
+
+	@doc "upload"
+	@handler fileUpload
+	post /upload returns (FileUploadResp)
+}
+
