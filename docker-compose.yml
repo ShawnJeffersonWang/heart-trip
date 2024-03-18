@@ -19,7 +19,7 @@ services:
       - ./deploy/nginx/conf.d:/etc/nginx/conf.d
       - ./data/nginx/log:/var/log/nginx
     networks:
-      - looklook_net
+      - golodge_net
     depends_on:
       - homestay
 
@@ -41,10 +41,10 @@ services:
     privileged: true
     restart: always
     networks:
-      - looklook_net
+      - golodge_net
 
 networks:
-  looklook_net:
+  golodge_net:
     external: true
     driver: bridge
     ipam:

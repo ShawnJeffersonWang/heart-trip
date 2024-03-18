@@ -1,5 +1,7 @@
 version: '3'
 
+# 之所以改了一些配置使用postman发请求nginx会502 Bad Gateway, 是因为go要重新下一些包
+
 ######## 项目依赖的环境，启动项目之前要先启动此环境 #######
 ######## The environment that the project depends on, starting this environment before starting the project #######
 
@@ -206,7 +208,7 @@ services:
     privileged: true
     restart: always
     networks:
-      - looklook_net
+      - golodge_net
 
   #redis容器 - Redis container
   redis:
@@ -224,11 +226,11 @@ services:
     privileged: true
     restart: always
     networks:
-      - looklook_net
+      - golodge_net
 
 
 networks:
-  looklook_net:
+  golodge_net:
     external: true
     driver: bridge
     ipam:
