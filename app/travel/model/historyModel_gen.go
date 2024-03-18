@@ -30,6 +30,7 @@ type (
 		Insert(ctx context.Context, data *History) (sql.Result, error)
 		FindOne(ctx context.Context, id int64) (*History, error)
 		FindOneByUserId(ctx context.Context, userId int64) (*History, error)
+		FindOneByHomestayId(ctx context.Context, homestayId int64) (*History, error)
 		Update(ctx context.Context, data *History) error
 		Delete(ctx context.Context, id int64) error
 	}
@@ -53,6 +54,7 @@ type (
 		HomestayBusinessId int64     `db:"homestay_business_id"`
 		RatingStars        float32   `db:"rating_stars"`
 		UserId             int64     `db:"user_id"`
+		HomestayId         int64     `db:"homestay_id"`
 	}
 )
 
@@ -89,6 +91,23 @@ func (m *defaultHistoryModel) FindOne(ctx context.Context, id int64) (*History, 
 	}
 }
 
+func (m *defaultHistoryModel) FindOneByHomestayId(ctx context.Context, homestayId int64) (*History, error) {
+	looklookTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHistoryIdPrefix, homestayId)
+	var resp History
+	err := m.QueryRowCtx(ctx, &resp, looklookTravelHistoryIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
+		query := fmt.Sprintf("select %s from %s where `homestay_id` = ? limit 1", historyRows, m.table)
+		return conn.QueryRowCtx(ctx, v, query, homestayId)
+	})
+	switch err {
+	case nil:
+		return &resp, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
 func (m *defaultHistoryModel) FindOneByUserId(ctx context.Context, userId int64) (*History, error) {
 	looklookTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHistoryIdPrefix, userId)
 	var resp History
@@ -109,8 +128,8 @@ func (m *defaultHistoryModel) FindOneByUserId(ctx context.Context, userId int64)
 func (m *defaultHistoryModel) Insert(ctx context.Context, data *History) (sql.Result, error) {
 	looklookTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHistoryIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, historyRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.Title, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, historyRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.Title, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId, data.HomestayId)
 	}, looklookTravelHistoryIdKey)
 	return ret, err
 }

@@ -107,7 +107,7 @@ type (
 
 type (
     AddWishListReq {
-        Id int64 `json:"id"`
+        HomestayId int64 `json:"homestayId"`
     }
     AddWishListResp {
         homestay Homestay `json:"homestay"`
@@ -141,7 +141,7 @@ type (
 
 type (
     RemoveHistoryReq {
-        HomestayId int64 `json:"homestayId"`
+        HistoryId int64 `json:"historyId"`
     }
     RemoveHistoryResp {
         Success bool `json:"success"`

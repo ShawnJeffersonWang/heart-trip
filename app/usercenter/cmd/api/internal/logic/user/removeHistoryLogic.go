@@ -2,6 +2,8 @@ package user
 
 import (
 	"context"
+	"homestay/app/travel/cmd/rpc/travel"
+	"homestay/common/ctxdata"
 
 	"homestay/app/usercenter/cmd/api/internal/svc"
 	"homestay/app/usercenter/cmd/api/internal/types"
@@ -23,8 +25,18 @@ func NewRemoveHistoryLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Rem
 	}
 }
 
-func (l *RemoveHistoryLogic) RemoveHistory(req *types.RemoveHistoryReq) (resp *types.RemoveHistoryResp, err error) {
+func (l *RemoveHistoryLogic) RemoveHistory(req *types.RemoveHistoryReq) (*types.RemoveHistoryResp, error) {
 	// todo: add your logic here and delete this line
+	userId := ctxdata.GetUidFromCtx(l.ctx)
+	_, err := l.svcCtx.TravelRpc.RemoveHistory(l.ctx, &travel.RemoveHistoryReq{
+		UserId:    userId,
+		HistoryId: req.HistoryId,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-	return
+	return &types.RemoveHistoryResp{
+		Success: true,
+	}, nil
 }

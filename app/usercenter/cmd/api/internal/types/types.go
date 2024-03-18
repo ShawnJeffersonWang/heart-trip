@@ -2,7 +2,7 @@
 package types
 
 type AddWishListReq struct {
-	Id int64 `json:"id"`
+	HomestayId int64 `json:"homestayId"`
 }
 
 type AddWishListResp struct {
@@ -76,7 +76,7 @@ type RegisterResp struct {
 }
 
 type RemoveHistoryReq struct {
-	HomestayId int64 `json:"homestayId"`
+	HistoryId int64 `json:"historyId"`
 }
 
 type RemoveHistoryResp struct {

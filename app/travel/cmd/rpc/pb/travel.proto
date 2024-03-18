@@ -82,13 +82,15 @@ message HistoryListResp {
 }
 
 message RemoveHistoryReq {
-  int64 HomestayId = 1;
+  int64 userId = 1;
+  int64 HistoryId = 2;
 }
 message RemoveHistoryResp {
   bool Success = 1;
 }
 
 message ClearHistoryReq {
+  int64 userId = 1;
 }
 message ClearHistoryResp {
   bool Success = 1;

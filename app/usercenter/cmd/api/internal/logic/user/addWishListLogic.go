@@ -32,7 +32,7 @@ func (l *AddWishListLogic) AddWishList(req *types.AddWishListReq) (*types.AddWis
 
 	wishListResp, err := l.svcCtx.TravelRpc.AddWishList(l.ctx, &travel.AddWishListReq{
 		UserId:     userId,
-		HomestayId: req.Id,
+		HomestayId: req.HomestayId,
 	})
 	if err != nil {
 		return nil, err

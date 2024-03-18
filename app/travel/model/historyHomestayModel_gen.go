@@ -31,9 +31,10 @@ type (
 		SelectBuilder() squirrel.SelectBuilder
 		FindOne(ctx context.Context, id int64) (*HistoryHomestay, error)
 		FindOneByUserId(ctx context.Context, userId int64) (*HistoryHomestay, error)
-		FindAll(ctx context.Context,builder squirrel.SelectBuilder,orderBy string)([]*HistoryHomestay,error)
+		FindAll(ctx context.Context, builder squirrel.SelectBuilder, orderBy string) ([]*HistoryHomestay, error)
 		Update(ctx context.Context, data *HistoryHomestay) error
-		Delete(ctx context.Context, id int64) error
+		Delete(ctx context.Context, user_id, history_id int64) error
+		DeleteAll(ctx context.Context, user_id int64) error
 	}
 
 	defaultHistoryHomestayModel struct {
@@ -55,11 +56,20 @@ func newHistoryHomestayModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache
 	}
 }
 
-func (m *defaultHistoryHomestayModel) Delete(ctx context.Context, id int64) error {
-	looklookTravelHistoryHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHistoryHomestayIdPrefix, id)
+func (m *defaultHistoryHomestayModel) Delete(ctx context.Context, user_id, history_id int64) error {
+	looklookTravelHistoryHomestayIdKey := fmt.Sprintf("%s%v%v", cacheLooklookTravelHistoryHomestayIdPrefix, user_id, history_id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
-		return conn.ExecCtx(ctx, query, id)
+		query := fmt.Sprintf("delete from %s where `user_id` = ? and `history_id` = ?", m.table)
+		return conn.ExecCtx(ctx, query, user_id, history_id)
+	}, looklookTravelHistoryHomestayIdKey)
+	return err
+}
+
+func (m *defaultHistoryHomestayModel) DeleteAll(ctx context.Context, user_id int64) error {
+	looklookTravelHistoryHomestayIdKey := fmt.Sprintf("%s%v%v", cacheLooklookTravelHistoryHomestayIdPrefix, user_id)
+	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("delete from %s where `user_id` = ?", m.table)
+		return conn.ExecCtx(ctx, query, user_id)
 	}, looklookTravelHistoryHomestayIdKey)
 	return err
 }
@@ -102,7 +112,7 @@ func (m *defaultHistoryHomestayModel) FindOneByUserId(ctx context.Context, userI
 	}
 }
 
-func (m *defaultHistoryHomestayModel) FindAll(ctx context.Context,builder squirrel.SelectBuilder,orderBy string)([]*HistoryHomestay,error){
+func (m *defaultHistoryHomestayModel) FindAll(ctx context.Context, builder squirrel.SelectBuilder, orderBy string) ([]*HistoryHomestay, error) {
 
 	builder = builder.Columns(historyHomestayRows)
 	if orderBy == "" {

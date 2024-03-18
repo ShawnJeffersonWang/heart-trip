@@ -33,13 +33,22 @@ service travel {
 	@handler guessList
 	post /homestay/guessList (GuessListReq) returns (GuessListResp)
 
-	@doc "homestay room detail"
-	@handler homestayDetail
-	post /homestay/homestayDetail (HomestayDetailReq) returns (HomestayDetailResp)
-
 	@doc "add homestay"
 	@handler addHomestay
 	post /homestay/addHomestay (AddHomestayReq) returns (AddHomestayResp)
+}
+
+// bug: 一直根据jwt校验不出userId, 原因是这里没有加jwt中间件
+// need login
+@server (
+	prefix: travel/v1
+	group:  homestay
+	jwt:    JwtAuth
+)
+service travel {
+	@doc "homestay room detail"
+	@handler homestayDetail
+	post /homestay/homestayDetail (HomestayDetailReq) returns (HomestayDetailResp)
 }
 
 //====================================> travel-homestayBusiness v1 <====================================

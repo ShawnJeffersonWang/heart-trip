@@ -32,15 +32,22 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/homestay/homestayDetail",
-				Handler: homestay.HomestayDetailHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
 				Path:    "/homestay/homestayList",
 				Handler: homestay.HomestayListHandler(serverCtx),
 			},
 		},
+		rest.WithPrefix("/travel/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/homestay/homestayDetail",
+				Handler: homestay.HomestayDetailHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 		rest.WithPrefix("/travel/v1"),
 	)
 
