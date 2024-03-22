@@ -190,7 +190,7 @@ services:
       # 时区上海 - Time zone Shanghai (Change if needed)
       TZ: Asia/Shanghai
       # root 密码 - root password
-      MYSQL_ROOT_PASSWORD: PXDN93VRKUm8TeE7
+      MYSQL_ROOT_PASSWORD: ${mysql.password}
     ports:
       - 33069:3306
     volumes:
@@ -222,7 +222,7 @@ services:
     volumes:
       # 数据文件 - data files
       - ./data/redis/data:/data:rw
-    command: "redis-server --requirepass G62m50oigInC30sf  --appendonly yes"
+    command: "redis-server --requirepass ${redis.password}  --appendonly yes"
     privileged: true
     restart: always
     networks:
