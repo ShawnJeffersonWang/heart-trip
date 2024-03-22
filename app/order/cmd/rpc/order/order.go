@@ -6,7 +6,7 @@ package order
 import (
 	"context"
 
-	"homestay/app/order/cmd/rpc/pb"
+	"golodge/app/order/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"

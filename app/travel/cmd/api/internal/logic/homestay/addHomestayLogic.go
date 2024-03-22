@@ -2,11 +2,11 @@ package homestay
 
 import (
 	"context"
-	"homestay/app/travel/cmd/api/internal/svc"
-	"homestay/app/travel/cmd/api/internal/types"
-	"homestay/app/travel/cmd/rpc/pb"
-	"homestay/app/travel/cmd/rpc/travel"
-	"homestay/common/ctxdata"
+	"golodge/app/travel/cmd/api/internal/svc"
+	"golodge/app/travel/cmd/api/internal/types"
+	"golodge/app/travel/cmd/rpc/pb"
+	"golodge/app/travel/cmd/rpc/travel"
+	"golodge/common/ctxdata"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -29,7 +29,7 @@ func (l *AddHomestayLogic) AddHomestay(req *types.AddHomestayReq) (*types.AddHom
 	// todo: add your logic here and delete this line
 	userId := ctxdata.GetUidFromCtx(l.ctx)
 
-	l.svcCtx.TravelRpc.AddHomestay(l.ctx, &travel.AddHomestayReq{
+	_, err := l.svcCtx.TravelRpc.AddHomestay(l.ctx, &travel.AddHomestayReq{
 		Homestay: &pb.Homestay{
 			UserId:      userId,
 			Title:       req.Homestay.Title,
@@ -39,6 +39,9 @@ func (l *AddHomestayLogic) AddHomestay(req *types.AddHomestayReq) (*types.AddHom
 			PriceBefore: req.Homestay.PriceBefore,
 		},
 	})
+	if err != nil {
+		return nil, err
+	}
 
 	return &types.AddHomestayResp{
 		Success: true,

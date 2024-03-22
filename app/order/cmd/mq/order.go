@@ -2,8 +2,8 @@ package main
 
 import (
 	"flag"
-	"homestay/app/order/cmd/mq/internal/config"
-	"homestay/app/order/cmd/mq/internal/listen"
+	"golodge/app/order/cmd/mq/internal/config"
+	"golodge/app/order/cmd/mq/internal/listen"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"

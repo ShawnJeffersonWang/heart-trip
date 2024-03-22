@@ -4,9 +4,9 @@ import (
 	"context"
 	"flag"
 	"github.com/zeromicro/go-zero/core/logx"
-	"homestay/app/mqueue/cmd/scheduler/internal/config"
-	"homestay/app/mqueue/cmd/scheduler/internal/logic"
-	"homestay/app/mqueue/cmd/scheduler/internal/svc"
+	"golodge/app/mqueue/cmd/scheduler/internal/config"
+	"golodge/app/mqueue/cmd/scheduler/internal/logic"
+	"golodge/app/mqueue/cmd/scheduler/internal/svc"
 	"os"
 
 	"github.com/zeromicro/go-zero/core/conf"

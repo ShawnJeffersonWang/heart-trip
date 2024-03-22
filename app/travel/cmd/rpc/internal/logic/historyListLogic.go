@@ -5,10 +5,10 @@ import (
 	"github.com/Masterminds/squirrel"
 	"github.com/jinzhu/copier"
 	"github.com/zeromicro/go-zero/core/mr"
-	"homestay/app/travel/model"
+	"golodge/app/travel/model"
 
-	"homestay/app/travel/cmd/rpc/internal/svc"
-	"homestay/app/travel/cmd/rpc/pb"
+	"golodge/app/travel/cmd/rpc/internal/svc"
+	"golodge/app/travel/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

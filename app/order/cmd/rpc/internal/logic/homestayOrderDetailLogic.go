@@ -3,10 +3,10 @@ package logic
 import (
 	"context"
 
-	"homestay/app/order/cmd/rpc/internal/svc"
-	"homestay/app/order/cmd/rpc/pb"
-	"homestay/app/order/model"
-	"homestay/common/xerr"
+	"golodge/app/order/cmd/rpc/internal/svc"
+	"golodge/app/order/cmd/rpc/pb"
+	"golodge/app/order/model"
+	"golodge/common/xerr"
 
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"

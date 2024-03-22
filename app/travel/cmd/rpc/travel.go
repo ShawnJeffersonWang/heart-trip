@@ -4,11 +4,11 @@ import (
 	"flag"
 	"fmt"
 
-	"homestay/app/travel/cmd/rpc/internal/config"
-	"homestay/app/travel/cmd/rpc/internal/server"
-	"homestay/app/travel/cmd/rpc/internal/svc"
-	"homestay/app/travel/cmd/rpc/pb"
-	"homestay/common/interceptor/rpcserver"
+	"golodge/app/travel/cmd/rpc/internal/config"
+	"golodge/app/travel/cmd/rpc/internal/server"
+	"golodge/app/travel/cmd/rpc/internal/svc"
+	"golodge/app/travel/cmd/rpc/pb"
+	"golodge/common/interceptor/rpcserver"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"

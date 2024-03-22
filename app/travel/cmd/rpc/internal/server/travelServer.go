@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"homestay/app/travel/cmd/rpc/internal/logic"
-	"homestay/app/travel/cmd/rpc/internal/svc"
-	"homestay/app/travel/cmd/rpc/pb"
+	"golodge/app/travel/cmd/rpc/internal/logic"
+	"golodge/app/travel/cmd/rpc/internal/svc"
+	"golodge/app/travel/cmd/rpc/pb"
 )
 
 type TravelServer struct {

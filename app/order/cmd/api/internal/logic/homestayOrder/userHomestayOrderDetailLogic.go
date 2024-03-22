@@ -3,14 +3,14 @@ package homestayOrder
 import (
 	"context"
 
-	"homestay/app/order/cmd/api/internal/svc"
-	"homestay/app/order/cmd/api/internal/types"
-	"homestay/app/order/cmd/rpc/order"
-	"homestay/app/order/model"
-	"homestay/app/payment/cmd/rpc/payment"
-	"homestay/common/ctxdata"
-	"homestay/common/tool"
-	"homestay/common/xerr"
+	"golodge/app/order/cmd/api/internal/svc"
+	"golodge/app/order/cmd/api/internal/types"
+	"golodge/app/order/cmd/rpc/order"
+	"golodge/app/order/model"
+	"golodge/app/payment/cmd/rpc/payment"
+	"golodge/common/ctxdata"
+	"golodge/common/tool"
+	"golodge/common/xerr"
 
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"

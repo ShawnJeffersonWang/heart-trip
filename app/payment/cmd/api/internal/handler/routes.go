@@ -4,8 +4,8 @@ package handler
 import (
 	"net/http"
 
-	thirdPayment "homestay/app/payment/cmd/api/internal/handler/thirdPayment"
-	"homestay/app/payment/cmd/api/internal/svc"
+	thirdPayment "golodge/app/payment/cmd/api/internal/handler/thirdPayment"
+	"golodge/app/payment/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )

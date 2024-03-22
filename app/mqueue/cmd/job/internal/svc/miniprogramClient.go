@@ -5,7 +5,7 @@ import (
 	"github.com/silenceper/wechat/v2/cache"
 	"github.com/silenceper/wechat/v2/miniprogram"
 	miniConfig "github.com/silenceper/wechat/v2/miniprogram/config"
-	"homestay/app/mqueue/cmd/job/internal/config"
+	"golodge/app/mqueue/cmd/job/internal/config"
 )
 
 //小程序客户端

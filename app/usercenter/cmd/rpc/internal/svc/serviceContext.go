@@ -1,8 +1,8 @@
 package svc
 
 import (
-	"homestay/app/usercenter/cmd/rpc/internal/config"
-	"homestay/app/usercenter/model"
+	"golodge/app/usercenter/cmd/rpc/internal/config"
+	"golodge/app/usercenter/model"
 
 	"github.com/zeromicro/go-zero/core/stores/redis"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"

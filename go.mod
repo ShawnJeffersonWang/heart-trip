@@ -1,4 +1,4 @@
-module homestay
+module golodge
 
 go 1.21
 

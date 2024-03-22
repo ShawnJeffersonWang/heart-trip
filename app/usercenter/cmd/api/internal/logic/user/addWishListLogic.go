@@ -3,11 +3,11 @@ package user
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"homestay/app/travel/cmd/rpc/travel"
-	"homestay/common/ctxdata"
+	"golodge/app/travel/cmd/rpc/travel"
+	"golodge/common/ctxdata"
 
-	"homestay/app/usercenter/cmd/api/internal/svc"
-	"homestay/app/usercenter/cmd/api/internal/types"
+	"golodge/app/usercenter/cmd/api/internal/svc"
+	"golodge/app/usercenter/cmd/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

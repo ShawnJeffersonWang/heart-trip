@@ -4,8 +4,8 @@ package handler
 import (
 	"net/http"
 
-	homestayOrder "homestay/app/order/cmd/api/internal/handler/homestayOrder"
-	"homestay/app/order/cmd/api/internal/svc"
+	homestayOrder "golodge/app/order/cmd/api/internal/handler/homestayOrder"
+	"golodge/app/order/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )

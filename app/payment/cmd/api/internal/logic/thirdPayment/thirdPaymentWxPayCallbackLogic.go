@@ -4,11 +4,11 @@ import (
 	"context"
 	"net/http"
 
-	"homestay/app/payment/cmd/api/internal/svc"
-	"homestay/app/payment/cmd/api/internal/types"
-	"homestay/app/payment/cmd/rpc/payment"
-	"homestay/app/payment/model"
-	"homestay/common/xerr"
+	"golodge/app/payment/cmd/api/internal/svc"
+	"golodge/app/payment/cmd/api/internal/types"
+	"golodge/app/payment/cmd/rpc/payment"
+	"golodge/app/payment/model"
+	"golodge/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/wechatpay-apiv3/wechatpay-go/core/auth/verifiers"

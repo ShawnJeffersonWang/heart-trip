@@ -1,13 +1,13 @@
 package homestay
 
 import (
-	"homestay/common/result"
+	"golodge/common/result"
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"homestay/app/travel/cmd/api/internal/logic/homestay"
-	"homestay/app/travel/cmd/api/internal/svc"
-	"homestay/app/travel/cmd/api/internal/types"
+	"golodge/app/travel/cmd/api/internal/logic/homestay"
+	"golodge/app/travel/cmd/api/internal/svc"
+	"golodge/app/travel/cmd/api/internal/types"
 )
 
 func AddHomestayHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {

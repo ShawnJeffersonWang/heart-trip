@@ -6,11 +6,11 @@ import (
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/mr"
-	"homestay/app/travel/model"
-	"homestay/common/xerr"
+	"golodge/app/travel/model"
+	"golodge/common/xerr"
 
-	"homestay/app/travel/cmd/api/internal/svc"
-	"homestay/app/travel/cmd/api/internal/types"
+	"golodge/app/travel/cmd/api/internal/svc"
+	"golodge/app/travel/cmd/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

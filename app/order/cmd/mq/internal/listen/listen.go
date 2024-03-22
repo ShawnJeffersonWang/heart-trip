@@ -2,8 +2,8 @@ package listen
 
 import (
 	"context"
-	"homestay/app/order/cmd/mq/internal/config"
-	"homestay/app/order/cmd/mq/internal/svc"
+	"golodge/app/order/cmd/mq/internal/config"
+	"golodge/app/order/cmd/mq/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/service"
 )

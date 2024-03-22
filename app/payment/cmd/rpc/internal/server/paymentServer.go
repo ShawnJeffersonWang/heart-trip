@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"homestay/app/payment/cmd/rpc/internal/logic"
-	"homestay/app/payment/cmd/rpc/internal/svc"
-	"homestay/app/payment/cmd/rpc/pb"
+	"golodge/app/payment/cmd/rpc/internal/logic"
+	"golodge/app/payment/cmd/rpc/internal/svc"
+	"golodge/app/payment/cmd/rpc/pb"
 )
 
 type PaymentServer struct {

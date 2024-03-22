@@ -3,12 +3,12 @@ package kq
 import (
 	"context"
 	"encoding/json"
-	"homestay/app/order/cmd/mq/internal/svc"
-	"homestay/app/order/cmd/rpc/order"
-	"homestay/app/order/model"
-	paymentModel "homestay/app/payment/model"
-	"homestay/common/kqueue"
-	"homestay/common/xerr"
+	"golodge/app/order/cmd/mq/internal/svc"
+	"golodge/app/order/cmd/rpc/order"
+	"golodge/app/order/model"
+	paymentModel "golodge/app/payment/model"
+	"golodge/common/kqueue"
+	"golodge/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"

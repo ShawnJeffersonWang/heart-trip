@@ -6,9 +6,9 @@ import (
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"
-	"homestay/app/travel/cmd/api/internal/config"
-	"homestay/app/travel/cmd/api/internal/handler"
-	"homestay/app/travel/cmd/api/internal/svc"
+	"golodge/app/travel/cmd/api/internal/config"
+	"golodge/app/travel/cmd/api/internal/handler"
+	"golodge/app/travel/cmd/api/internal/svc"
 )
 
 var configFile = flag.String("f", "etc/travel.yaml", "the config file")

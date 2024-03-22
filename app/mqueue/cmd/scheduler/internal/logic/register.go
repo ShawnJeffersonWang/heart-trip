@@ -2,7 +2,7 @@ package logic
 
 import (
 	"context"
-	"homestay/app/mqueue/cmd/scheduler/internal/svc"
+	"golodge/app/mqueue/cmd/scheduler/internal/svc"
 )
 
 type MqueueScheduler struct {

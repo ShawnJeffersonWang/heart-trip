@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/hibiken/asynq"
 	"github.com/zeromicro/go-zero/core/logx"
-	"homestay/app/mqueue/cmd/job/jobtype"
+	"golodge/app/mqueue/cmd/job/jobtype"
 )
 
 // scheduler job ------> go-zero-looklook/app/mqueue/cmd/job/internal/logic/settleRecord.go.

@@ -3,10 +3,10 @@ package svc
 import (
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"github.com/zeromicro/go-zero/zrpc"
-	"homestay/app/travel/cmd/api/internal/config"
-	"homestay/app/travel/cmd/rpc/travel"
-	"homestay/app/travel/model"
-	"homestay/app/usercenter/cmd/rpc/usercenter"
+	"golodge/app/travel/cmd/api/internal/config"
+	"golodge/app/travel/cmd/rpc/travel"
+	"golodge/app/travel/model"
+	"golodge/app/usercenter/cmd/rpc/usercenter"
 )
 
 type ServiceContext struct {

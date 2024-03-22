@@ -2,7 +2,7 @@ package uniqueid
 
 import (
 	"fmt"
-	"homestay/common/tool"
+	"golodge/common/tool"
 	"time"
 )
 

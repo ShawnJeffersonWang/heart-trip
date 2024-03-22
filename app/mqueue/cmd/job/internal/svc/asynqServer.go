@@ -3,7 +3,7 @@ package svc
 import (
 	"fmt"
 	"github.com/hibiken/asynq"
-	"homestay/app/mqueue/cmd/job/internal/config"
+	"golodge/app/mqueue/cmd/job/internal/config"
 )
 
 func newAsynqServer(c config.Config) *asynq.Server {

@@ -3,11 +3,11 @@ package homestayBussiness
 import (
 	"context"
 
-	"homestay/app/travel/cmd/api/internal/svc"
-	"homestay/app/travel/cmd/api/internal/types"
-	"homestay/app/usercenter/cmd/rpc/usercenter"
-	"homestay/app/usercenter/model"
-	"homestay/common/xerr"
+	"golodge/app/travel/cmd/api/internal/svc"
+	"golodge/app/travel/cmd/api/internal/types"
+	"golodge/app/usercenter/cmd/rpc/usercenter"
+	"golodge/app/usercenter/model"
+	"golodge/common/xerr"
 
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"

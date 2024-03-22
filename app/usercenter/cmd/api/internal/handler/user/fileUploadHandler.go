@@ -1,11 +1,11 @@
 package user
 
 import (
-	"homestay/common/result"
+	"golodge/common/result"
 	"net/http"
 
-	"homestay/app/usercenter/cmd/api/internal/logic/user"
-	"homestay/app/usercenter/cmd/api/internal/svc"
+	"golodge/app/usercenter/cmd/api/internal/logic/user"
+	"golodge/app/usercenter/cmd/api/internal/svc"
 )
 
 func FileUploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {

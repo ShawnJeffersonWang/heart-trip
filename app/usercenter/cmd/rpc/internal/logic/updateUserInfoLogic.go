@@ -4,11 +4,11 @@ import (
 	"context"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
-	"homestay/app/usercenter/cmd/rpc/usercenter"
-	"homestay/app/usercenter/model"
-	"homestay/common/xerr"
+	"golodge/app/usercenter/cmd/rpc/usercenter"
+	"golodge/app/usercenter/model"
+	"golodge/common/xerr"
 
-	"homestay/app/usercenter/cmd/rpc/internal/svc"
+	"golodge/app/usercenter/cmd/rpc/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

@@ -3,8 +3,8 @@ package logic
 import (
 	"context"
 	"github.com/hibiken/asynq"
-	"homestay/app/mqueue/cmd/job/internal/svc"
-	"homestay/app/mqueue/cmd/job/jobtype"
+	"golodge/app/mqueue/cmd/job/internal/svc"
+	"golodge/app/mqueue/cmd/job/jobtype"
 )
 
 

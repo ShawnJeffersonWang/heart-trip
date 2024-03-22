@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"homestay/app/payment/cmd/api/internal/logic/thirdPayment"
-	"homestay/app/payment/cmd/api/internal/svc"
+	"golodge/app/payment/cmd/api/internal/logic/thirdPayment"
+	"golodge/app/payment/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

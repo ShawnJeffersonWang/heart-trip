@@ -6,7 +6,7 @@ package travel
 import (
 	"context"
 
-	"homestay/app/travel/cmd/rpc/pb"
+	"golodge/app/travel/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"

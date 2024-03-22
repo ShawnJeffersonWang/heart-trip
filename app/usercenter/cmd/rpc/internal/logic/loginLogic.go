@@ -3,11 +3,11 @@ package logic
 import (
 	"context"
 
-	"homestay/app/usercenter/cmd/rpc/internal/svc"
-	"homestay/app/usercenter/cmd/rpc/usercenter"
-	"homestay/app/usercenter/model"
-	"homestay/common/tool"
-	"homestay/common/xerr"
+	"golodge/app/usercenter/cmd/rpc/internal/svc"
+	"golodge/app/usercenter/cmd/rpc/usercenter"
+	"golodge/app/usercenter/model"
+	"golodge/common/tool"
+	"golodge/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"

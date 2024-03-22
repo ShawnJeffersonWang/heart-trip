@@ -3,10 +3,10 @@ package thirdPayment
 import (
 	"net/http"
 
-	"homestay/app/payment/cmd/api/internal/logic/thirdPayment"
-	"homestay/app/payment/cmd/api/internal/svc"
-	"homestay/app/payment/cmd/api/internal/types"
-	"homestay/common/result"
+	"golodge/app/payment/cmd/api/internal/logic/thirdPayment"
+	"golodge/app/payment/cmd/api/internal/svc"
+	"golodge/app/payment/cmd/api/internal/types"
+	"golodge/common/result"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 )

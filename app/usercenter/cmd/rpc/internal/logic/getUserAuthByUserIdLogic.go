@@ -3,11 +3,11 @@ package logic
 import (
 	"context"
 
-	"homestay/app/usercenter/cmd/rpc/internal/svc"
-	"homestay/app/usercenter/cmd/rpc/pb"
-	"homestay/app/usercenter/cmd/rpc/usercenter"
-	"homestay/app/usercenter/model"
-	"homestay/common/xerr"
+	"golodge/app/usercenter/cmd/rpc/internal/svc"
+	"golodge/app/usercenter/cmd/rpc/pb"
+	"golodge/app/usercenter/cmd/rpc/usercenter"
+	"golodge/app/usercenter/model"
+	"golodge/common/xerr"
 
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"

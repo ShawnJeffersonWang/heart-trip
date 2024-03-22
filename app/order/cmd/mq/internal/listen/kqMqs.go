@@ -2,9 +2,9 @@ package listen
 
 import (
 	"context"
-	"homestay/app/order/cmd/mq/internal/config"
-	kqMq "homestay/app/order/cmd/mq/internal/mqs/kq"
-	"homestay/app/order/cmd/mq/internal/svc"
+	"golodge/app/order/cmd/mq/internal/config"
+	kqMq "golodge/app/order/cmd/mq/internal/mqs/kq"
+	"golodge/app/order/cmd/mq/internal/svc"
 
 	"github.com/zeromicro/go-queue/kq"
 	"github.com/zeromicro/go-zero/core/service"

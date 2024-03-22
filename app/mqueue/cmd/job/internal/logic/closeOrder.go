@@ -5,11 +5,11 @@ import (
 	"encoding/json"
 	"github.com/hibiken/asynq"
 	"github.com/pkg/errors"
-	"homestay/app/mqueue/cmd/job/internal/svc"
-	"homestay/app/mqueue/cmd/job/jobtype"
-	"homestay/app/order/cmd/rpc/order"
-	"homestay/app/order/model"
-	"homestay/common/xerr"
+	"golodge/app/mqueue/cmd/job/internal/svc"
+	"golodge/app/mqueue/cmd/job/jobtype"
+	"golodge/app/order/cmd/rpc/order"
+	"golodge/app/order/model"
+	"golodge/common/xerr"
 )
 
 

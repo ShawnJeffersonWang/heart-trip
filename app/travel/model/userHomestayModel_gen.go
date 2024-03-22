@@ -29,7 +29,7 @@ type (
 	userHomestayModel interface {
 		Insert(ctx context.Context, data *UserHomestay) (sql.Result, error)
 		SelectBuilder() squirrel.SelectBuilder
-		FindOne(ctx context.Context, id int64) (*UserHomestay, error)
+		FindOne(ctx context.Context, homestay_id int64) (*UserHomestay, error)
 		FindAll(ctx context.Context, builder squirrel.SelectBuilder, orderBy string) ([]*UserHomestay, error)
 		Update(ctx context.Context, data *UserHomestay) error
 		Delete(ctx context.Context, user_id, homestay_id int64) error
@@ -67,13 +67,17 @@ func (m *defaultUserHomestayModel) SelectBuilder() squirrel.SelectBuilder {
 	return squirrel.Select().From(m.table)
 }
 
-func (m *defaultUserHomestayModel) FindOne(ctx context.Context, id int64) (*UserHomestay, error) {
-	looklookTravelUserHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHomestayIdPrefix, id)
+func (m *defaultUserHomestayModel) FindOne(ctx context.Context, homestay_id int64) (*UserHomestay, error) {
+	//looklookTravelUserHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHomestayIdPrefix, homestay_id)
 	var resp UserHomestay
-	err := m.QueryRowCtx(ctx, &resp, looklookTravelUserHomestayIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
-		query := fmt.Sprintf("select %s from %s where `id` = ? limit 1", userHomestayRows, m.table)
-		return conn.QueryRowCtx(ctx, v, query, id)
-	})
+	//err := m.QueryRowCtx(ctx, &resp, looklookTravelUserHomestayIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
+	//	query := fmt.Sprintf("select %s from %s where `homestay_id` = ? limit 1", userHomestayRows, m.table)
+	//	return conn.QueryRowCtx(ctx, v, query, homestay_id)
+	//})
+
+	// FindOne里面查询不能带缓存会导致再次添加相同的名宿id可以成功，会出现缓存不一致的问题
+	query := fmt.Sprintf("select %s from %s where `homestay_id` = ? limit 1", userHomestayRows, m.table)
+	err := m.QueryRowNoCacheCtx(ctx, &resp, query, homestay_id)
 	switch err {
 	case nil:
 		return &resp, nil

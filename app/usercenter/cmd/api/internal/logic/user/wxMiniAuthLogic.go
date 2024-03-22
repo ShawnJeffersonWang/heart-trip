@@ -4,11 +4,11 @@ import (
 	"context"
 	"fmt"
 
-	"homestay/app/usercenter/cmd/api/internal/svc"
-	"homestay/app/usercenter/cmd/api/internal/types"
-	"homestay/app/usercenter/cmd/rpc/usercenter"
-	usercenterModel "homestay/app/usercenter/model"
-	"homestay/common/xerr"
+	"golodge/app/usercenter/cmd/api/internal/svc"
+	"golodge/app/usercenter/cmd/api/internal/types"
+	"golodge/app/usercenter/cmd/rpc/usercenter"
+	usercenterModel "golodge/app/usercenter/model"
+	"golodge/common/xerr"
 
 	"github.com/pkg/errors"
 	wechat "github.com/silenceper/wechat/v2"

@@ -12,6 +12,7 @@ type Homestay {
     Id int64 `json:"id"`
     Title string `json:"title"`
     Cover string `json:"cover"`
+    CleanVideo string `json:"cleanVideo"`
     Intro string `json:"intro"`
     Location string `json:"location"`
     HomestayBusinessId int64 `json:"homestayBusinessId"`  //店铺id

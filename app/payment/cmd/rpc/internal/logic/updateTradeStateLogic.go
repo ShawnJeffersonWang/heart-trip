@@ -3,13 +3,13 @@ package logic
 import (
 	"context"
 	"encoding/json"
-	"homestay/common/kqueue"
+	"golodge/common/kqueue"
 	"time"
 
-	"homestay/app/payment/cmd/rpc/internal/svc"
-	"homestay/app/payment/cmd/rpc/pb"
-	"homestay/app/payment/model"
-	"homestay/common/xerr"
+	"golodge/app/payment/cmd/rpc/internal/svc"
+	"golodge/app/payment/cmd/rpc/pb"
+	"golodge/app/payment/model"
+	"golodge/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"

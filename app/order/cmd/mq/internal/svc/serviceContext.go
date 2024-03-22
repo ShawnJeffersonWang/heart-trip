@@ -1,9 +1,9 @@
 package svc
 
 import (
-	"homestay/app/order/cmd/mq/internal/config"
-	"homestay/app/order/cmd/rpc/order"
-	"homestay/app/usercenter/cmd/rpc/usercenter"
+	"golodge/app/order/cmd/mq/internal/config"
+	"golodge/app/order/cmd/rpc/order"
+	"golodge/app/usercenter/cmd/rpc/usercenter"
 
 	"github.com/zeromicro/go-zero/zrpc"
 )

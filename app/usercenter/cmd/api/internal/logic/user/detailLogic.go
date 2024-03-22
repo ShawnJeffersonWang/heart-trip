@@ -3,10 +3,10 @@ package user
 import (
 	"context"
 
-	"homestay/app/usercenter/cmd/api/internal/svc"
-	"homestay/app/usercenter/cmd/api/internal/types"
-	"homestay/app/usercenter/cmd/rpc/usercenter"
-	"homestay/common/ctxdata"
+	"golodge/app/usercenter/cmd/api/internal/svc"
+	"golodge/app/usercenter/cmd/api/internal/types"
+	"golodge/app/usercenter/cmd/rpc/usercenter"
+	"golodge/common/ctxdata"
 
 	"github.com/jinzhu/copier"
 	"github.com/zeromicro/go-zero/core/logx"

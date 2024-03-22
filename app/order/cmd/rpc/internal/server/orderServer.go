@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"homestay/app/order/cmd/rpc/internal/logic"
-	"homestay/app/order/cmd/rpc/internal/svc"
-	"homestay/app/order/cmd/rpc/pb"
+	"golodge/app/order/cmd/rpc/internal/logic"
+	"golodge/app/order/cmd/rpc/internal/svc"
+	"golodge/app/order/cmd/rpc/pb"
 )
 
 type OrderServer struct {

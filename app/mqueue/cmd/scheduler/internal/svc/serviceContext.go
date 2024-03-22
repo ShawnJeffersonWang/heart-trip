@@ -2,7 +2,7 @@ package svc
 
 import (
 	"github.com/hibiken/asynq"
-	"homestay/app/mqueue/cmd/scheduler/internal/config"
+	"golodge/app/mqueue/cmd/scheduler/internal/config"
 )
 
 type ServiceContext struct {

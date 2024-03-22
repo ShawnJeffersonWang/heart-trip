@@ -3,10 +3,10 @@ package user
 import (
 	"net/http"
 
-	"homestay/app/usercenter/cmd/api/internal/logic/user"
-	"homestay/app/usercenter/cmd/api/internal/svc"
-	"homestay/app/usercenter/cmd/api/internal/types"
-	"homestay/common/result"
+	"golodge/app/usercenter/cmd/api/internal/logic/user"
+	"golodge/app/usercenter/cmd/api/internal/svc"
+	"golodge/app/usercenter/cmd/api/internal/types"
+	"golodge/common/result"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 )

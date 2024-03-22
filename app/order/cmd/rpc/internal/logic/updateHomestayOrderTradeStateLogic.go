@@ -4,12 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/hibiken/asynq"
-	"homestay/app/mqueue/cmd/job/jobtype"
+	"golodge/app/mqueue/cmd/job/jobtype"
 
-	"homestay/app/order/cmd/rpc/internal/svc"
-	"homestay/app/order/cmd/rpc/pb"
-	"homestay/app/order/model"
-	"homestay/common/xerr"
+	"golodge/app/order/cmd/rpc/internal/svc"
+	"golodge/app/order/cmd/rpc/pb"
+	"golodge/app/order/model"
+	"golodge/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"

@@ -2,9 +2,9 @@ package svc
 
 import (
 	"github.com/hibiken/asynq"
-	"homestay/app/order/cmd/rpc/internal/config"
-	"homestay/app/order/model"
-	"homestay/app/travel/cmd/rpc/travel"
+	"golodge/app/order/cmd/rpc/internal/config"
+	"golodge/app/order/model"
+	"golodge/app/travel/cmd/rpc/travel"
 
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"github.com/zeromicro/go-zero/zrpc"

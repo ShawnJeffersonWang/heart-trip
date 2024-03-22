@@ -4,8 +4,8 @@ package handler
 import (
 	"net/http"
 
-	user "homestay/app/usercenter/cmd/api/internal/handler/user"
-	"homestay/app/usercenter/cmd/api/internal/svc"
+	user "golodge/app/usercenter/cmd/api/internal/handler/user"
+	"golodge/app/usercenter/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )

@@ -4,10 +4,10 @@ import (
 	"context"
 	"github.com/jinzhu/copier"
 	"github.com/zeromicro/go-zero/core/logx"
-	"homestay/app/travel/cmd/rpc/travel"
-	"homestay/app/usercenter/cmd/api/internal/svc"
-	"homestay/app/usercenter/cmd/api/internal/types"
-	"homestay/common/ctxdata"
+	"golodge/app/travel/cmd/rpc/travel"
+	"golodge/app/usercenter/cmd/api/internal/svc"
+	"golodge/app/usercenter/cmd/api/internal/types"
+	"golodge/common/ctxdata"
 )
 
 type WishListLogic struct {

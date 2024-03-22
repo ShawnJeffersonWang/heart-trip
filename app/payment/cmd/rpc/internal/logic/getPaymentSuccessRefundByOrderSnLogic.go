@@ -2,10 +2,10 @@ package logic
 
 import (
 	"context"
-	"homestay/app/payment/cmd/rpc/internal/svc"
-	"homestay/app/payment/cmd/rpc/pb"
-	"homestay/app/payment/model"
-	"homestay/common/xerr"
+	"golodge/app/payment/cmd/rpc/internal/svc"
+	"golodge/app/payment/cmd/rpc/pb"
+	"golodge/app/payment/model"
+	"golodge/common/xerr"
 
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"

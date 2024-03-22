@@ -1,10 +1,10 @@
 package svc
 
 import (
-	"homestay/app/order/cmd/api/internal/config"
-	"homestay/app/order/cmd/rpc/order"
-	"homestay/app/payment/cmd/rpc/payment"
-	"homestay/app/travel/cmd/rpc/travel"
+	"golodge/app/order/cmd/api/internal/config"
+	"golodge/app/order/cmd/rpc/order"
+	"golodge/app/payment/cmd/rpc/payment"
+	"golodge/app/travel/cmd/rpc/travel"
 
 	"github.com/zeromicro/go-zero/zrpc"
 )

@@ -1,6 +1,6 @@
 package jobtype
 
-import "homestay/app/order/model"
+import "golodge/app/order/model"
 
 // DeferCloseHomestayOrderPayload defer close homestay order
 type DeferCloseHomestayOrderPayload struct {

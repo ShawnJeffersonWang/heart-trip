@@ -4,11 +4,11 @@ import (
 	"context"
 	"flag"
 	"github.com/zeromicro/go-zero/core/logx"
-	"homestay/app/mqueue/cmd/job/internal/logic"
-	"homestay/app/mqueue/cmd/job/internal/svc"
+	"golodge/app/mqueue/cmd/job/internal/logic"
+	"golodge/app/mqueue/cmd/job/internal/svc"
 	"os"
 
-	"homestay/app/mqueue/cmd/job/internal/config"
+	"golodge/app/mqueue/cmd/job/internal/config"
 
 	"github.com/zeromicro/go-zero/core/conf"
 )

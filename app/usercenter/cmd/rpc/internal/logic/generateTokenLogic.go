@@ -3,12 +3,12 @@ package logic
 import (
 	"context"
 	"github.com/pkg/errors"
-	"homestay/common/ctxdata"
+	"golodge/common/ctxdata"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
-	"homestay/app/usercenter/cmd/rpc/internal/svc"
-	"homestay/app/usercenter/cmd/rpc/pb"
+	"golodge/app/usercenter/cmd/rpc/internal/svc"
+	"golodge/app/usercenter/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

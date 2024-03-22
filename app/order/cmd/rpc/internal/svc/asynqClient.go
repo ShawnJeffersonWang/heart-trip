@@ -2,7 +2,7 @@ package svc
 
 import (
 	"github.com/hibiken/asynq"
-	"homestay/app/order/cmd/rpc/internal/config"
+	"golodge/app/order/cmd/rpc/internal/config"
 )
 
 //create asynq client.

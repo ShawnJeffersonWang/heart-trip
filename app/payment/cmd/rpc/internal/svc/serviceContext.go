@@ -2,8 +2,8 @@ package svc
 
 import (
 	"github.com/zeromicro/go-queue/kq"
-	"homestay/app/payment/cmd/rpc/internal/config"
-	"homestay/app/payment/model"
+	"golodge/app/payment/cmd/rpc/internal/config"
+	"golodge/app/payment/model"
 
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )

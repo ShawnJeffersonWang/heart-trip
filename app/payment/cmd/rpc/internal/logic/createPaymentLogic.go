@@ -2,11 +2,11 @@ package logic
 
 import (
 	"context"
-	"homestay/app/payment/cmd/rpc/internal/svc"
-	"homestay/app/payment/cmd/rpc/pb"
-	"homestay/app/payment/model"
-	"homestay/common/uniqueid"
-	"homestay/common/xerr"
+	"golodge/app/payment/cmd/rpc/internal/svc"
+	"golodge/app/payment/cmd/rpc/pb"
+	"golodge/app/payment/model"
+	"golodge/common/uniqueid"
+	"golodge/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"

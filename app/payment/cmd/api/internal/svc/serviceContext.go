@@ -1,10 +1,10 @@
 package svc
 
 import (
-	"homestay/app/order/cmd/rpc/order"
-	"homestay/app/payment/cmd/api/internal/config"
-	"homestay/app/payment/cmd/rpc/payment"
-	"homestay/app/usercenter/cmd/rpc/usercenter"
+	"golodge/app/order/cmd/rpc/order"
+	"golodge/app/payment/cmd/api/internal/config"
+	"golodge/app/payment/cmd/rpc/payment"
+	"golodge/app/usercenter/cmd/rpc/usercenter"
 
 	"github.com/wechatpay-apiv3/wechatpay-go/core"
 	"github.com/zeromicro/go-zero/zrpc"

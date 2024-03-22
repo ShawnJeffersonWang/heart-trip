@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/hibiken/asynq"
-	"homestay/app/mqueue/cmd/job/internal/svc"
+	"golodge/app/mqueue/cmd/job/internal/svc"
 )
 
 

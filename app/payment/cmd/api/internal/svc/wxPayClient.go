@@ -2,8 +2,8 @@ package svc
 
 import (
 	"context"
-	"homestay/app/payment/cmd/api/internal/config"
-	"homestay/common/xerr"
+	"golodge/app/payment/cmd/api/internal/config"
+	"golodge/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/wechatpay-apiv3/wechatpay-go/core"

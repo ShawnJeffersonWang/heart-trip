@@ -21,14 +21,14 @@ services:
     networks:
       - golodge_net
     depends_on:
-      - homestay
+      - golodge
 
   #前端api + 业务rpc - Front-end API + business RPC
-  homestay:
+  golodge:
     # docker-hub : https://hub.docker.com/r/lyumikael/gomodd
     # dockerfile: https://github.com/Mikaelemmmm/gomodd , If you are macOs m1\m2 use dockerfile yourself to build the image
     image: lyumikael/gomodd:v1.20.3
-    container_name: homestay
+    container_name: golodge
     environment:
       # 时区上海 - Timezone Shanghai
       TZ: Asia/Shanghai

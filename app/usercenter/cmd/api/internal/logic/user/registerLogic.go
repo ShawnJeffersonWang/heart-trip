@@ -2,10 +2,10 @@ package user
 
 import (
 	"context"
-	"homestay/app/usercenter/cmd/api/internal/svc"
-	"homestay/app/usercenter/cmd/api/internal/types"
-	"homestay/app/usercenter/cmd/rpc/usercenter"
-	"homestay/app/usercenter/model"
+	"golodge/app/usercenter/cmd/api/internal/svc"
+	"golodge/app/usercenter/cmd/api/internal/types"
+	"golodge/app/usercenter/cmd/rpc/usercenter"
+	"golodge/app/usercenter/model"
 
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"

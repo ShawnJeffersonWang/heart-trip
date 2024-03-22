@@ -2,13 +2,13 @@ package homestayOrder
 
 import (
 	"context"
-	"homestay/app/travel/cmd/rpc/pb"
-	"homestay/common/ctxdata"
+	"golodge/app/travel/cmd/rpc/pb"
+	"golodge/common/ctxdata"
 
-	"homestay/app/order/cmd/api/internal/svc"
-	"homestay/app/order/cmd/api/internal/types"
-	"homestay/app/order/cmd/rpc/order"
-	"homestay/common/xerr"
+	"golodge/app/order/cmd/api/internal/svc"
+	"golodge/app/order/cmd/api/internal/types"
+	"golodge/app/order/cmd/rpc/order"
+	"golodge/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"

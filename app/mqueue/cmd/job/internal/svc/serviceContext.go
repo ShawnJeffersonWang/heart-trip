@@ -4,9 +4,9 @@ import (
 	"github.com/hibiken/asynq"
 	"github.com/silenceper/wechat/v2/miniprogram"
 	"github.com/zeromicro/go-zero/zrpc"
-	"homestay/app/mqueue/cmd/job/internal/config"
-	"homestay/app/order/cmd/rpc/order"
-	"homestay/app/usercenter/cmd/rpc/usercenter"
+	"golodge/app/mqueue/cmd/job/internal/config"
+	"golodge/app/order/cmd/rpc/order"
+	"golodge/app/usercenter/cmd/rpc/usercenter"
 )
 
 type ServiceContext struct {

@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"homestay/app/usercenter/cmd/rpc/internal/logic"
-	"homestay/app/usercenter/cmd/rpc/internal/svc"
-	"homestay/app/usercenter/cmd/rpc/pb"
+	"golodge/app/usercenter/cmd/rpc/internal/logic"
+	"golodge/app/usercenter/cmd/rpc/internal/svc"
+	"golodge/app/usercenter/cmd/rpc/pb"
 )
 
 type UsercenterServer struct {
