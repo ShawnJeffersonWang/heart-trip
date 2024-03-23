@@ -19,15 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Travel_HomestayDetail_FullMethodName = "/pb.travel/homestayDetail"
-	Travel_AddHomestay_FullMethodName    = "/pb.travel/addHomestay"
-	Travel_AddComment_FullMethodName     = "/pb.travel/addComment"
-	Travel_WishList_FullMethodName       = "/pb.travel/wishList"
-	Travel_AddWishList_FullMethodName    = "/pb.travel/addWishList"
-	Travel_RemoveWishList_FullMethodName = "/pb.travel/removeWishList"
-	Travel_HistoryList_FullMethodName    = "/pb.travel/historyList"
-	Travel_RemoveHistory_FullMethodName  = "/pb.travel/removeHistory"
-	Travel_ClearHistory_FullMethodName   = "/pb.travel/clearHistory"
+	Travel_HomestayDetail_FullMethodName   = "/pb.travel/homestayDetail"
+	Travel_AddHomestay_FullMethodName      = "/pb.travel/addHomestay"
+	Travel_AddComment_FullMethodName       = "/pb.travel/addComment"
+	Travel_WishList_FullMethodName         = "/pb.travel/wishList"
+	Travel_AddWishList_FullMethodName      = "/pb.travel/addWishList"
+	Travel_RemoveWishList_FullMethodName   = "/pb.travel/removeWishList"
+	Travel_HistoryList_FullMethodName      = "/pb.travel/historyList"
+	Travel_RemoveHistory_FullMethodName    = "/pb.travel/removeHistory"
+	Travel_ClearHistory_FullMethodName     = "/pb.travel/clearHistory"
+	Travel_SearchByLocation_FullMethodName = "/pb.travel/searchByLocation"
 )
 
 // TravelClient is the client API for Travel service.
@@ -44,6 +45,7 @@ type TravelClient interface {
 	HistoryList(ctx context.Context, in *HistoryListReq, opts ...grpc.CallOption) (*HistoryListResp, error)
 	RemoveHistory(ctx context.Context, in *RemoveHistoryReq, opts ...grpc.CallOption) (*RemoveHistoryResp, error)
 	ClearHistory(ctx context.Context, in *ClearHistoryReq, opts ...grpc.CallOption) (*ClearHistoryResp, error)
+	SearchByLocation(ctx context.Context, in *SearchByLocationReq, opts ...grpc.CallOption) (*SearchByLocationResp, error)
 }
 
 type travelClient struct {
@@ -135,6 +137,15 @@ func (c *travelClient) ClearHistory(ctx context.Context, in *ClearHistoryReq, op
 	return out, nil
 }
 
+func (c *travelClient) SearchByLocation(ctx context.Context, in *SearchByLocationReq, opts ...grpc.CallOption) (*SearchByLocationResp, error) {
+	out := new(SearchByLocationResp)
+	err := c.cc.Invoke(ctx, Travel_SearchByLocation_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TravelServer is the server API for Travel service.
 // All implementations must embed UnimplementedTravelServer
 // for forward compatibility
@@ -149,6 +160,7 @@ type TravelServer interface {
 	HistoryList(context.Context, *HistoryListReq) (*HistoryListResp, error)
 	RemoveHistory(context.Context, *RemoveHistoryReq) (*RemoveHistoryResp, error)
 	ClearHistory(context.Context, *ClearHistoryReq) (*ClearHistoryResp, error)
+	SearchByLocation(context.Context, *SearchByLocationReq) (*SearchByLocationResp, error)
 	mustEmbedUnimplementedTravelServer()
 }
 
@@ -182,6 +194,9 @@ func (UnimplementedTravelServer) RemoveHistory(context.Context, *RemoveHistoryRe
 }
 func (UnimplementedTravelServer) ClearHistory(context.Context, *ClearHistoryReq) (*ClearHistoryResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ClearHistory not implemented")
+}
+func (UnimplementedTravelServer) SearchByLocation(context.Context, *SearchByLocationReq) (*SearchByLocationResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchByLocation not implemented")
 }
 func (UnimplementedTravelServer) mustEmbedUnimplementedTravelServer() {}
 
@@ -358,6 +373,24 @@ func _Travel_ClearHistory_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Travel_SearchByLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchByLocationReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).SearchByLocation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Travel_SearchByLocation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).SearchByLocation(ctx, req.(*SearchByLocationReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Travel_ServiceDesc is the grpc.ServiceDesc for Travel service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -400,6 +433,10 @@ var Travel_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "clearHistory",
 			Handler:    _Travel_ClearHistory_Handler,
+		},
+		{
+			MethodName: "searchByLocation",
+			Handler:    _Travel_SearchByLocation_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

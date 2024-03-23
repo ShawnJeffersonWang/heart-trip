@@ -32,11 +32,13 @@ func (l *AddHomestayLogic) AddHomestay(req *types.AddHomestayReq) (*types.AddHom
 	_, err := l.svcCtx.TravelRpc.AddHomestay(l.ctx, &travel.AddHomestayReq{
 		Homestay: &pb.Homestay{
 			UserId:      userId,
-			Title:       req.Homestay.Title,
-			Cover:       req.Homestay.Cover,
-			Intro:       req.Homestay.Intro,
-			Location:    req.Homestay.Location,
-			PriceBefore: req.Homestay.PriceBefore,
+			Title:       req.Title,
+			Cover:       req.Cover,
+			CleanVideo:  req.CleanVideo,
+			ImageUrls:   req.ImageUrls,
+			Intro:       req.Intro,
+			Location:    req.Location,
+			PriceBefore: req.PriceBefore,
 		},
 	})
 	if err != nil {

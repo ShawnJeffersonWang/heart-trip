@@ -25,6 +25,10 @@ service travel {
 	@handler homestayList
 	post /homestay/homestayList (HomestayListReq) returns (HomestayListResp)
 
+	@doc "search by location"
+	@handler searchByLocation
+	post /homestay/searchByLocation (SearchByLocationReq) returns (SearchByLocationResp)
+
 	@doc "boss all homestay room"
 	@handler businessList
 	post /homestay/businessList (BusinessListReq) returns (BusinessListResp)
@@ -32,10 +36,6 @@ service travel {
 	@doc "guess homestay room"
 	@handler guessList
 	post /homestay/guessList (GuessListReq) returns (GuessListResp)
-
-	@doc "add homestay"
-	@handler addHomestay
-	post /homestay/addHomestay (AddHomestayReq) returns (AddHomestayResp)
 }
 
 // bug: 一直根据jwt校验不出userId, 原因是这里没有加jwt中间件
@@ -49,6 +49,10 @@ service travel {
 	@doc "homestay room detail"
 	@handler homestayDetail
 	post /homestay/homestayDetail (HomestayDetailReq) returns (HomestayDetailResp)
+
+	@doc "add homestay"
+	@handler addHomestay
+	post /homestay/addHomestay (AddHomestayReq) returns (AddHomestayResp)
 }
 
 //====================================> travel-homestayBusiness v1 <====================================
@@ -83,6 +87,7 @@ service travel {
 	post /homestayComment/commentList (CommentListReq) returns (CommentListResp)
 }
 
+// need login
 @server (
 	prefix: travel/v1
 	group:  homestayComment

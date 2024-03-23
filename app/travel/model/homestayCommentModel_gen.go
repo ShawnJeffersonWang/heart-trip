@@ -65,6 +65,9 @@ type (
 		Content    string    `db:"content"`     // 评论内容
 		Star       string    `db:"star"`        // 星星数,多个维度
 		Version    int64     `db:"version"`     // 版本号
+		Nickname   string    `db:"nickname"`
+		Avatar     string    `db:"avatar"`
+		ImageUrls  string    `db:"image_urls"`
 	}
 )
 
@@ -80,11 +83,11 @@ func (m *defaultHomestayCommentModel) Insert(ctx context.Context, session sqlx.S
 	data.DelState = globalkey.DelStateNo
 	looklookTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayCommentIdPrefix, data.Id)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?)", m.table, homestayCommentRowsExpectAutoSet)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, homestayCommentRowsExpectAutoSet)
 		if session != nil {
-			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version)
+			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Avatar, data.Nickname, data.ImageUrls)
 		}
-		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version)
+		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Avatar, data.Nickname, data.ImageUrls)
 	}, looklookTravelHomestayCommentIdKey)
 }
 

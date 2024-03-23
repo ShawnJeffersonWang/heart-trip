@@ -22,7 +22,7 @@ var (
 	homestayRowsExpectAutoSet   = strings.Join(stringx.Remove(homestayFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), ",")
 	homestayRowsWithPlaceHolder = strings.Join(stringx.Remove(homestayFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), "=?,") + "=?"
 
-	cacheLooklookWishlistHomestayIdPrefix = "cache:looklookWishlist:homestay:id:"
+	cacheLooklookTravelHomestayIdPrefix = "cache:looklookTravel:homestay:id:"
 )
 
 type (
@@ -55,6 +55,8 @@ type (
 		RatingStars        float64   `db:"rating_stars"`         // 评分
 		PriceBefore        int64     `db:"price_before"`         // 民宿价格（分）
 		PriceAfter         int64     `db:"price_after"`
+		CleanVideo         string    `db:"clean_video"`
+		ImageUrls          string    `db:"image_urls"`
 	}
 )
 
@@ -66,18 +68,18 @@ func newHomestayModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option
 }
 
 func (m *defaultHomestayModel) Delete(ctx context.Context, id int64) error {
-	looklookWishlistHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookWishlistHomestayIdPrefix, id)
+	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayIdPrefix, id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
 		return conn.ExecCtx(ctx, query, id)
-	}, looklookWishlistHomestayIdKey)
+	}, looklookTravelHomestayIdKey)
 	return err
 }
 
 func (m *defaultHomestayModel) FindOne(ctx context.Context, id int64) (*Homestay, error) {
-	looklookWishlistHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookWishlistHomestayIdPrefix, id)
+	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayIdPrefix, id)
 	var resp Homestay
-	err := m.QueryRowCtx(ctx, &resp, looklookWishlistHomestayIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
+	err := m.QueryRowCtx(ctx, &resp, looklookTravelHomestayIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
 		query := fmt.Sprintf("select %s from %s where `id` = ? limit 1", homestayRows, m.table)
 		return conn.QueryRowCtx(ctx, v, query, id)
 	})
@@ -92,25 +94,25 @@ func (m *defaultHomestayModel) FindOne(ctx context.Context, id int64) (*Homestay
 }
 
 func (m *defaultHomestayModel) Insert(ctx context.Context, data *Homestay) (sql.Result, error) {
-	looklookWishlistHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookWishlistHomestayIdPrefix, data.Id)
+	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, homestayRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.Cover, data.Intro, data.Location, data.HomestayBusinessId, data.UserId, data.RowState, data.RatingStars, data.PriceBefore, data.PriceAfter)
-	}, looklookWishlistHomestayIdKey)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, homestayRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.Cover, data.Intro, data.Location, data.HomestayBusinessId, data.UserId, data.RowState, data.RatingStars, data.PriceBefore, data.PriceAfter, data.CleanVideo, data.ImageUrls)
+	}, looklookTravelHomestayIdKey)
 	return ret, err
 }
 
 func (m *defaultHomestayModel) Update(ctx context.Context, data *Homestay) error {
-	looklookWishlistHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookWishlistHomestayIdPrefix, data.Id)
+	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, homestayRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.Cover, data.Intro, data.Location, data.HomestayBusinessId, data.UserId, data.RowState, data.RatingStars, data.PriceBefore, data.PriceAfter, data.Id)
-	}, looklookWishlistHomestayIdKey)
+		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.Cover, data.Intro, data.Location, data.HomestayBusinessId, data.UserId, data.RowState, data.RatingStars, data.PriceBefore, data.PriceAfter, data.CleanVideo, data.ImageUrls, data.Id)
+	}, looklookTravelHomestayIdKey)
 	return err
 }
 
 func (m *defaultHomestayModel) formatPrimary(primary any) string {
-	return fmt.Sprintf("%s%v", cacheLooklookWishlistHomestayIdPrefix, primary)
+	return fmt.Sprintf("%s%v", cacheLooklookTravelHomestayIdPrefix, primary)
 }
 
 func (m *defaultHomestayModel) queryPrimary(ctx context.Context, conn sqlx.SqlConn, v, primary any) error {

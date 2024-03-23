@@ -2,7 +2,12 @@
 package types
 
 type AddCommentReq struct {
-	HomestayComment HomestayComment `json:"homestayId"`
+	HomestayId int64  `json:"homestayId"`
+	Content    string `json:"content"`
+	Star       string `json:"star"`
+	Nickname   string `json:"nickname"`
+	Avatar     string `json:"avatar"`
+	ImageUrls  string `json:"imageUrls"`
 }
 
 type AddCommentResp struct {
@@ -10,7 +15,13 @@ type AddCommentResp struct {
 }
 
 type AddHomestayReq struct {
-	Homestay Homestay `json:"homestay"`
+	Title       string `json:"title"`
+	Cover       string `json:"cover"`
+	CleanVideo  string `json:"cleanVideo"`
+	ImageUrls   string `json:"imageUrls"`
+	Intro       string `json:"intro"`
+	Location    string `json:"location"`
+	PriceBefore int64  `json:"priceBefore"` //民宿价格
 }
 
 type AddHomestayResp struct {
@@ -55,6 +66,8 @@ type Homestay struct {
 	Id                 int64   `json:"id"`
 	Title              string  `json:"title"`
 	Cover              string  `json:"cover"`
+	CleanVideo         string  `json:"cleanVideo"`
+	ImageUrls          string  `json:"imageUrls"`
 	Intro              string  `json:"intro"`
 	Location           string  `json:"location"`
 	HomestayBusinessId int64   `json:"homestayBusinessId"` //店铺id
@@ -116,6 +129,7 @@ type HomestayComment struct {
 	UserId     int64  `json:"userId"`
 	Nickname   string `json:"nickname"`
 	Avatar     string `json:"avatar"`
+	ImageUrls  string `json:"imageUrls"`
 }
 
 type HomestayDetailReq struct {
@@ -132,5 +146,13 @@ type HomestayListReq struct {
 }
 
 type HomestayListResp struct {
+	List []Homestay `json:"list"`
+}
+
+type SearchByLocationReq struct {
+	Location string `json:"location"`
+}
+
+type SearchByLocationResp struct {
 	List []Homestay `json:"list"`
 }

@@ -32,6 +32,9 @@ func (l *AddCommentLogic) AddComment(in *pb.AddCommentReq) (*pb.AddCommentResp, 
 		Content:    in.HomestayComment.Content,
 		Star:       in.HomestayComment.Star,
 		UserId:     in.HomestayComment.UserId,
+		Nickname:   in.HomestayComment.Nickname,
+		Avatar:     in.HomestayComment.Avatar,
+		ImageUrls:  in.HomestayComment.ImageUrls,
 	}
 	if err := l.svcCtx.HomestayCommentModel.Trans(l.ctx, func(ctx context.Context, session sqlx.Session) error {
 		l.svcCtx.HomestayCommentModel.Insert(l.ctx, session, &homestayComment)

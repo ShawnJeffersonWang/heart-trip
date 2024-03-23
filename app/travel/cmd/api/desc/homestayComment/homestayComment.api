@@ -16,6 +16,7 @@ type HomestayComment {
     UserId int64 `json:"userId"`
     Nickname string `json:"nickname"`
     Avatar string `json:"avatar"`
+    ImageUrls string `json:"imageUrls"`
 }
 
 type (
@@ -29,7 +30,12 @@ type (
     }
 
     AddCommentReq {
-        HomestayComment HomestayComment `json:"homestayId"`
+        HomestayId int64 `json:"homestayId"`
+        Content string `json:"content"`
+        Star string `json:"star"`
+        Nickname string `json:"nickname"`
+        Avatar string `json:"avatar"`
+        ImageUrls string `json:"imageUrls"`
     }
     AddCommentResp {
         Success bool `json:"success"`

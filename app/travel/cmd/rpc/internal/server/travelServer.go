@@ -67,3 +67,8 @@ func (s *TravelServer) ClearHistory(ctx context.Context, in *pb.ClearHistoryReq)
 	l := logic.NewClearHistoryLogic(ctx, s.svcCtx)
 	return l.ClearHistory(in)
 }
+
+func (s *TravelServer) SearchByLocation(ctx context.Context, in *pb.SearchByLocationReq) (*pb.SearchByLocationResp, error) {
+	l := logic.NewSearchByLocationLogic(ctx, s.svcCtx)
+	return l.SearchByLocation(in)
+}

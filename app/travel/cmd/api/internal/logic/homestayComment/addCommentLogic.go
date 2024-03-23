@@ -6,6 +6,7 @@ import (
 	"golodge/app/travel/cmd/api/internal/types"
 	"golodge/app/travel/cmd/rpc/pb"
 	"golodge/app/travel/cmd/rpc/travel"
+	"golodge/common/ctxdata"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,13 +27,15 @@ func NewAddCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddCom
 
 func (l *AddCommentLogic) AddComment(req *types.AddCommentReq) (*types.AddCommentResp, error) {
 	// todo: add your logic here and delete this line
+	userId := ctxdata.GetUidFromCtx(l.ctx)
 	homestayComment := pb.HomestayComment{
-		HomestayId: req.HomestayComment.HomestayId,
-		Content:    req.HomestayComment.Content,
-		Star:       req.HomestayComment.Star,
-		UserId:     req.HomestayComment.UserId,
-		Nickname:   req.HomestayComment.Nickname,
-		Avatar:     req.HomestayComment.Avatar,
+		HomestayId: req.HomestayId,
+		Content:    req.Content,
+		Star:       req.Star,
+		UserId:     userId,
+		Nickname:   req.Nickname,
+		Avatar:     req.Avatar,
+		ImageUrls:  req.ImageUrls,
 	}
 	_, err := l.svcCtx.TravelRpc.AddComment(l.ctx, &travel.AddCommentReq{
 		HomestayComment: &homestayComment,

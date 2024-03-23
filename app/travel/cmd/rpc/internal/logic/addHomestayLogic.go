@@ -38,10 +38,13 @@ func (l *AddHomestayLogic) AddHomestay(in *pb.AddHomestayReq) (*pb.AddHomestayRe
 		homestay := model.Homestay{
 			Title:       in.Homestay.Title,
 			Cover:       in.Homestay.Cover,
+			CleanVideo:  in.Homestay.CleanVideo,
+			ImageUrls:   in.Homestay.ImageUrls,
 			Intro:       in.Homestay.Intro,
 			Location:    in.Homestay.Location,
 			UserId:      in.Homestay.UserId,
 			PriceBefore: in.Homestay.PriceBefore,
+			RowState:    1,
 		}
 
 		res, err := l.svcCtx.HomestayModel.Insert(ctx, session, &homestay)

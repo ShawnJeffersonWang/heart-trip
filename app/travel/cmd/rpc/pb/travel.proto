@@ -10,24 +10,27 @@ message Homestay {
   int64   id = 1;
   string  title = 2;
   string  cover = 3;
-  string  intro = 4;
-  string location = 5;
-  int64   homestayBusinessId = 6;   //店铺id
-  int64   userId = 7;               //房东id
-  int64   rowState = 8;             //0:下架 1:上架
-  float   ratingStars = 9;
-  int64   priceBefore = 10;       //民宿价格(分)
-  int64   priceAfter = 11;
+  string cleanVideo = 4;
+  string imageUrls = 5;
+  string  intro = 6;
+  string location = 7;
+  int64   homestayBusinessId = 8;   //店铺id
+  int64   userId = 9;               //房东id
+  int64   rowState = 10;             //0:下架 1:上架
+  float   ratingStars = 11;
+  int64   priceBefore = 12;       //民宿价格(分)
+  int64   priceAfter = 13;
 }
 
 message HomestayComment {
-  int64 id=1;
-  int64 HomestayId=2;
-  string Content=3;
-  string Star=4;
-  int64 UserId=5;
-  string Nickname=6;
-  string Avatar=7;
+  int64 id = 1;
+  int64 HomestayId = 2;
+  string Content = 3;
+  string Star = 4;
+  int64 UserId = 5;
+  string Nickname = 6;
+  string Avatar = 7;
+  string ImageUrls = 8;
 }
 
 //req 、resp
@@ -106,10 +109,17 @@ message ClearHistoryResp {
 }
 
 message AddCommentReq {
-  HomestayComment homestayComment=1;
+  HomestayComment homestayComment = 1;
 }
 message AddCommentResp {
-  bool success=1;
+  bool success = 1;
+}
+
+message SearchByLocationReq {
+  string location = 1;
+}
+message SearchByLocationResp {
+  repeated Homestay list = 1;
 }
 
 //service
@@ -124,4 +134,5 @@ service travel {
   rpc historyList(HistoryListReq) returns (HistoryListResp);
   rpc removeHistory(RemoveHistoryReq) returns (RemoveHistoryResp);
   rpc clearHistory(ClearHistoryReq) returns (ClearHistoryResp);
+  rpc searchByLocation(SearchByLocationReq) returns (SearchByLocationResp);
 }

@@ -13,27 +13,29 @@ import (
 )
 
 type (
-	AddCommentReq      = pb.AddCommentReq
-	AddCommentResp     = pb.AddCommentResp
-	AddHomestayReq     = pb.AddHomestayReq
-	AddHomestayResp    = pb.AddHomestayResp
-	AddWishListReq     = pb.AddWishListReq
-	AddWishListResp    = pb.AddWishListResp
-	ClearHistoryReq    = pb.ClearHistoryReq
-	ClearHistoryResp   = pb.ClearHistoryResp
-	HistoryHomestay    = pb.HistoryHomestay
-	HistoryListReq     = pb.HistoryListReq
-	HistoryListResp    = pb.HistoryListResp
-	Homestay           = pb.Homestay
-	HomestayComment    = pb.HomestayComment
-	HomestayDetailReq  = pb.HomestayDetailReq
-	HomestayDetailResp = pb.HomestayDetailResp
-	RemoveHistoryReq   = pb.RemoveHistoryReq
-	RemoveHistoryResp  = pb.RemoveHistoryResp
-	RemoveWishListReq  = pb.RemoveWishListReq
-	RemoveWishListResp = pb.RemoveWishListResp
-	WishListReq        = pb.WishListReq
-	WishListResp       = pb.WishListResp
+	AddCommentReq        = pb.AddCommentReq
+	AddCommentResp       = pb.AddCommentResp
+	AddHomestayReq       = pb.AddHomestayReq
+	AddHomestayResp      = pb.AddHomestayResp
+	AddWishListReq       = pb.AddWishListReq
+	AddWishListResp      = pb.AddWishListResp
+	ClearHistoryReq      = pb.ClearHistoryReq
+	ClearHistoryResp     = pb.ClearHistoryResp
+	HistoryHomestay      = pb.HistoryHomestay
+	HistoryListReq       = pb.HistoryListReq
+	HistoryListResp      = pb.HistoryListResp
+	Homestay             = pb.Homestay
+	HomestayComment      = pb.HomestayComment
+	HomestayDetailReq    = pb.HomestayDetailReq
+	HomestayDetailResp   = pb.HomestayDetailResp
+	RemoveHistoryReq     = pb.RemoveHistoryReq
+	RemoveHistoryResp    = pb.RemoveHistoryResp
+	RemoveWishListReq    = pb.RemoveWishListReq
+	RemoveWishListResp   = pb.RemoveWishListResp
+	SearchByLocationReq  = pb.SearchByLocationReq
+	SearchByLocationResp = pb.SearchByLocationResp
+	WishListReq          = pb.WishListReq
+	WishListResp         = pb.WishListResp
 
 	Travel interface {
 		// homestayDetail
@@ -46,6 +48,7 @@ type (
 		HistoryList(ctx context.Context, in *HistoryListReq, opts ...grpc.CallOption) (*HistoryListResp, error)
 		RemoveHistory(ctx context.Context, in *RemoveHistoryReq, opts ...grpc.CallOption) (*RemoveHistoryResp, error)
 		ClearHistory(ctx context.Context, in *ClearHistoryReq, opts ...grpc.CallOption) (*ClearHistoryResp, error)
+		SearchByLocation(ctx context.Context, in *SearchByLocationReq, opts ...grpc.CallOption) (*SearchByLocationResp, error)
 	}
 
 	defaultTravel struct {
@@ -103,4 +106,9 @@ func (m *defaultTravel) RemoveHistory(ctx context.Context, in *RemoveHistoryReq,
 func (m *defaultTravel) ClearHistory(ctx context.Context, in *ClearHistoryReq, opts ...grpc.CallOption) (*ClearHistoryResp, error) {
 	client := pb.NewTravelClient(m.cli.Conn())
 	return client.ClearHistory(ctx, in, opts...)
+}
+
+func (m *defaultTravel) SearchByLocation(ctx context.Context, in *SearchByLocationReq, opts ...grpc.CallOption) (*SearchByLocationResp, error) {
+	client := pb.NewTravelClient(m.cli.Conn())
+	return client.SearchByLocation(ctx, in, opts...)
 }
