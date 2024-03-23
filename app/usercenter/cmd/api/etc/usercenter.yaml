@@ -26,8 +26,8 @@ Log:
 
 #WxMiniConf
 WxMiniConf:
-  AppId: wx123456
-  Secret: 123456
+  AppId: wx2add729fadddddd
+  Secret: 20365395b3de9b2a9351ddddddd
 
 #rpc service
 UsercenterRpcConf:

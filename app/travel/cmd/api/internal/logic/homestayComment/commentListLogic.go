@@ -32,7 +32,9 @@ func NewCommentListLogic(ctx context.Context, svcCtx *svc.ServiceContext) Commen
 func (l *CommentListLogic) CommentList(req types.CommentListReq) (*types.CommentListResp, error) {
 	// todo: add your logic here and delete this line
 
-	whereBuilder := l.svcCtx.HomestayCommentModel.SelectBuilder().Where(squirrel.Eq{})
+	whereBuilder := l.svcCtx.HomestayCommentModel.SelectBuilder().Where(squirrel.Eq{
+		"homestay_id": req.HomestayId,
+	})
 	homestayCommentList, err := l.svcCtx.HomestayCommentModel.FindPageListByPage(l.ctx, whereBuilder, req.Page, req.PageSize, "id desc")
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "get activity homestay id set fail rowType: %s ,err : %v", model.HomestayActivityPreferredType, err)

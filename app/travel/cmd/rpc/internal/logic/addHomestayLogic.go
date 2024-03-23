@@ -44,15 +44,20 @@ func (l *AddHomestayLogic) AddHomestay(in *pb.AddHomestayReq) (*pb.AddHomestayRe
 			PriceBefore: in.Homestay.PriceBefore,
 		}
 
-		_, err := l.svcCtx.HomestayModel.Insert(ctx, session, &homestay)
+		res, err := l.svcCtx.HomestayModel.Insert(ctx, session, &homestay)
 		if err != nil {
 			return err
 		}
 
+		// bug: 这里可以直接通过homestay获取新加入的Id, 而不用再去查询, 多此一举, 因为是通过&homestay获取的
+		// 就像C语言的传入传出参数一样, 更正: 虽然类似传出参数, 但是不能获取自增的id
+		// 之前加入的无法在列表中拿到是因为之加入了Homestay表, 而没有加入HomestayActivity表
+		// 困扰了n天的bug: 加入数据库后自增的id使用sql.Result接口中的LastInsertId()方法获取
+		dataId, _ := res.LastInsertId()
 		homestayActivity := model.HomestayActivity{
 			DelState:  0,
 			RowType:   "preferredHomestay",
-			DataId:    homestay.Id,
+			DataId:    dataId,
 			RowStatus: 1,
 			Version:   0,
 		}

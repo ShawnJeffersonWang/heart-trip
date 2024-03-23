@@ -33,6 +33,11 @@ func (s *TravelServer) AddHomestay(ctx context.Context, in *pb.AddHomestayReq) (
 	return l.AddHomestay(in)
 }
 
+func (s *TravelServer) AddComment(ctx context.Context, in *pb.AddCommentReq) (*pb.AddCommentResp, error) {
+	l := logic.NewAddCommentLogic(ctx, s.svcCtx)
+	return l.AddComment(in)
+}
+
 func (s *TravelServer) WishList(ctx context.Context, in *pb.WishListReq) (*pb.WishListResp, error) {
 	l := logic.NewWishListLogic(ctx, s.svcCtx)
 	return l.WishList(in)

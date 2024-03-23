@@ -21,12 +21,13 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	Travel_HomestayDetail_FullMethodName = "/pb.travel/homestayDetail"
 	Travel_AddHomestay_FullMethodName    = "/pb.travel/addHomestay"
-	Travel_WishList_FullMethodName       = "/pb.travel/WishList"
-	Travel_AddWishList_FullMethodName    = "/pb.travel/AddWishList"
-	Travel_RemoveWishList_FullMethodName = "/pb.travel/RemoveWishList"
-	Travel_HistoryList_FullMethodName    = "/pb.travel/HistoryList"
-	Travel_RemoveHistory_FullMethodName  = "/pb.travel/RemoveHistory"
-	Travel_ClearHistory_FullMethodName   = "/pb.travel/ClearHistory"
+	Travel_AddComment_FullMethodName     = "/pb.travel/addComment"
+	Travel_WishList_FullMethodName       = "/pb.travel/wishList"
+	Travel_AddWishList_FullMethodName    = "/pb.travel/addWishList"
+	Travel_RemoveWishList_FullMethodName = "/pb.travel/removeWishList"
+	Travel_HistoryList_FullMethodName    = "/pb.travel/historyList"
+	Travel_RemoveHistory_FullMethodName  = "/pb.travel/removeHistory"
+	Travel_ClearHistory_FullMethodName   = "/pb.travel/clearHistory"
 )
 
 // TravelClient is the client API for Travel service.
@@ -36,6 +37,7 @@ type TravelClient interface {
 	// homestayDetail
 	HomestayDetail(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error)
 	AddHomestay(ctx context.Context, in *AddHomestayReq, opts ...grpc.CallOption) (*AddHomestayResp, error)
+	AddComment(ctx context.Context, in *AddCommentReq, opts ...grpc.CallOption) (*AddCommentResp, error)
 	WishList(ctx context.Context, in *WishListReq, opts ...grpc.CallOption) (*WishListResp, error)
 	AddWishList(ctx context.Context, in *AddWishListReq, opts ...grpc.CallOption) (*AddWishListResp, error)
 	RemoveWishList(ctx context.Context, in *RemoveWishListReq, opts ...grpc.CallOption) (*RemoveWishListResp, error)
@@ -64,6 +66,15 @@ func (c *travelClient) HomestayDetail(ctx context.Context, in *HomestayDetailReq
 func (c *travelClient) AddHomestay(ctx context.Context, in *AddHomestayReq, opts ...grpc.CallOption) (*AddHomestayResp, error) {
 	out := new(AddHomestayResp)
 	err := c.cc.Invoke(ctx, Travel_AddHomestay_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *travelClient) AddComment(ctx context.Context, in *AddCommentReq, opts ...grpc.CallOption) (*AddCommentResp, error) {
+	out := new(AddCommentResp)
+	err := c.cc.Invoke(ctx, Travel_AddComment_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -131,6 +142,7 @@ type TravelServer interface {
 	// homestayDetail
 	HomestayDetail(context.Context, *HomestayDetailReq) (*HomestayDetailResp, error)
 	AddHomestay(context.Context, *AddHomestayReq) (*AddHomestayResp, error)
+	AddComment(context.Context, *AddCommentReq) (*AddCommentResp, error)
 	WishList(context.Context, *WishListReq) (*WishListResp, error)
 	AddWishList(context.Context, *AddWishListReq) (*AddWishListResp, error)
 	RemoveWishList(context.Context, *RemoveWishListReq) (*RemoveWishListResp, error)
@@ -149,6 +161,9 @@ func (UnimplementedTravelServer) HomestayDetail(context.Context, *HomestayDetail
 }
 func (UnimplementedTravelServer) AddHomestay(context.Context, *AddHomestayReq) (*AddHomestayResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddHomestay not implemented")
+}
+func (UnimplementedTravelServer) AddComment(context.Context, *AddCommentReq) (*AddCommentResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddComment not implemented")
 }
 func (UnimplementedTravelServer) WishList(context.Context, *WishListReq) (*WishListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WishList not implemented")
@@ -213,6 +228,24 @@ func _Travel_AddHomestay_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TravelServer).AddHomestay(ctx, req.(*AddHomestayReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Travel_AddComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddCommentReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).AddComment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Travel_AddComment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).AddComment(ctx, req.(*AddCommentReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -341,27 +374,31 @@ var Travel_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Travel_AddHomestay_Handler,
 		},
 		{
-			MethodName: "WishList",
+			MethodName: "addComment",
+			Handler:    _Travel_AddComment_Handler,
+		},
+		{
+			MethodName: "wishList",
 			Handler:    _Travel_WishList_Handler,
 		},
 		{
-			MethodName: "AddWishList",
+			MethodName: "addWishList",
 			Handler:    _Travel_AddWishList_Handler,
 		},
 		{
-			MethodName: "RemoveWishList",
+			MethodName: "removeWishList",
 			Handler:    _Travel_RemoveWishList_Handler,
 		},
 		{
-			MethodName: "HistoryList",
+			MethodName: "historyList",
 			Handler:    _Travel_HistoryList_Handler,
 		},
 		{
-			MethodName: "RemoveHistory",
+			MethodName: "removeHistory",
 			Handler:    _Travel_RemoveHistory_Handler,
 		},
 		{
-			MethodName: "ClearHistory",
+			MethodName: "clearHistory",
 			Handler:    _Travel_ClearHistory_Handler,
 		},
 	},

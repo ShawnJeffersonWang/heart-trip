@@ -28,11 +28,12 @@ var (
 type (
 	historyModel interface {
 		Insert(ctx context.Context, data *History) (sql.Result, error)
-		FindOne(ctx context.Context, id int64) (*History, error)
+		FindOne(ctx context.Context, historyId int64) (*History, error)
 		FindOneByUserId(ctx context.Context, userId int64) (*History, error)
-		FindOneByHomestayId(ctx context.Context, homestayId int64) (*History, error)
+		FindOneByHomestayIdAndUserId(ctx context.Context, homestayId, userId int64) (*History, error)
 		Update(ctx context.Context, data *History) error
-		Delete(ctx context.Context, id int64) error
+		Delete(ctx context.Context, historyId int64) error
+		DeleteAll(ctx context.Context, userId int64) error
 	}
 
 	defaultHistoryModel struct {
@@ -65,21 +66,32 @@ func newHistoryModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option)
 	}
 }
 
-func (m *defaultHistoryModel) Delete(ctx context.Context, id int64) error {
-	looklookTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHistoryIdPrefix, id)
+func (m *defaultHistoryModel) Delete(ctx context.Context, historyId int64) error {
+	looklookTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHistoryIdPrefix, historyId)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		// bug: 这里写的是historyId, 而数据库里根本没有historyId, 应该是id
 		query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
-		return conn.ExecCtx(ctx, query, id)
+		return conn.ExecCtx(ctx, query, historyId)
 	}, looklookTravelHistoryIdKey)
 	return err
 }
 
-func (m *defaultHistoryModel) FindOne(ctx context.Context, id int64) (*History, error) {
-	looklookTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHistoryIdPrefix, id)
+func (m *defaultHistoryModel) DeleteAll(ctx context.Context, userId int64) error {
+	looklookTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHistoryIdPrefix, userId)
+	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("delete from %s where `user_id` = ?", m.table)
+		return conn.ExecCtx(ctx, query, userId)
+	}, looklookTravelHistoryIdKey)
+	return err
+}
+
+func (m *defaultHistoryModel) FindOne(ctx context.Context, historyId int64) (*History, error) {
+	looklookTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHistoryIdPrefix, historyId)
 	var resp History
 	err := m.QueryRowCtx(ctx, &resp, looklookTravelHistoryIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
+		// bug: 这里不能用history_id, 要用id
 		query := fmt.Sprintf("select %s from %s where `id` = ? limit 1", historyRows, m.table)
-		return conn.QueryRowCtx(ctx, v, query, id)
+		return conn.QueryRowCtx(ctx, v, query, historyId)
 	})
 	switch err {
 	case nil:
@@ -91,13 +103,15 @@ func (m *defaultHistoryModel) FindOne(ctx context.Context, id int64) (*History, 
 	}
 }
 
-func (m *defaultHistoryModel) FindOneByHomestayId(ctx context.Context, homestayId int64) (*History, error) {
-	looklookTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHistoryIdPrefix, homestayId)
+func (m *defaultHistoryModel) FindOneByHomestayIdAndUserId(ctx context.Context, homestayId, userId int64) (*History, error) {
+	//looklookTravelHistoryIdKey := fmt.Sprintf("%s%v%v", cacheLooklookTravelHistoryIdPrefix, homestayId, userId)
 	var resp History
-	err := m.QueryRowCtx(ctx, &resp, looklookTravelHistoryIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
-		query := fmt.Sprintf("select %s from %s where `homestay_id` = ? limit 1", historyRows, m.table)
-		return conn.QueryRowCtx(ctx, v, query, homestayId)
-	})
+	query := fmt.Sprintf("select %s from %s where `homestay_id` = ? and `user_id` = ? limit 1", historyRows, m.table)
+	err := m.QueryRowNoCacheCtx(ctx, &resp, query, homestayId, userId)
+	//err := m.QueryRowCtx(ctx, &resp, looklookTravelHistoryIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
+	//	query := fmt.Sprintf("select %s from %s where `homestay_id` = ? and `user_id` = ? limit 1", historyRows, m.table)
+	//	return conn.QueryRowCtx(ctx, v, query, homestayId, userId)
+	//})
 	switch err {
 	case nil:
 		return &resp, nil

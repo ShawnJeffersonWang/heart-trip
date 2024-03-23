@@ -30,17 +30,17 @@ func (l *AddWishListLogic) AddWishList(in *pb.AddWishListReq) (*pb.AddWishListRe
 	// todo: add your logic here and delete this line
 	homestay, _ := l.svcCtx.HomestayModel.FindOne(l.ctx, in.HomestayId)
 	// FindOne里面查询不能带缓存会导致再次添加相同的名宿id可以成功，会出现缓存不一致的问题，这可以算在面试中遇到的一个问题
-	_, err := l.svcCtx.UserHomestayModel.FindOne(l.ctx, in.HomestayId)
+	// 然后查找的时候需要查UserId和HomestayId, 而不能只查HomestayId
+	_, err := l.svcCtx.UserHomestayModel.FindOne(l.ctx, in.UserId, in.HomestayId)
 	if err == nil {
 		return nil, errors.Wrapf(ErrHomestayAlreadyAdded,
-			"homestay has been added in wishlist homestayId:%d,err:%v", in.HomestayId, err)
+			"homestay has been added in wishlist homestayId:%d, err:%v", in.HomestayId, err)
 	}
 
 	_, err = l.svcCtx.UserHomestayModel.Insert(l.ctx, &model.UserHomestay{
 		UserId:     in.UserId,
 		HomestayId: in.HomestayId,
 	})
-
 	if err != nil {
 		return nil, err
 	}

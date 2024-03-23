@@ -20,10 +20,19 @@ message Homestay {
   int64   priceAfter = 11;
 }
 
+message HomestayComment {
+  int64 id=1;
+  int64 HomestayId=2;
+  string Content=3;
+  string Star=4;
+  int64 UserId=5;
+  string Nickname=6;
+  string Avatar=7;
+}
 
 //req 、resp
 message HomestayDetailReq {
-  int64   id = 1;
+  int64 homestayId = 1;
   int64 userId = 2;
 }
 message HomestayDetailResp {
@@ -83,17 +92,24 @@ message HistoryListResp {
 
 message RemoveHistoryReq {
   int64 userId = 1;
-  int64 HistoryId = 2;
+  int64 historyId = 2;
 }
 message RemoveHistoryResp {
-  bool Success = 1;
+  bool success = 1;
 }
 
 message ClearHistoryReq {
   int64 userId = 1;
 }
 message ClearHistoryResp {
-  bool Success = 1;
+  bool success = 1;
+}
+
+message AddCommentReq {
+  HomestayComment homestayComment=1;
+}
+message AddCommentResp {
+  bool success=1;
 }
 
 //service
@@ -101,10 +117,11 @@ service travel {
   //homestayDetail
   rpc homestayDetail(HomestayDetailReq) returns(HomestayDetailResp);
   rpc addHomestay(AddHomestayReq) returns (AddHomestayResp);
-  rpc WishList(WishListReq) returns (WishListResp);
-  rpc AddWishList(AddWishListReq) returns (AddWishListResp);
-  rpc RemoveWishList(RemoveWishListReq) returns (RemoveWishListResp);
-  rpc HistoryList(HistoryListReq) returns (HistoryListResp);
-  rpc RemoveHistory(RemoveHistoryReq) returns (RemoveHistoryResp);
-  rpc ClearHistory(ClearHistoryReq) returns (ClearHistoryResp);
+  rpc addComment(AddCommentReq) returns (AddCommentResp);
+  rpc wishList(WishListReq) returns (WishListResp);
+  rpc addWishList(AddWishListReq) returns (AddWishListResp);
+  rpc removeWishList(RemoveWishListReq) returns (RemoveWishListResp);
+  rpc historyList(HistoryListReq) returns (HistoryListResp);
+  rpc removeHistory(RemoveHistoryReq) returns (RemoveHistoryResp);
+  rpc clearHistory(ClearHistoryReq) returns (ClearHistoryResp);
 }

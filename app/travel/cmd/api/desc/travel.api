@@ -83,3 +83,14 @@ service travel {
 	post /homestayComment/commentList (CommentListReq) returns (CommentListResp)
 }
 
+@server (
+	prefix: travel/v1
+	group:  homestayComment
+	jwt:    JwtAuth
+)
+service travel {
+	@doc "add comment"
+	@handler addComment
+	post /homestayComment/addComment (AddCommentReq) returns (AddCommentResp)
+}
+

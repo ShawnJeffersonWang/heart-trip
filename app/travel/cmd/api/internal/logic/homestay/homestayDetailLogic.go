@@ -31,11 +31,12 @@ func (l *HomestayDetailLogic) HomestayDetail(req types.HomestayDetailReq) (*type
 
 	userId := ctxdata.GetUidFromCtx(l.ctx)
 	homestayResp, err := l.svcCtx.TravelRpc.HomestayDetail(l.ctx, &travel.HomestayDetailReq{
-		Id:     req.Id,
-		UserId: userId,
+		HomestayId: req.HomestayId,
+		UserId:     userId,
 	})
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrMsg("get homestay detail fail"), " get homestay detail db err , id : %d , err : %v ", req.Id, err)
+		return nil, errors.Wrapf(xerr.NewErrMsg("get homestay detail fail"),
+			" get homestay detail db err , id : %d , err : %v ", req.HomestayId, err)
 	}
 
 	var typeHomestay types.Homestay

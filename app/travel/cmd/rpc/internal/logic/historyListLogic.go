@@ -29,19 +29,20 @@ func NewHistoryListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Histo
 
 func (l *HistoryListLogic) HistoryList(in *pb.HistoryListReq) (*pb.HistoryListResp, error) {
 	// todo: add your logic here and delete this line
-	whereBuilder := l.svcCtx.HistoryHomestayModel.SelectBuilder().Where(squirrel.Eq{
+	whereBuilder := l.svcCtx.UserHistoryModel.SelectBuilder().Where(squirrel.Eq{
 		"user_id": in.UserId,
 	})
-	historyIdList, _ := l.svcCtx.HistoryHomestayModel.FindAll(l.ctx, whereBuilder, "id desc")
+	// 按历史记录时间倒叙排列
+	userHistories, _ := l.svcCtx.UserHistoryModel.FindAll(l.ctx, whereBuilder, "")
 	var resp []*pb.HistoryHomestay
-	//fmt.Println("list: ", historyIdList)
-	//for _, h := range historyIdList {
+	//fmt.Println("list: ", userHistories)
+	//for _, h := range userHistories {
 	//	fmt.Println("history: ", h)
 	//}
-	if len(historyIdList) > 0 {
+	if len(userHistories) > 0 {
 		mr.MapReduceVoid(func(source chan<- any) {
-			for _, historyHomestay := range historyIdList {
-				source <- historyHomestay.HistoryId
+			for _, userHistory := range userHistories {
+				source <- userHistory.HistoryId
 			}
 		}, func(item any, writer mr.Writer[*model.History], cancel func(error)) {
 			id := item.(int64)

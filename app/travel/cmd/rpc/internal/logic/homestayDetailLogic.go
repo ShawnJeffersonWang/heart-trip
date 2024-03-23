@@ -30,44 +30,51 @@ func NewHomestayDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ho
 // HomestayDetail homestay detail .
 func (l *HomestayDetailLogic) HomestayDetail(in *pb.HomestayDetailReq) (*pb.HomestayDetailResp, error) {
 
-	homestay, err := l.svcCtx.HomestayModel.FindOne(l.ctx, in.Id)
+	homestay, err := l.svcCtx.HomestayModel.FindOne(l.ctx, in.HomestayId)
 	if err != nil && err != model.ErrNotFound {
-		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), " HomestayDetail db err , id : %d ", in.Id)
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), " HomestayDetail db err , id : %d ", in.HomestayId)
 	}
 
-	history, err := l.svcCtx.HistoryModel.FindOneByHomestayId(l.ctx, in.Id)
-	fmt.Println("history: ", history)
-	if history == nil {
-		// bug: 这里用的是homestay.UserId, 导致一直是0, 应该用in.UserId
-		history = &model.History{
-			Title:              homestay.Title,
-			HomestayBusinessId: homestay.HomestayBusinessId,
-			Intro:              homestay.Intro,
-			Cover:              homestay.Cover,
-			Location:           homestay.Location,
-			PriceAfter:         homestay.PriceAfter,
-			PriceBefore:        homestay.PriceBefore,
-			RatingStars:        homestay.RatingStars,
-			UserId:             in.UserId,
-			HomestayId:         homestay.Id,
-			CreateTime:         time.Now(),
-			UpdateTime:         time.Now(),
-		}
-		_, err = l.svcCtx.HistoryModel.Insert(l.ctx, history)
-
-		historyTemp, err := l.svcCtx.HistoryModel.FindOneByUserId(l.ctx, in.UserId)
-		fmt.Println("history: ", historyTemp)
-
-		historyHomestay := &model.HistoryHomestay{
-			HistoryId: historyTemp.Id,
-			UserId:    in.UserId,
-		}
-
-		_, err = l.svcCtx.HistoryHomestayModel.Insert(l.ctx, historyHomestay)
-		if err != nil {
-			return nil, err
-		}
+	// 缓存不一致, 查缓存发现是以前的历史记录id, 而删不掉真实的, 还是会添加历史记录
+	historyTemp, err := l.svcCtx.HistoryModel.FindOneByHomestayIdAndUserId(l.ctx, in.HomestayId, in.UserId)
+	// 类似LRU, 找到了先删除, 没找到才新建一个历史记录和建立关联
+	if historyTemp != nil {
+		fmt.Println("==========id: ", historyTemp.Id)
+		_ = l.svcCtx.HistoryModel.Delete(l.ctx, historyTemp.Id)
+		_ = l.svcCtx.UserHistoryModel.Delete(l.ctx, in.UserId, historyTemp.Id)
 	}
+	// bug: 这里用的是homestay.UserId, 导致一直是0, 应该用in.UserId
+	history := model.History{
+		Title:              homestay.Title,
+		HomestayBusinessId: homestay.HomestayBusinessId,
+		Intro:              homestay.Intro,
+		Cover:              homestay.Cover,
+		Location:           homestay.Location,
+		PriceAfter:         homestay.PriceAfter,
+		PriceBefore:        homestay.PriceBefore,
+		RatingStars:        homestay.RatingStars,
+		UserId:             in.UserId,
+		HomestayId:         homestay.Id,
+		CreateTime:         time.Now(),
+		UpdateTime:         time.Now(),
+	}
+	res, err := l.svcCtx.HistoryModel.Insert(l.ctx, &history)
+
+	// bug: 当时没想到可以用&history, 传出参数, 就想的再去通过UserId查历史记录, 其实根本不一定是刚插入的这条历史记录
+	//historyTemp, err := l.svcCtx.HistoryModel.FindOneByUserId(l.ctx, in.UserId)
+	//fmt.Println("history: ", historyTemp)
+	// &history无法获取数据库自增的id, 要使用LastInsertId()
+	historyId, _ := res.LastInsertId()
+	userHistory := model.UserHistory{
+		HistoryId: historyId,
+		UserId:    in.UserId,
+	}
+
+	_, err = l.svcCtx.UserHistoryModel.Insert(l.ctx, &userHistory)
+	if err != nil {
+		return nil, err
+	}
+
 	var pbHomestay pb.Homestay
 	if homestay != nil {
 		_ = copier.Copy(&pbHomestay, homestay)
@@ -76,5 +83,4 @@ func (l *HomestayDetailLogic) HomestayDetail(in *pb.HomestayDetailReq) (*pb.Home
 	return &pb.HomestayDetailResp{
 		Homestay: &pbHomestay,
 	}, nil
-
 }
