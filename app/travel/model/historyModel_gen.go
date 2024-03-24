@@ -19,8 +19,8 @@ import (
 var (
 	historyFieldNames          = builder.RawFieldNames(&History{})
 	historyRows                = strings.Join(historyFieldNames, ",")
-	historyRowsExpectAutoSet   = strings.Join(stringx.Remove(historyFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), ",")
-	historyRowsWithPlaceHolder = strings.Join(stringx.Remove(historyFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), "=?,") + "=?"
+	historyRowsExpectAutoSet   = strings.Join(stringx.Remove(historyFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`last_browsing_time`", "`updated_at`"), ",")
+	historyRowsWithPlaceHolder = strings.Join(stringx.Remove(historyFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`last_browsing_time`", "`updated_at`"), "=?,") + "=?"
 
 	cacheLooklookTravelHistoryIdPrefix = "cache:looklookTravel:history:id:"
 )
@@ -44,7 +44,8 @@ type (
 	History struct {
 		Id                 int64     `db:"id"`
 		CreateTime         time.Time `db:"create_time"`
-		UpdateTime         time.Time `db:"update_time"`
+		//UpdateTime         time.Time `db:"update_time"`
+		LastBrowsingTime   time.Time `db:"last_browsing_time"`
 		Title              string    `db:"title"`
 		Cover              string    `db:"cover"`
 		Intro              string    `db:"intro"`

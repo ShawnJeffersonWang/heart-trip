@@ -36,7 +36,7 @@ func (l *HistoryListLogic) HistoryList(req *types.HistoryListReq) (*types.Histor
 		return nil, err
 	}
 
-	var resp []types.HistoryHomestay
+	var resp []types.History
 	_ = copier.Copy(&resp, historyListResp.HistoryList)
 	return &types.HistoryListResp{
 		HistoryList: resp,

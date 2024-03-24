@@ -106,6 +106,7 @@ func (m *defaultUserHistoryModel) FindAll(ctx context.Context, builder squirrel.
 	} else {
 		builder = builder.OrderBy(orderBy)
 	}
+	// 生成的SQL和参数
 	query, values, err := builder.Where("").ToSql()
 	if err != nil {
 		return nil, err

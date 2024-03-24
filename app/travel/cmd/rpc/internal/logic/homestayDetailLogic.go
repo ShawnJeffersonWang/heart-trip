@@ -56,7 +56,7 @@ func (l *HomestayDetailLogic) HomestayDetail(in *pb.HomestayDetailReq) (*pb.Home
 		UserId:             in.UserId,
 		HomestayId:         homestay.Id,
 		CreateTime:         time.Now(),
-		UpdateTime:         time.Now(),
+		LastBrowsingTime:   time.Now(),
 	}
 	res, err := l.svcCtx.HistoryModel.Insert(l.ctx, &history)
 

@@ -20,23 +20,23 @@ type FileUploadResp struct {
 	URL string `json:"url"`
 }
 
-type HistoryHomestay struct {
-	Id              int64  `json:"id"`
-	Title           string `json:"title"`
-	Cover           string `json:"cover"`
-	Intro           string `json:"intro"`
-	Location        string `json:"location"`
-	RowState        int64  `json:"rowState"`    //0:下架 1:上架
-	PriceBefore     int64  `json:"priceBefore"` //民宿价格
-	PriceAfter      int64  `json:"priceAfter"`
-	LastBrowingTime int64  `json:"lastBrowingTime"`
+type History struct {
+	Id               int64  `json:"id"`
+	Title            string `json:"title"`
+	Cover            string `json:"cover"`
+	Intro            string `json:"intro"`
+	Location         string `json:"location"`
+	RowState         int64  `json:"rowState"`    //0:下架 1:上架
+	PriceBefore      int64  `json:"priceBefore"` //民宿价格
+	PriceAfter       int64  `json:"priceAfter"`
+	LastBrowsingTime int64  `json:"lastBrowsingTime"`
 }
 
 type HistoryListReq struct {
 }
 
 type HistoryListResp struct {
-	HistoryList []HistoryHomestay `json:"historyList"`
+	HistoryList []History `json:"historyList"`
 }
 
 type Homestay struct {

@@ -71,12 +71,12 @@ message RemoveWishListResp {
   bool success = 1;
 }
 
-message HistoryHomestay {
+message History {
   int64   id = 1;
   string  title = 2;
   string  cover = 3;
   string  intro = 4;
-  string location = 5;
+  string  location = 5;
   int64   homestayBusinessId = 6;   //店铺id
   int64   userId = 7;               //房东id
   int64   rowState = 8;             //0:下架 1:上架
@@ -90,7 +90,7 @@ message HistoryListReq {
   int64 userId = 1;
 }
 message HistoryListResp {
-  repeated HistoryHomestay historyList = 1;
+  repeated History historyList = 1;
 }
 
 message RemoveHistoryReq {

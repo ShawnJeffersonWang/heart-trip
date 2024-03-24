@@ -2,10 +2,11 @@ package logic
 
 import (
 	"context"
+	"fmt"
 	"github.com/Masterminds/squirrel"
-	"github.com/jinzhu/copier"
 	"github.com/zeromicro/go-zero/core/mr"
 	"golodge/app/travel/model"
+	"sort"
 
 	"golodge/app/travel/cmd/rpc/internal/svc"
 	"golodge/app/travel/cmd/rpc/pb"
@@ -27,14 +28,21 @@ func NewHistoryListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Histo
 	}
 }
 
+// 用于按照 LastBrowsingTime 对 History 切片进行排序的自定义排序函数
+func sortByLastBrowsingTime(histories []*pb.History) {
+	sort.SliceStable(histories, func(i, j int) bool {
+		return histories[i].LastBrowsingTime > histories[j].LastBrowsingTime
+	})
+}
+
 func (l *HistoryListLogic) HistoryList(in *pb.HistoryListReq) (*pb.HistoryListResp, error) {
 	// todo: add your logic here and delete this line
 	whereBuilder := l.svcCtx.UserHistoryModel.SelectBuilder().Where(squirrel.Eq{
 		"user_id": in.UserId,
 	})
-	// 按历史记录时间倒叙排列
+	// 按历史记录时间倒叙排列, bug: 这里不能按照更新时间，因为UserHistory这个表压根没有update_time这个字段
 	userHistories, _ := l.svcCtx.UserHistoryModel.FindAll(l.ctx, whereBuilder, "")
-	var resp []*pb.HistoryHomestay
+	var resp []*pb.History
 	//fmt.Println("list: ", userHistories)
 	//for _, h := range userHistories {
 	//	fmt.Println("history: ", h)
@@ -54,13 +62,30 @@ func (l *HistoryListLogic) HistoryList(in *pb.HistoryListReq) (*pb.HistoryListRe
 			writer.Write(history)
 		}, func(pipe <-chan *model.History, cancel func(error)) {
 			for history := range pipe {
-				var tyHistory pb.HistoryHomestay
-				_ = copier.Copy(&tyHistory, history)
+				//var tyHistory pb.History
+				// 爽, 可以用Fill all fields一键填充所有字段
+				tyHistory := pb.History{
+					Id:                 history.Id,
+					Title:              history.Title,
+					Cover:              history.Cover,
+					Intro:              history.Intro,
+					Location:           history.Location,
+					HomestayBusinessId: history.HomestayBusinessId,
+					UserId:             history.UserId,
+					RowState:           history.RowState,
+					RatingStars:        history.RatingStars,
+					PriceBefore:        history.PriceBefore,
+					PriceAfter:         history.PriceAfter,
+					LastBrowsingTime:   history.LastBrowsingTime.Unix(),
+				}
+				fmt.Println("browing time: ", tyHistory.LastBrowsingTime)
+				//_ = copier.Copy(&tyHistory, history)
 				resp = append(resp, &tyHistory)
 			}
 		})
 	}
 
+	sortByLastBrowsingTime(resp)
 	return &pb.HistoryListResp{
 		HistoryList: resp,
 	}, nil

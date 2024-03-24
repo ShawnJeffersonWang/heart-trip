@@ -31,7 +31,7 @@ type Homestay {
     PriceAfter int64 `json:"priceAfter"`
 }
 
-type HistoryHomestay {
+type History {
     Id int64 `json:"id"`
     Title string `json:"title"`
     Cover string `json:"cover"`
@@ -40,7 +40,7 @@ type HistoryHomestay {
     RowState int64 `json:"rowState"`                      //0:下架 1:上架
     PriceBefore int64 `json:"priceBefore"`                //民宿价格
     PriceAfter int64 `json:"priceAfter"`
-    LastBrowingTime int64 `json:"lastBrowingTime"`
+    LastBrowsingTime int64 `json:"lastBrowsingTime"`
 }
 
 type (
@@ -127,7 +127,7 @@ type (
     HistoryListReq {
     }
     HistoryListResp {
-        HistoryList []HistoryHomestay `json:"historyList"`
+        HistoryList []History `json:"historyList"`
     }
 )
 

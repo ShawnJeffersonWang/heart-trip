@@ -2,10 +2,13 @@ package logic
 
 import (
 	"context"
+	"fmt"
 	"github.com/Masterminds/squirrel"
 	"github.com/jinzhu/copier"
+	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/mr"
 	"golodge/app/travel/model"
+	"golodge/common/xerr"
 
 	"golodge/app/travel/cmd/rpc/internal/svc"
 	"golodge/app/travel/cmd/rpc/pb"
@@ -29,8 +32,15 @@ func NewSearchByLocationLogic(ctx context.Context, svcCtx *svc.ServiceContext) *
 
 func (l *SearchByLocationLogic) SearchByLocation(in *pb.SearchByLocationReq) (*pb.SearchByLocationResp, error) {
 	// todo: add your logic here and delete this line
-	whereBuilder := l.svcCtx.HomestayModel.SelectBuilder().Where(squirrel.Eq{
-		"location": in.Location,
+	if len(in.Location) == 0 {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Search By Location err, len(Location) == 0")
+	}
+	// 模糊查询
+	//whereBuilder := l.svcCtx.HomestayModel.SelectBuilder().Where("location LIKE ?", fmt.Sprint("%", in.Location, "%"))
+	// 按地名或者详情查询
+	whereBuilder := l.svcCtx.HomestayModel.SelectBuilder().Where(squirrel.Or{
+		squirrel.Like{"location": fmt.Sprint("%", in.Location, "%")},
+		squirrel.Like{"intro": fmt.Sprint("%", in.Location, "%")},
 	})
 	homestays, err := l.svcCtx.HomestayModel.FindAll(l.ctx, whereBuilder, "id desc")
 	if err != nil {

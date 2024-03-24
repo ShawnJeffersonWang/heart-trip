@@ -21,7 +21,7 @@ type (
 	AddWishListResp      = pb.AddWishListResp
 	ClearHistoryReq      = pb.ClearHistoryReq
 	ClearHistoryResp     = pb.ClearHistoryResp
-	HistoryHomestay      = pb.HistoryHomestay
+	History              = pb.History
 	HistoryListReq       = pb.HistoryListReq
 	HistoryListResp      = pb.HistoryListResp
 	Homestay             = pb.Homestay
