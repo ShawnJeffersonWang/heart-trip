@@ -64,6 +64,7 @@ func (l *HistoryListLogic) HistoryList(in *pb.HistoryListReq) (*pb.HistoryListRe
 			for history := range pipe {
 				//var tyHistory pb.History
 				// 爽, 可以用Fill all fields一键填充所有字段
+				// 不用copier.Copy, 手动映射lastBrowsingTime
 				tyHistory := pb.History{
 					Id:                 history.Id,
 					Title:              history.Title,

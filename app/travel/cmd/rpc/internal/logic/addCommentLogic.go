@@ -28,13 +28,19 @@ func NewAddCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddCom
 func (l *AddCommentLogic) AddComment(in *pb.AddCommentReq) (*pb.AddCommentResp, error) {
 	// todo: add your logic here and delete this line
 	homestayComment := model.HomestayComment{
-		HomestayId: in.HomestayComment.HomestayId,
-		Content:    in.HomestayComment.Content,
-		Star:       in.HomestayComment.Star,
-		UserId:     in.HomestayComment.UserId,
-		Nickname:   in.HomestayComment.Nickname,
-		Avatar:     in.HomestayComment.Avatar,
-		ImageUrls:  in.HomestayComment.ImageUrls,
+		HomestayId:     in.HomestayComment.HomestayId,
+		CommentTime:    in.HomestayComment.CommentTime,
+		Content:        in.HomestayComment.Content,
+		Star:           in.HomestayComment.Star,
+		UserId:         in.HomestayComment.UserId,
+		Nickname:       in.HomestayComment.Nickname,
+		Avatar:         in.HomestayComment.Avatar,
+		ImageUrls:      in.HomestayComment.ImageUrls,
+		CostRating:     in.HomestayComment.CostRating,
+		TrafficRating:  in.HomestayComment.TrafficRating,
+		TidyRating:     in.HomestayComment.TidyRating,
+		SecurityRating: in.HomestayComment.SecurityRating,
+		FoodRating:     in.HomestayComment.FoodRating,
 	}
 	if err := l.svcCtx.HomestayCommentModel.Trans(l.ctx, func(ctx context.Context, session sqlx.Session) error {
 		l.svcCtx.HomestayCommentModel.Insert(l.ctx, session, &homestayComment)

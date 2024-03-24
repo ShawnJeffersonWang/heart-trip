@@ -85,6 +85,10 @@ service travel {
 	@doc "homestay comment list"
 	@handler commentList
 	post /homestayComment/commentList (CommentListReq) returns (CommentListResp)
+
+	@doc "like comment"
+	@handler likeComment
+	post /homestayComment/likeComment (LikeCommentReq) returns (LikeCommentResp)
 }
 
 // need login

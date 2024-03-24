@@ -84,6 +84,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/homestayComment/commentList",
 				Handler: homestayComment.CommentListHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/homestayComment/likeComment",
+				Handler: homestayComment.LikeCommentHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/travel/v1"),
 	)

@@ -37,6 +37,7 @@ func (l *HistoryListLogic) HistoryList(req *types.HistoryListReq) (*types.Histor
 	}
 
 	var resp []types.History
+	// bug: 之前是api的History的last browsingTime拼错了，导致rpc的返回值HistoryList无法自动映射到api的[]types.History
 	_ = copier.Copy(&resp, historyListResp.HistoryList)
 	return &types.HistoryListResp{
 		HistoryList: resp,

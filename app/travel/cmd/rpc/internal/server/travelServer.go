@@ -38,6 +38,11 @@ func (s *TravelServer) AddComment(ctx context.Context, in *pb.AddCommentReq) (*p
 	return l.AddComment(in)
 }
 
+func (s *TravelServer) LikeComment(ctx context.Context, in *pb.LikeCommentReq) (*pb.LikeCommentResp, error) {
+	l := logic.NewLikeCommentLogic(ctx, s.svcCtx)
+	return l.LikeComment(in)
+}
+
 func (s *TravelServer) WishList(ctx context.Context, in *pb.WishListReq) (*pb.WishListResp, error) {
 	l := logic.NewWishListLogic(ctx, s.svcCtx)
 	return l.WishList(in)

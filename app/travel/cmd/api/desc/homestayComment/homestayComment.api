@@ -11,12 +11,19 @@ info(
 type HomestayComment {
     Id int64 `json:"id"`
     HomestayId int64 `json:"homestayId"`
+    CommentTime string `json:"commentTime"`
     Content string `json:"content"`
     Star string `json:"star"`
+    TidyRating string `json:"tidyRating"`
+    TrafficRating string `json:"trafficRating"`
+    SecurityRating string `json:"securityRating"`
+    FoodRating string `json:"foodRating"`
+    CostRating string `json:"costRating"`
     UserId int64 `json:"userId"`
     Nickname string `json:"nickname"`
     Avatar string `json:"avatar"`
     ImageUrls string `json:"imageUrls"`
+    LikeCount int64 `json:"likeCount"`
 }
 
 type (
@@ -31,13 +38,26 @@ type (
 
     AddCommentReq {
         HomestayId int64 `json:"homestayId"`
+        CommentTime string `json:"commentTime"`
         Content string `json:"content"`
         Star string `json:"star"`
+        TidyRating string `json:"tidyRating"`
+        TrafficRating string `json:"trafficRating"`
+        SecurityRating string `json:"securityRating"`
+        FoodRating string `json:"foodRating"`
+        CostRating string `json:"costRating"`
         Nickname string `json:"nickname"`
         Avatar string `json:"avatar"`
         ImageUrls string `json:"imageUrls"`
     }
     AddCommentResp {
+        Success bool `json:"success"`
+    }
+
+    LikeCommentReq {
+        CommentId int64 `json:"commentId"`
+    }
+    LikeCommentResp {
         Success bool `json:"success"`
     }
 )

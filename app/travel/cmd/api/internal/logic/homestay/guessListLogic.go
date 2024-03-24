@@ -2,7 +2,6 @@ package homestay
 
 import (
 	"context"
-
 	"golodge/app/travel/cmd/api/internal/svc"
 	"golodge/app/travel/cmd/api/internal/types"
 	"golodge/common/xerr"
@@ -27,17 +26,18 @@ func NewGuessListLogic(ctx context.Context, svcCtx *svc.ServiceContext) GuessLis
 }
 
 func (l *GuessListLogic) GuessList(req types.GuessListReq) (*types.GuessListResp, error) {
-	var resp []types.Homestay
+	var resp []types.Guess
 
-	list, err := l.svcCtx.HomestayModel.FindPageListByIdDESC(l.ctx, l.svcCtx.HomestayModel.SelectBuilder(), 0, 5)
+	// bug: 改了前面的没改后面的
+	list, err := l.svcCtx.GuessModel.FindPageListByIdDESC(l.ctx, l.svcCtx.GuessModel.SelectBuilder(), 0, 5)
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "GuessList db err req : %+v , err : %v", req, err)
 	}
 
 	if len(list) > 0 {
-		for _, homestay := range list {
-			var typeHomestay types.Homestay
-			_ = copier.Copy(&typeHomestay, homestay)
+		for _, guess := range list {
+			var typeHomestay types.Guess
+			_ = copier.Copy(&typeHomestay, guess)
 
 			resp = append(resp, typeHomestay)
 		}

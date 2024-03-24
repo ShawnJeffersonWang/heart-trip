@@ -22,6 +22,7 @@ const (
 	Travel_HomestayDetail_FullMethodName   = "/pb.travel/homestayDetail"
 	Travel_AddHomestay_FullMethodName      = "/pb.travel/addHomestay"
 	Travel_AddComment_FullMethodName       = "/pb.travel/addComment"
+	Travel_LikeComment_FullMethodName      = "/pb.travel/likeComment"
 	Travel_WishList_FullMethodName         = "/pb.travel/wishList"
 	Travel_AddWishList_FullMethodName      = "/pb.travel/addWishList"
 	Travel_RemoveWishList_FullMethodName   = "/pb.travel/removeWishList"
@@ -39,6 +40,7 @@ type TravelClient interface {
 	HomestayDetail(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error)
 	AddHomestay(ctx context.Context, in *AddHomestayReq, opts ...grpc.CallOption) (*AddHomestayResp, error)
 	AddComment(ctx context.Context, in *AddCommentReq, opts ...grpc.CallOption) (*AddCommentResp, error)
+	LikeComment(ctx context.Context, in *LikeCommentReq, opts ...grpc.CallOption) (*LikeCommentResp, error)
 	WishList(ctx context.Context, in *WishListReq, opts ...grpc.CallOption) (*WishListResp, error)
 	AddWishList(ctx context.Context, in *AddWishListReq, opts ...grpc.CallOption) (*AddWishListResp, error)
 	RemoveWishList(ctx context.Context, in *RemoveWishListReq, opts ...grpc.CallOption) (*RemoveWishListResp, error)
@@ -77,6 +79,15 @@ func (c *travelClient) AddHomestay(ctx context.Context, in *AddHomestayReq, opts
 func (c *travelClient) AddComment(ctx context.Context, in *AddCommentReq, opts ...grpc.CallOption) (*AddCommentResp, error) {
 	out := new(AddCommentResp)
 	err := c.cc.Invoke(ctx, Travel_AddComment_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *travelClient) LikeComment(ctx context.Context, in *LikeCommentReq, opts ...grpc.CallOption) (*LikeCommentResp, error) {
+	out := new(LikeCommentResp)
+	err := c.cc.Invoke(ctx, Travel_LikeComment_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -154,6 +165,7 @@ type TravelServer interface {
 	HomestayDetail(context.Context, *HomestayDetailReq) (*HomestayDetailResp, error)
 	AddHomestay(context.Context, *AddHomestayReq) (*AddHomestayResp, error)
 	AddComment(context.Context, *AddCommentReq) (*AddCommentResp, error)
+	LikeComment(context.Context, *LikeCommentReq) (*LikeCommentResp, error)
 	WishList(context.Context, *WishListReq) (*WishListResp, error)
 	AddWishList(context.Context, *AddWishListReq) (*AddWishListResp, error)
 	RemoveWishList(context.Context, *RemoveWishListReq) (*RemoveWishListResp, error)
@@ -176,6 +188,9 @@ func (UnimplementedTravelServer) AddHomestay(context.Context, *AddHomestayReq) (
 }
 func (UnimplementedTravelServer) AddComment(context.Context, *AddCommentReq) (*AddCommentResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddComment not implemented")
+}
+func (UnimplementedTravelServer) LikeComment(context.Context, *LikeCommentReq) (*LikeCommentResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LikeComment not implemented")
 }
 func (UnimplementedTravelServer) WishList(context.Context, *WishListReq) (*WishListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WishList not implemented")
@@ -261,6 +276,24 @@ func _Travel_AddComment_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TravelServer).AddComment(ctx, req.(*AddCommentReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Travel_LikeComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LikeCommentReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).LikeComment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Travel_LikeComment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).LikeComment(ctx, req.(*LikeCommentReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -409,6 +442,10 @@ var Travel_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "addComment",
 			Handler:    _Travel_AddComment_Handler,
+		},
+		{
+			MethodName: "likeComment",
+			Handler:    _Travel_LikeComment_Handler,
 		},
 		{
 			MethodName: "wishList",

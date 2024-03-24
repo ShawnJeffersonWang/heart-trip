@@ -28,6 +28,8 @@ type (
 	HomestayComment      = pb.HomestayComment
 	HomestayDetailReq    = pb.HomestayDetailReq
 	HomestayDetailResp   = pb.HomestayDetailResp
+	LikeCommentReq       = pb.LikeCommentReq
+	LikeCommentResp      = pb.LikeCommentResp
 	RemoveHistoryReq     = pb.RemoveHistoryReq
 	RemoveHistoryResp    = pb.RemoveHistoryResp
 	RemoveWishListReq    = pb.RemoveWishListReq
@@ -42,6 +44,7 @@ type (
 		HomestayDetail(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error)
 		AddHomestay(ctx context.Context, in *AddHomestayReq, opts ...grpc.CallOption) (*AddHomestayResp, error)
 		AddComment(ctx context.Context, in *AddCommentReq, opts ...grpc.CallOption) (*AddCommentResp, error)
+		LikeComment(ctx context.Context, in *LikeCommentReq, opts ...grpc.CallOption) (*LikeCommentResp, error)
 		WishList(ctx context.Context, in *WishListReq, opts ...grpc.CallOption) (*WishListResp, error)
 		AddWishList(ctx context.Context, in *AddWishListReq, opts ...grpc.CallOption) (*AddWishListResp, error)
 		RemoveWishList(ctx context.Context, in *RemoveWishListReq, opts ...grpc.CallOption) (*RemoveWishListResp, error)
@@ -76,6 +79,11 @@ func (m *defaultTravel) AddHomestay(ctx context.Context, in *AddHomestayReq, opt
 func (m *defaultTravel) AddComment(ctx context.Context, in *AddCommentReq, opts ...grpc.CallOption) (*AddCommentResp, error) {
 	client := pb.NewTravelClient(m.cli.Conn())
 	return client.AddComment(ctx, in, opts...)
+}
+
+func (m *defaultTravel) LikeComment(ctx context.Context, in *LikeCommentReq, opts ...grpc.CallOption) (*LikeCommentResp, error) {
+	client := pb.NewTravelClient(m.cli.Conn())
+	return client.LikeComment(ctx, in, opts...)
 }
 
 func (m *defaultTravel) WishList(ctx context.Context, in *WishListReq, opts ...grpc.CallOption) (*WishListResp, error) {

@@ -24,6 +24,18 @@ type Homestay {
     PriceAfter int64 `json:"priceAfter"`
 }
 
+type Guess {
+    Id int64 `json:"id"`
+    HomestayId int64 `json:"homestayId"`
+    IsCollected bool `json:"isCollected"`
+    Title string `json:"title"`
+    Cover string `json:"cover"`
+    Intro string `json:"intro"`
+    Location string `json:"location"`
+    PriceBefore int64 `json:"priceBefore"`                //民宿价格
+    PriceAfter int64 `json:"priceAfter"`
+}
+
 type (
     AddHomestayReq {
         Title string `json:"title"`
@@ -73,7 +85,7 @@ type (
     GuessListReq {
     }
     GuessListResp {
-        List []Homestay `json:"list"`
+        List []Guess `json:"list"`
     }
 )
 

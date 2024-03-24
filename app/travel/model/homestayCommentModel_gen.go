@@ -35,6 +35,7 @@ type (
 		Insert(ctx context.Context, session sqlx.Session, data *HomestayComment) (sql.Result, error)
 		FindOne(ctx context.Context, id int64) (*HomestayComment, error)
 		Update(ctx context.Context, session sqlx.Session, data *HomestayComment) (sql.Result, error)
+		//UpdateWithLikeCount(ctx context.Context, session sqlx.Session, data *HomestayComment) (sql.Result, error)
 		UpdateWithVersion(ctx context.Context, session sqlx.Session, data *HomestayComment) error
 		Trans(ctx context.Context, fn func(context context.Context, session sqlx.Session) error) error
 		SelectBuilder() squirrel.SelectBuilder
@@ -55,19 +56,26 @@ type (
 	}
 
 	HomestayComment struct {
-		Id         int64     `db:"id"`
-		CreateTime time.Time `db:"create_time"`
-		UpdateTime time.Time `db:"update_time"`
-		DeleteTime time.Time `db:"delete_time"`
-		DelState   int64     `db:"del_state"`
-		HomestayId int64     `db:"homestay_id"` // 民宿id
-		UserId     int64     `db:"user_id"`     // 用户id
-		Content    string    `db:"content"`     // 评论内容
-		Star       string    `db:"star"`        // 星星数,多个维度
-		Version    int64     `db:"version"`     // 版本号
-		Nickname   string    `db:"nickname"`
-		Avatar     string    `db:"avatar"`
-		ImageUrls  string    `db:"image_urls"`
+		Id             int64     `db:"id"`
+		CreateTime     time.Time `db:"create_time"`
+		UpdateTime     time.Time `db:"update_time"`
+		DeleteTime     time.Time `db:"delete_time"`
+		DelState       int64     `db:"del_state"`
+		HomestayId     int64     `db:"homestay_id"` // 民宿id
+		UserId         int64     `db:"user_id"`     // 用户id
+		Content        string    `db:"content"`     // 评论内容
+		Star           string    `db:"star"`        // 星星数,多个维度
+		Version        int64     `db:"version"`     // 版本号
+		Nickname       string    `db:"nickname"`
+		Avatar         string    `db:"avatar"`
+		ImageUrls      string    `db:"image_urls"`
+		LikeCount      int64     `db:"like_count"`
+		CommentTime    string    `db:"comment_time"`
+		TidyRating     string    `db:"tidy_rating"`
+		TrafficRating  string    `db:"traffic_rating"`
+		SecurityRating string    `db:"security_rating"`
+		FoodRating     string    `db:"food_rating"`
+		CostRating     string    `db:"cost_rating"`
 	}
 )
 
@@ -83,11 +91,11 @@ func (m *defaultHomestayCommentModel) Insert(ctx context.Context, session sqlx.S
 	data.DelState = globalkey.DelStateNo
 	looklookTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayCommentIdPrefix, data.Id)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, homestayCommentRowsExpectAutoSet)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, homestayCommentRowsExpectAutoSet)
 		if session != nil {
-			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Avatar, data.Nickname, data.ImageUrls)
+			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Avatar, data.Nickname, data.ImageUrls, data.LikeCount, data.CommentTime, data.TidyRating, data.TrafficRating, data.SecurityRating, data.FoodRating, data.CostRating)
 		}
-		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Avatar, data.Nickname, data.ImageUrls)
+		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Avatar, data.Nickname, data.ImageUrls, data.LikeCount, data.CommentTime, data.TidyRating, data.TrafficRating, data.SecurityRating, data.FoodRating, data.CostRating)
 	}, looklookTravelHomestayCommentIdKey)
 }
 
@@ -113,11 +121,22 @@ func (m *defaultHomestayCommentModel) Update(ctx context.Context, session sqlx.S
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, homestayCommentRowsWithPlaceHolder)
 		if session != nil {
-			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Id)
+			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Nickname, data.Avatar, data.ImageUrls, data.LikeCount, data.CommentTime, data.TidyRating, data.TrafficRating, data.SecurityRating, data.FoodRating, data.CostRating, data.Id)
 		}
-		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Id)
+		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Nickname, data.Avatar, data.ImageUrls, data.LikeCount, data.CommentTime, data.TidyRating, data.TrafficRating, data.SecurityRating, data.FoodRating, data.CostRating, data.Id)
 	}, looklookTravelHomestayCommentIdKey)
 }
+
+//func (m *defaultHomestayCommentModel) UpdateWithLikeCount(ctx context.Context, session sqlx.Session, data *HomestayComment) (sql.Result, error) {
+//	looklookTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayCommentIdPrefix, data.Id)
+//	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+//		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, homestayCommentRowsWithPlaceHolder)
+//		if session != nil {
+//			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Id)
+//		}
+//		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Id)
+//	}, looklookTravelHomestayCommentIdKey)
+//}
 
 func (m *defaultHomestayCommentModel) UpdateWithVersion(ctx context.Context, session sqlx.Session, data *HomestayComment) error {
 

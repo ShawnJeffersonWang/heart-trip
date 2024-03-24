@@ -2,12 +2,18 @@
 package types
 
 type AddCommentReq struct {
-	HomestayId int64  `json:"homestayId"`
-	Content    string `json:"content"`
-	Star       string `json:"star"`
-	Nickname   string `json:"nickname"`
-	Avatar     string `json:"avatar"`
-	ImageUrls  string `json:"imageUrls"`
+	HomestayId     int64  `json:"homestayId"`
+	CommentTime    string `json:"commentTime"`
+	Content        string `json:"content"`
+	Star           string `json:"star"`
+	TidyRating     string `json:"tidyRating"`
+	TrafficRating  string `json:"trafficRating"`
+	SecurityRating string `json:"securityRating"`
+	FoodRating     string `json:"foodRating"`
+	CostRating     string `json:"costRating"`
+	Nickname       string `json:"nickname"`
+	Avatar         string `json:"avatar"`
+	ImageUrls      string `json:"imageUrls"`
 }
 
 type AddCommentResp struct {
@@ -55,11 +61,23 @@ type GoodBossResp struct {
 	List []HomestayBusinessBoss `json:"list"`
 }
 
+type Guess struct {
+	Id          int64  `json:"id"`
+	HomestayId  int64  `json:"homestayId"`
+	IsCollected bool   `json:"isCollected"`
+	Title       string `json:"title"`
+	Cover       string `json:"cover"`
+	Intro       string `json:"intro"`
+	Location    string `json:"location"`
+	PriceBefore int64  `json:"priceBefore"` //民宿价格
+	PriceAfter  int64  `json:"priceAfter"`
+}
+
 type GuessListReq struct {
 }
 
 type GuessListResp struct {
-	List []Homestay `json:"list"`
+	List []Guess `json:"list"`
 }
 
 type Homestay struct {
@@ -122,14 +140,21 @@ type HomestayBussinessListResp struct {
 }
 
 type HomestayComment struct {
-	Id         int64  `json:"id"`
-	HomestayId int64  `json:"homestayId"`
-	Content    string `json:"content"`
-	Star       string `json:"star"`
-	UserId     int64  `json:"userId"`
-	Nickname   string `json:"nickname"`
-	Avatar     string `json:"avatar"`
-	ImageUrls  string `json:"imageUrls"`
+	Id             int64  `json:"id"`
+	HomestayId     int64  `json:"homestayId"`
+	CommentTime    string `json:"commentTime"`
+	Content        string `json:"content"`
+	Star           string `json:"star"`
+	TidyRating     string `json:"tidyRating"`
+	TrafficRating  string `json:"trafficRating"`
+	SecurityRating string `json:"securityRating"`
+	FoodRating     string `json:"foodRating"`
+	CostRating     string `json:"costRating"`
+	UserId         int64  `json:"userId"`
+	Nickname       string `json:"nickname"`
+	Avatar         string `json:"avatar"`
+	ImageUrls      string `json:"imageUrls"`
+	LikeCount      int64  `json:"likeCount"`
 }
 
 type HomestayDetailReq struct {
@@ -147,6 +172,14 @@ type HomestayListReq struct {
 
 type HomestayListResp struct {
 	List []Homestay `json:"list"`
+}
+
+type LikeCommentReq struct {
+	CommentId int64 `json:"commentId"`
+}
+
+type LikeCommentResp struct {
+	Success bool `json:"success"`
 }
 
 type SearchByLocationReq struct {

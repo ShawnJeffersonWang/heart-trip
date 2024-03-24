@@ -25,12 +25,19 @@ message Homestay {
 message HomestayComment {
   int64 id = 1;
   int64 HomestayId = 2;
-  string Content = 3;
-  string Star = 4;
-  int64 UserId = 5;
-  string Nickname = 6;
-  string Avatar = 7;
-  string ImageUrls = 8;
+  string CommentTime = 3;
+  string Content = 4;
+  string Star = 5;
+  string TidyRating = 6;
+  string TrafficRating = 7;
+  string SecurityRating = 8;
+  string FoodRating = 9;
+  string CostRating = 10;
+  int64 UserId = 11;
+  string Nickname = 12;
+  string Avatar = 13;
+  string ImageUrls = 14;
+  int64 LikeCount = 15;
 }
 
 //req 、resp
@@ -115,6 +122,13 @@ message AddCommentResp {
   bool success = 1;
 }
 
+message LikeCommentReq {
+  int64 commentId = 1;
+}
+message LikeCommentResp {
+  bool success = 1;
+}
+
 message SearchByLocationReq {
   string location = 1;
 }
@@ -128,6 +142,7 @@ service travel {
   rpc homestayDetail(HomestayDetailReq) returns(HomestayDetailResp);
   rpc addHomestay(AddHomestayReq) returns (AddHomestayResp);
   rpc addComment(AddCommentReq) returns (AddCommentResp);
+  rpc likeComment(LikeCommentReq) returns (LikeCommentResp);
   rpc wishList(WishListReq) returns (WishListResp);
   rpc addWishList(AddWishListReq) returns (AddWishListResp);
   rpc removeWishList(RemoveWishListReq) returns (RemoveWishListResp);

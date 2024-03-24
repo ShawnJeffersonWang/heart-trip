@@ -29,13 +29,19 @@ func (l *AddCommentLogic) AddComment(req *types.AddCommentReq) (*types.AddCommen
 	// todo: add your logic here and delete this line
 	userId := ctxdata.GetUidFromCtx(l.ctx)
 	homestayComment := pb.HomestayComment{
-		HomestayId: req.HomestayId,
-		Content:    req.Content,
-		Star:       req.Star,
-		UserId:     userId,
-		Nickname:   req.Nickname,
-		Avatar:     req.Avatar,
-		ImageUrls:  req.ImageUrls,
+		HomestayId:     req.HomestayId,
+		CommentTime:    req.CommentTime,
+		Content:        req.Content,
+		Star:           req.Star,
+		TidyRating:     req.TidyRating,
+		TrafficRating:  req.TrafficRating,
+		SecurityRating: req.SecurityRating,
+		FoodRating:     req.FoodRating,
+		CostRating:     req.CostRating,
+		UserId:         userId,
+		Nickname:       req.Nickname,
+		Avatar:         req.Avatar,
+		ImageUrls:      req.ImageUrls,
 	}
 	_, err := l.svcCtx.TravelRpc.AddComment(l.ctx, &travel.AddCommentReq{
 		HomestayComment: &homestayComment,
