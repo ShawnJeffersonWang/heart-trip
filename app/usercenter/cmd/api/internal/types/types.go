@@ -92,7 +92,10 @@ type RemoveWishListResp struct {
 }
 
 type UpdateUserInfoReq struct {
-	UserInfo User `json:"userInfo"`
+	Nickname string `json:"nickname"`
+	Sex      int64  `json:"sex"`
+	Avatar   string `json:"avatar"`
+	Info     string `json:"info"`
 }
 
 type UpdateUserInfoResp struct {

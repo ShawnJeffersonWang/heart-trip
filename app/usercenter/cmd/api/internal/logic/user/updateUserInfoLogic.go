@@ -33,10 +33,10 @@ func (l *UpdateUserInfoLogic) UpdateUserInfo(req *types.UpdateUserInfoReq) (*typ
 	updateUserInfoResp, err := l.svcCtx.UsercenterRpc.UpdateUserInfo(l.ctx, &usercenter.UpdateUserInfoReq{
 		User: &usercenter.User{
 			Id:       userId,
-			Nickname: req.UserInfo.Nickname,
-			Sex:      req.UserInfo.Sex,
-			Avatar:   req.UserInfo.Avatar,
-			Info:     req.UserInfo.Info,
+			Nickname: req.Nickname,
+			Sex:      req.Sex,
+			Avatar:   req.Avatar,
+			Info:     req.Info,
 		},
 	})
 	if err != nil {

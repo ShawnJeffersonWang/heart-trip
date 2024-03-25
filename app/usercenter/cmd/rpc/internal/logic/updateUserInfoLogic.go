@@ -34,15 +34,18 @@ func (l *UpdateUserInfoLogic) UpdateUserInfo(in *usercenter.UpdateUserInfoReq) (
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "GetUserInfo find user db err , id:%d , err:%v", in.User.Id, err)
 	}
 	if user == nil {
-		return nil, errors.Wrapf(ErrUserNoExistsError, "id:%d", in.User.Id)
+		return nil, errors.Wrapf(ErrUserNoExistsError, "id: %d", in.User.Id)
 	}
 
 	user.Nickname = in.User.Nickname
-	user.Sex = in.User.Id
+	user.Sex = in.User.Sex
 	user.Avatar = in.User.Avatar
 	user.Info = in.User.Info
 	if err := l.svcCtx.UserModel.Trans(l.ctx, func(ctx context.Context, session sqlx.Session) error {
-		l.svcCtx.UserModel.Update(ctx, session, user)
+		_, err := l.svcCtx.UserModel.Update(ctx, session, user)
+		if err != nil {
+			return err
+		}
 		return nil
 	}); err != nil {
 		return nil, err
