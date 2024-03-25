@@ -1,9 +1,24 @@
+create table guess
+(
+    id           bigint auto_increment
+        primary key,
+    homestay_id  bigint                                  not null,
+    price_after  bigint                                  not null,
+    price_before bigint                                  null,
+    cover        varchar(4096) default ''                not null,
+    location     varchar(4096) default ''                not null,
+    title        varchar(4096) default ''                null,
+    is_collected tinyint       default 0                 not null,
+    udate_time   datetime      default CURRENT_TIMESTAMP not null,
+    create_time  datetime      default CURRENT_TIMESTAMP not null
+);
+
 create table history
 (
     id                   bigint auto_increment
         primary key,
     create_time          datetime      default CURRENT_TIMESTAMP not null,
-    update_time          datetime      default CURRENT_TIMESTAMP not null,
+    last_browsing_time   datetime      default CURRENT_TIMESTAMP not null,
     title                varchar(32)   default ''                not null,
     cover                varchar(4096) default ''                not null,
     intro                varchar(4096) default ''                not null,
@@ -15,14 +30,6 @@ create table history
     rating_stars         float                                   not null,
     user_id              bigint                                  not null,
     homestay_id          bigint                                  not null
-);
-
-create table history_homestay
-(
-    id         int unsigned auto_increment
-        primary key,
-    history_id int unsigned not null,
-    user_id    int unsigned not null
 );
 
 create table homestay
@@ -43,7 +50,9 @@ create table homestay
     row_state            tinyint(1)    default 0                 not null comment '0:下架 1:上架',
     rating_stars         float         default 0                 not null comment '评分',
     price_before         bigint        default 0                 not null comment '民宿价格（分）',
-    price_after          bigint        default 0                 not null
+    price_after          bigint        default 0                 not null,
+    clean_video          varchar(1024) default ''                not null,
+    image_urls           varchar(4096) default ''                not null
 )
     comment '每一间民宿';
 
@@ -92,25 +101,43 @@ create table homestay_business
 
 create table homestay_comment
 (
-    id          bigint auto_increment
+    id              bigint auto_increment
         primary key,
-    create_time datetime    default CURRENT_TIMESTAMP not null,
-    update_time datetime    default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
-    delete_time datetime    default CURRENT_TIMESTAMP not null,
-    del_state   tinyint     default 0                 not null,
-    homestay_id bigint      default 0                 not null comment '民宿id',
-    user_id     bigint      default 0                 not null comment '用户id',
-    content     varchar(64) default ''                not null comment '评论内容',
-    star        json                                  not null comment '星星数,多个维度',
-    version     bigint      default 0                 not null comment '版本号'
+    create_time     datetime      default CURRENT_TIMESTAMP not null,
+    update_time     datetime      default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
+    delete_time     datetime      default CURRENT_TIMESTAMP not null,
+    del_state       tinyint       default 0                 not null,
+    homestay_id     bigint        default 0                 not null comment '民宿id',
+    user_id         bigint        default 0                 not null comment '用户id',
+    content         varchar(1024) default ''                not null comment '评论内容',
+    star            json                                    not null comment '星星数,多个维度',
+    version         bigint        default 0                 not null comment '版本号',
+    nickname        varchar(32)   default ''                not null,
+    avatar          varchar(1024) default ''                not null,
+    image_urls      varchar(4096) default ''                not null,
+    like_count      bigint        default 0                 not null,
+    comment_time    varchar(255)  default ''                not null,
+    tidy_rating     varchar(255)  default ''                not null,
+    traffic_rating  varchar(255)  default ''                not null,
+    security_rating varchar(255)  default ''                not null,
+    food_rating     varchar(255)  default ''                not null,
+    cost_rating     varchar(255)  default ''                not null
 )
     comment '民宿评价';
 
+create table user_history
+(
+    id         bigint auto_increment
+        primary key,
+    history_id bigint not null,
+    user_id    bigint not null
+);
+
 create table user_homestay
 (
-    id          int unsigned auto_increment
+    id          bigint auto_increment
         primary key,
-    user_id     int unsigned not null,
-    homestay_id int unsigned not null
+    user_id     bigint not null,
+    homestay_id bigint not null
 );
 
