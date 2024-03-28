@@ -24,20 +24,20 @@ message Homestay {
 
 message HomestayComment {
   int64 id = 1;
-  int64 HomestayId = 2;
-  string CommentTime = 3;
-  string Content = 4;
-  string Star = 5;
-  string TidyRating = 6;
-  string TrafficRating = 7;
-  string SecurityRating = 8;
-  string FoodRating = 9;
-  string CostRating = 10;
-  int64 UserId = 11;
-  string Nickname = 12;
-  string Avatar = 13;
-  string ImageUrls = 14;
-  int64 LikeCount = 15;
+  int64 homestayId = 2;
+  string commentTime = 3;
+  string content = 4;
+  string star = 5;
+  string tidyRating = 6;
+  string trafficRating = 7;
+  string securityRating = 8;
+  string foodRating = 9;
+  string costRating = 10;
+  int64 userId = 11;
+  string nickname = 12;
+  string avatar = 13;
+  string imageUrls = 14;
+  int64 likeCount = 15;
 }
 
 //req 、resp
@@ -53,6 +53,14 @@ message AddHomestayReq {
   Homestay homestay = 1;
 }
 message AddHomestayResp {
+}
+
+message DeleteHomestayReq {
+  int64 userId = 1;
+  int64 homestayId = 2;
+}
+message DeleteHomestayResp {
+  bool success = 1;
 }
 
 message WishListReq {
@@ -75,6 +83,13 @@ message RemoveWishListReq {
   int64 homestayId = 2;
 }
 message RemoveWishListResp {
+  bool success = 1;
+}
+
+message AddGuessReq {
+  int64 homestayId = 1;
+}
+message AddGuessResp {
   bool success = 1;
 }
 
@@ -141,11 +156,13 @@ service travel {
   //homestayDetail
   rpc homestayDetail(HomestayDetailReq) returns(HomestayDetailResp);
   rpc addHomestay(AddHomestayReq) returns (AddHomestayResp);
+  rpc deleteHomestay(DeleteHomestayReq) returns (DeleteHomestayResp);
   rpc addComment(AddCommentReq) returns (AddCommentResp);
   rpc likeComment(LikeCommentReq) returns (LikeCommentResp);
   rpc wishList(WishListReq) returns (WishListResp);
   rpc addWishList(AddWishListReq) returns (AddWishListResp);
   rpc removeWishList(RemoveWishListReq) returns (RemoveWishListResp);
+  rpc addGuess(AddGuessReq) returns (AddGuessResp);
   rpc historyList(HistoryListReq) returns (HistoryListResp);
   rpc removeHistory(RemoveHistoryReq) returns (RemoveHistoryResp);
   rpc clearHistory(ClearHistoryReq) returns (ClearHistoryResp);

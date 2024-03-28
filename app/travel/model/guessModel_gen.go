@@ -42,16 +42,16 @@ type (
 	}
 
 	Guess struct {
-		Id          int64         `db:"id"`
-		HomestayId  int64         `db:"homestay_id"`
-		PriceAfter  int64         `db:"price_after"`
-		PriceBefore sql.NullInt64 `db:"price_before"`
-		Cover       string        `db:"cover"`
-		Location    string        `db:"location"`
-		Title       string        `db:"title"`
-		IsCollected int64         `db:"is_collected"`
-		UdateTime   time.Time     `db:"udate_time"`
-		CreateTime  time.Time     `db:"create_time"`
+		Id          int64     `db:"id"`
+		HomestayId  int64     `db:"homestay_id"`
+		PriceAfter  int64     `db:"price_after"`
+		PriceBefore int64     `db:"price_before"`
+		Cover       string    `db:"cover"`
+		Location    string    `db:"location"`
+		Title       string    `db:"title"`
+		IsCollected int64     `db:"is_collected"`
+		UdateTime   time.Time `db:"udate_time"`
+		CreateTime  time.Time `db:"create_time"`
 	}
 )
 

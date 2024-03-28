@@ -71,6 +71,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
+				Path:    "/user/userList",
+				Handler: user.UserListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/user/wishList",
 				Handler: user.WishListHandler(serverCtx),
 			},

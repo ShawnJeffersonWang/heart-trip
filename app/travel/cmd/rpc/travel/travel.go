@@ -15,12 +15,16 @@ import (
 type (
 	AddCommentReq        = pb.AddCommentReq
 	AddCommentResp       = pb.AddCommentResp
+	AddGuessReq          = pb.AddGuessReq
+	AddGuessResp         = pb.AddGuessResp
 	AddHomestayReq       = pb.AddHomestayReq
 	AddHomestayResp      = pb.AddHomestayResp
 	AddWishListReq       = pb.AddWishListReq
 	AddWishListResp      = pb.AddWishListResp
 	ClearHistoryReq      = pb.ClearHistoryReq
 	ClearHistoryResp     = pb.ClearHistoryResp
+	DeleteHomestayReq    = pb.DeleteHomestayReq
+	DeleteHomestayResp   = pb.DeleteHomestayResp
 	History              = pb.History
 	HistoryListReq       = pb.HistoryListReq
 	HistoryListResp      = pb.HistoryListResp
@@ -43,11 +47,13 @@ type (
 		// homestayDetail
 		HomestayDetail(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error)
 		AddHomestay(ctx context.Context, in *AddHomestayReq, opts ...grpc.CallOption) (*AddHomestayResp, error)
+		DeleteHomestay(ctx context.Context, in *DeleteHomestayReq, opts ...grpc.CallOption) (*DeleteHomestayResp, error)
 		AddComment(ctx context.Context, in *AddCommentReq, opts ...grpc.CallOption) (*AddCommentResp, error)
 		LikeComment(ctx context.Context, in *LikeCommentReq, opts ...grpc.CallOption) (*LikeCommentResp, error)
 		WishList(ctx context.Context, in *WishListReq, opts ...grpc.CallOption) (*WishListResp, error)
 		AddWishList(ctx context.Context, in *AddWishListReq, opts ...grpc.CallOption) (*AddWishListResp, error)
 		RemoveWishList(ctx context.Context, in *RemoveWishListReq, opts ...grpc.CallOption) (*RemoveWishListResp, error)
+		AddGuess(ctx context.Context, in *AddGuessReq, opts ...grpc.CallOption) (*AddGuessResp, error)
 		HistoryList(ctx context.Context, in *HistoryListReq, opts ...grpc.CallOption) (*HistoryListResp, error)
 		RemoveHistory(ctx context.Context, in *RemoveHistoryReq, opts ...grpc.CallOption) (*RemoveHistoryResp, error)
 		ClearHistory(ctx context.Context, in *ClearHistoryReq, opts ...grpc.CallOption) (*ClearHistoryResp, error)
@@ -76,6 +82,11 @@ func (m *defaultTravel) AddHomestay(ctx context.Context, in *AddHomestayReq, opt
 	return client.AddHomestay(ctx, in, opts...)
 }
 
+func (m *defaultTravel) DeleteHomestay(ctx context.Context, in *DeleteHomestayReq, opts ...grpc.CallOption) (*DeleteHomestayResp, error) {
+	client := pb.NewTravelClient(m.cli.Conn())
+	return client.DeleteHomestay(ctx, in, opts...)
+}
+
 func (m *defaultTravel) AddComment(ctx context.Context, in *AddCommentReq, opts ...grpc.CallOption) (*AddCommentResp, error) {
 	client := pb.NewTravelClient(m.cli.Conn())
 	return client.AddComment(ctx, in, opts...)
@@ -99,6 +110,11 @@ func (m *defaultTravel) AddWishList(ctx context.Context, in *AddWishListReq, opt
 func (m *defaultTravel) RemoveWishList(ctx context.Context, in *RemoveWishListReq, opts ...grpc.CallOption) (*RemoveWishListResp, error) {
 	client := pb.NewTravelClient(m.cli.Conn())
 	return client.RemoveWishList(ctx, in, opts...)
+}
+
+func (m *defaultTravel) AddGuess(ctx context.Context, in *AddGuessReq, opts ...grpc.CallOption) (*AddGuessResp, error) {
+	client := pb.NewTravelClient(m.cli.Conn())
+	return client.AddGuess(ctx, in, opts...)
 }
 
 func (m *defaultTravel) HistoryList(ctx context.Context, in *HistoryListReq, opts ...grpc.CallOption) (*HistoryListResp, error) {

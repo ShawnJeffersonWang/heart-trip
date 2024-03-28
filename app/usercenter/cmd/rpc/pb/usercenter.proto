@@ -9,7 +9,7 @@ package pb;
 message User {
   int64 id = 1;
   string mobile = 2;
-  string nickname =3;
+  string nickname = 3;
   int64  sex = 4;
   string avatar = 5;
   string info = 6;
@@ -52,7 +52,7 @@ message GetUserInfoReq {
   int64  id = 1;
 }
 message GetUserInfoResp {
-   User user = 1;
+  User user = 1;
 }
 
 message GetUserAuthByAuthKeyReq {
@@ -60,7 +60,7 @@ message GetUserAuthByAuthKeyReq {
   string  authType = 2;
 }
 message GetUserAuthByAuthKeyResp {
-   UserAuth userAuth = 1;
+  UserAuth userAuth = 1;
 }
 
 message GetUserAuthByUserIdReq {
@@ -68,7 +68,7 @@ message GetUserAuthByUserIdReq {
   string  authType = 2;
 }
 message GetUserAuthyUserIdResp {
-   UserAuth userAuth = 1;
+  UserAuth userAuth = 1;
 }
 
 message GenerateTokenReq {
@@ -87,6 +87,12 @@ message UpdateUserInfoResp {
 
 }
 
+message UserListReq {
+}
+message UserListResp {
+  repeated User list = 1;
+}
+
 //service
 service usercenter {
   rpc login(LoginReq) returns(LoginResp);
@@ -96,4 +102,5 @@ service usercenter {
   rpc getUserAuthByUserId(GetUserAuthByUserIdReq) returns(GetUserAuthyUserIdResp);
   rpc generateToken(GenerateTokenReq) returns(GenerateTokenResp);
   rpc updateUserInfo(UpdateUserInfoReq) returns(UpdateUserInfoResp);
+  rpc userList(UserListReq) returns (UserListResp);
 }

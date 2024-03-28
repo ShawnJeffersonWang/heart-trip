@@ -21,11 +21,13 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	Travel_HomestayDetail_FullMethodName   = "/pb.travel/homestayDetail"
 	Travel_AddHomestay_FullMethodName      = "/pb.travel/addHomestay"
+	Travel_DeleteHomestay_FullMethodName   = "/pb.travel/deleteHomestay"
 	Travel_AddComment_FullMethodName       = "/pb.travel/addComment"
 	Travel_LikeComment_FullMethodName      = "/pb.travel/likeComment"
 	Travel_WishList_FullMethodName         = "/pb.travel/wishList"
 	Travel_AddWishList_FullMethodName      = "/pb.travel/addWishList"
 	Travel_RemoveWishList_FullMethodName   = "/pb.travel/removeWishList"
+	Travel_AddGuess_FullMethodName         = "/pb.travel/addGuess"
 	Travel_HistoryList_FullMethodName      = "/pb.travel/historyList"
 	Travel_RemoveHistory_FullMethodName    = "/pb.travel/removeHistory"
 	Travel_ClearHistory_FullMethodName     = "/pb.travel/clearHistory"
@@ -39,11 +41,13 @@ type TravelClient interface {
 	// homestayDetail
 	HomestayDetail(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error)
 	AddHomestay(ctx context.Context, in *AddHomestayReq, opts ...grpc.CallOption) (*AddHomestayResp, error)
+	DeleteHomestay(ctx context.Context, in *DeleteHomestayReq, opts ...grpc.CallOption) (*DeleteHomestayResp, error)
 	AddComment(ctx context.Context, in *AddCommentReq, opts ...grpc.CallOption) (*AddCommentResp, error)
 	LikeComment(ctx context.Context, in *LikeCommentReq, opts ...grpc.CallOption) (*LikeCommentResp, error)
 	WishList(ctx context.Context, in *WishListReq, opts ...grpc.CallOption) (*WishListResp, error)
 	AddWishList(ctx context.Context, in *AddWishListReq, opts ...grpc.CallOption) (*AddWishListResp, error)
 	RemoveWishList(ctx context.Context, in *RemoveWishListReq, opts ...grpc.CallOption) (*RemoveWishListResp, error)
+	AddGuess(ctx context.Context, in *AddGuessReq, opts ...grpc.CallOption) (*AddGuessResp, error)
 	HistoryList(ctx context.Context, in *HistoryListReq, opts ...grpc.CallOption) (*HistoryListResp, error)
 	RemoveHistory(ctx context.Context, in *RemoveHistoryReq, opts ...grpc.CallOption) (*RemoveHistoryResp, error)
 	ClearHistory(ctx context.Context, in *ClearHistoryReq, opts ...grpc.CallOption) (*ClearHistoryResp, error)
@@ -70,6 +74,15 @@ func (c *travelClient) HomestayDetail(ctx context.Context, in *HomestayDetailReq
 func (c *travelClient) AddHomestay(ctx context.Context, in *AddHomestayReq, opts ...grpc.CallOption) (*AddHomestayResp, error) {
 	out := new(AddHomestayResp)
 	err := c.cc.Invoke(ctx, Travel_AddHomestay_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *travelClient) DeleteHomestay(ctx context.Context, in *DeleteHomestayReq, opts ...grpc.CallOption) (*DeleteHomestayResp, error) {
+	out := new(DeleteHomestayResp)
+	err := c.cc.Invoke(ctx, Travel_DeleteHomestay_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -121,6 +134,15 @@ func (c *travelClient) RemoveWishList(ctx context.Context, in *RemoveWishListReq
 	return out, nil
 }
 
+func (c *travelClient) AddGuess(ctx context.Context, in *AddGuessReq, opts ...grpc.CallOption) (*AddGuessResp, error) {
+	out := new(AddGuessResp)
+	err := c.cc.Invoke(ctx, Travel_AddGuess_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *travelClient) HistoryList(ctx context.Context, in *HistoryListReq, opts ...grpc.CallOption) (*HistoryListResp, error) {
 	out := new(HistoryListResp)
 	err := c.cc.Invoke(ctx, Travel_HistoryList_FullMethodName, in, out, opts...)
@@ -164,11 +186,13 @@ type TravelServer interface {
 	// homestayDetail
 	HomestayDetail(context.Context, *HomestayDetailReq) (*HomestayDetailResp, error)
 	AddHomestay(context.Context, *AddHomestayReq) (*AddHomestayResp, error)
+	DeleteHomestay(context.Context, *DeleteHomestayReq) (*DeleteHomestayResp, error)
 	AddComment(context.Context, *AddCommentReq) (*AddCommentResp, error)
 	LikeComment(context.Context, *LikeCommentReq) (*LikeCommentResp, error)
 	WishList(context.Context, *WishListReq) (*WishListResp, error)
 	AddWishList(context.Context, *AddWishListReq) (*AddWishListResp, error)
 	RemoveWishList(context.Context, *RemoveWishListReq) (*RemoveWishListResp, error)
+	AddGuess(context.Context, *AddGuessReq) (*AddGuessResp, error)
 	HistoryList(context.Context, *HistoryListReq) (*HistoryListResp, error)
 	RemoveHistory(context.Context, *RemoveHistoryReq) (*RemoveHistoryResp, error)
 	ClearHistory(context.Context, *ClearHistoryReq) (*ClearHistoryResp, error)
@@ -186,6 +210,9 @@ func (UnimplementedTravelServer) HomestayDetail(context.Context, *HomestayDetail
 func (UnimplementedTravelServer) AddHomestay(context.Context, *AddHomestayReq) (*AddHomestayResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddHomestay not implemented")
 }
+func (UnimplementedTravelServer) DeleteHomestay(context.Context, *DeleteHomestayReq) (*DeleteHomestayResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteHomestay not implemented")
+}
 func (UnimplementedTravelServer) AddComment(context.Context, *AddCommentReq) (*AddCommentResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddComment not implemented")
 }
@@ -200,6 +227,9 @@ func (UnimplementedTravelServer) AddWishList(context.Context, *AddWishListReq) (
 }
 func (UnimplementedTravelServer) RemoveWishList(context.Context, *RemoveWishListReq) (*RemoveWishListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveWishList not implemented")
+}
+func (UnimplementedTravelServer) AddGuess(context.Context, *AddGuessReq) (*AddGuessResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddGuess not implemented")
 }
 func (UnimplementedTravelServer) HistoryList(context.Context, *HistoryListReq) (*HistoryListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HistoryList not implemented")
@@ -258,6 +288,24 @@ func _Travel_AddHomestay_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TravelServer).AddHomestay(ctx, req.(*AddHomestayReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Travel_DeleteHomestay_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteHomestayReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).DeleteHomestay(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Travel_DeleteHomestay_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).DeleteHomestay(ctx, req.(*DeleteHomestayReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -352,6 +400,24 @@ func _Travel_RemoveWishList_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Travel_AddGuess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddGuessReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).AddGuess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Travel_AddGuess_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).AddGuess(ctx, req.(*AddGuessReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Travel_HistoryList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HistoryListReq)
 	if err := dec(in); err != nil {
@@ -440,6 +506,10 @@ var Travel_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Travel_AddHomestay_Handler,
 		},
 		{
+			MethodName: "deleteHomestay",
+			Handler:    _Travel_DeleteHomestay_Handler,
+		},
+		{
 			MethodName: "addComment",
 			Handler:    _Travel_AddComment_Handler,
 		},
@@ -458,6 +528,10 @@ var Travel_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "removeWishList",
 			Handler:    _Travel_RemoveWishList_Handler,
+		},
+		{
+			MethodName: "addGuess",
+			Handler:    _Travel_AddGuess_Handler,
 		},
 		{
 			MethodName: "historyList",

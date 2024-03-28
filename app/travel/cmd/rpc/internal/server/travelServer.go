@@ -33,6 +33,11 @@ func (s *TravelServer) AddHomestay(ctx context.Context, in *pb.AddHomestayReq) (
 	return l.AddHomestay(in)
 }
 
+func (s *TravelServer) DeleteHomestay(ctx context.Context, in *pb.DeleteHomestayReq) (*pb.DeleteHomestayResp, error) {
+	l := logic.NewDeleteHomestayLogic(ctx, s.svcCtx)
+	return l.DeleteHomestay(in)
+}
+
 func (s *TravelServer) AddComment(ctx context.Context, in *pb.AddCommentReq) (*pb.AddCommentResp, error) {
 	l := logic.NewAddCommentLogic(ctx, s.svcCtx)
 	return l.AddComment(in)
@@ -56,6 +61,11 @@ func (s *TravelServer) AddWishList(ctx context.Context, in *pb.AddWishListReq) (
 func (s *TravelServer) RemoveWishList(ctx context.Context, in *pb.RemoveWishListReq) (*pb.RemoveWishListResp, error) {
 	l := logic.NewRemoveWishListLogic(ctx, s.svcCtx)
 	return l.RemoveWishList(in)
+}
+
+func (s *TravelServer) AddGuess(ctx context.Context, in *pb.AddGuessReq) (*pb.AddGuessResp, error) {
+	l := logic.NewAddGuessLogic(ctx, s.svcCtx)
+	return l.AddGuess(in)
 }
 
 func (s *TravelServer) HistoryList(ctx context.Context, in *pb.HistoryListReq) (*pb.HistoryListResp, error) {

@@ -12,6 +12,7 @@ type ServiceContext struct {
 
 	HomestayModel         model.HomestayModel
 	HomestayActivityModel model.HomestayActivityModel
+	GuessModel            model.GuessModel
 	UserHomestayModel     model.UserHomestayModel
 	HistoryModel          model.HistoryModel
 	UserHistoryModel      model.UserHistoryModel
@@ -28,6 +29,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		// 我了个骚刚bug: 没有初始化HomestayModel导致，travel模块的RPC调不动model
 		HomestayModel:         model.NewHomestayModel(sqlConn, c.Cache),
 		HomestayActivityModel: model.NewHomestayActivityModel(sqlConn, c.Cache),
+		GuessModel:            model.NewGuessModel(sqlConn, c.Cache),
 		UserHomestayModel:     model.NewUserHomestayModel(sqlConn, c.Cache),
 		HistoryModel:          model.NewHistoryModel(sqlConn, c.Cache),
 		UserHistoryModel:      model.NewUserHistoryModel(sqlConn, c.Cache),

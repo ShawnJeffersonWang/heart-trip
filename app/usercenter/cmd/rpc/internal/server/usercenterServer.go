@@ -56,3 +56,8 @@ func (s *UsercenterServer) UpdateUserInfo(ctx context.Context, in *pb.UpdateUser
 	l := logic.NewUpdateUserInfoLogic(ctx, s.svcCtx)
 	return l.UpdateUserInfo(in)
 }
+
+func (s *UsercenterServer) UserList(ctx context.Context, in *pb.UserListReq) (*pb.UserListResp, error) {
+	l := logic.NewUserListLogic(ctx, s.svcCtx)
+	return l.UserList(in)
+}

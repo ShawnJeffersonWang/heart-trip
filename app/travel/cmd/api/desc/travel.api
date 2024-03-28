@@ -53,6 +53,14 @@ service travel {
 	@doc "add homestay"
 	@handler addHomestay
 	post /homestay/addHomestay (AddHomestayReq) returns (AddHomestayResp)
+
+	@doc "delete homestay"
+	@handler deleteHomestay
+	post /homestay/deleteHomestay (DeleteHomestayReq) returns (DeleteHomestayResp)
+
+	@doc "add guess"
+	@handler addGuess
+	post /homestay/addGuess (AddGuessReq) returns (AddGuessResp)
 }
 
 //====================================> travel-homestayBusiness v1 <====================================

@@ -43,6 +43,10 @@ service usercenter {
 	@handler updateUserInfo
 	post /user/updateUserInfo (UpdateUserInfoReq) returns (UpdateUserInfoResp)
 
+	@doc "show user list"
+	@handler userList
+	post /user/userList (UserListReq) returns (UserListResp)
+
 	@doc "wechat mini auth"
 	@handler wxMiniAuth
 	post /user/wxMiniAuth (WXMiniAuthReq) returns (WXMiniAuthResp)

@@ -101,6 +101,14 @@ type (
 )
 
 type (
+    UserListReq {
+    }
+    UserListResp {
+        List []User `json:"list"`
+    }
+)
+
+type (
     WishListReq {
     }
     WishListResp {

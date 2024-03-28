@@ -20,6 +20,14 @@ type AddCommentResp struct {
 	Success bool `json:"success"`
 }
 
+type AddGuessReq struct {
+	HomestayId int64 `json:"homestayId"`
+}
+
+type AddGuessResp struct {
+	Success bool `json:"success"`
+}
+
 type AddHomestayReq struct {
 	Title       string `json:"title"`
 	Cover       string `json:"cover"`
@@ -52,6 +60,14 @@ type CommentListReq struct {
 
 type CommentListResp struct {
 	List []HomestayComment `json:"list"`
+}
+
+type DeleteHomestayReq struct {
+	HomestayId int64 `json:"homestayId"`
+}
+
+type DeleteHomestayResp struct {
+	Success bool `json:"success"`
 }
 
 type GoodBossReq struct {

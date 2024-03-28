@@ -119,6 +119,13 @@ type UserInfoResp struct {
 	UserInfo User `json:"userInfo"`
 }
 
+type UserListReq struct {
+}
+
+type UserListResp struct {
+	List []User `json:"list"`
+}
+
 type WXMiniAuthReq struct {
 	Code          string `json:"code"`
 	IV            string `json:"iv"`

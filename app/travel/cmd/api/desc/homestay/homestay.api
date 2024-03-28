@@ -52,6 +52,24 @@ type (
 )
 
 type (
+    DeleteHomestayReq {
+        HomestayId int64 `json:"homestayId"`
+    }
+    DeleteHomestayResp {
+        Success bool `json:"success"`
+    }
+)
+
+type (
+    AddGuessReq {
+        HomestayId int64 `json:"homestayId"`
+    }
+    AddGuessResp {
+        Success bool `json:"success"`
+    }
+)
+
+type (
     BusinessListReq {
         LastId int64 `json:"lastId"`
         PageSize int64 `json:"pageSize"`
