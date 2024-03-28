@@ -2,11 +2,9 @@ package homestay
 
 import (
 	"context"
-	"golodge/app/travel/cmd/rpc/pb"
-	"golodge/common/ctxdata"
-
 	"golodge/app/travel/cmd/api/internal/svc"
 	"golodge/app/travel/cmd/api/internal/types"
+	"golodge/app/travel/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -27,9 +25,9 @@ func NewDeleteHomestayLogic(ctx context.Context, svcCtx *svc.ServiceContext) *De
 
 func (l *DeleteHomestayLogic) DeleteHomestay(req *types.DeleteHomestayReq) (*types.DeleteHomestayResp, error) {
 	// todo: add your logic here and delete this line
-	userId := ctxdata.GetUidFromCtx(l.ctx)
+	//userId := ctxdata.GetUidFromCtx(l.ctx)
 	_, err := l.svcCtx.TravelRpc.DeleteHomestay(l.ctx, &pb.DeleteHomestayReq{
-		UserId:     userId,
+		//UserId:     userId,
 		HomestayId: req.HomestayId,
 	})
 	if err != nil {
