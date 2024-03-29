@@ -58,6 +58,10 @@ service travel {
 	@handler deleteHomestay
 	post /homestay/deleteHomestay (DeleteHomestayReq) returns (DeleteHomestayResp)
 
+	@doc "admin delete homestay"
+	@handler adminDeleteHomestay
+	post /homestay/adminDeleteHomestay (AdminDeleteHomestayReq) returns (AdminDeleteHomestayResp)
+
 	@doc "add guess"
 	@handler addGuess
 	post /homestay/addGuess (AddGuessReq) returns (AddGuessResp)

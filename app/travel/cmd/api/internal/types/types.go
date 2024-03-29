@@ -42,6 +42,14 @@ type AddHomestayResp struct {
 	Success bool `json:"success"`
 }
 
+type AdminDeleteHomestayReq struct {
+	HomestayId int64 `json:"homestayId"`
+}
+
+type AdminDeleteHomestayResp struct {
+	Success bool `json:"success"`
+}
+
 type BusinessListReq struct {
 	LastId             int64 `json:"lastId"`
 	PageSize           int64 `json:"pageSize"`

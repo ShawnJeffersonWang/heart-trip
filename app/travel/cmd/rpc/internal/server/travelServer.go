@@ -38,6 +38,11 @@ func (s *TravelServer) DeleteHomestay(ctx context.Context, in *pb.DeleteHomestay
 	return l.DeleteHomestay(in)
 }
 
+func (s *TravelServer) AdminDeleteHomestay(ctx context.Context, in *pb.AdminDeleteHomestayReq) (*pb.AdminDeleteHomestayResp, error) {
+	l := logic.NewAdminDeleteHomestayLogic(ctx, s.svcCtx)
+	return l.AdminDeleteHomestay(in)
+}
+
 func (s *TravelServer) AddComment(ctx context.Context, in *pb.AddCommentReq) (*pb.AddCommentResp, error) {
 	l := logic.NewAddCommentLogic(ctx, s.svcCtx)
 	return l.AddComment(in)

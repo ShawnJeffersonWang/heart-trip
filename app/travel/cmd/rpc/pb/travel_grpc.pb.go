@@ -19,19 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Travel_HomestayDetail_FullMethodName   = "/pb.travel/homestayDetail"
-	Travel_AddHomestay_FullMethodName      = "/pb.travel/addHomestay"
-	Travel_DeleteHomestay_FullMethodName   = "/pb.travel/deleteHomestay"
-	Travel_AddComment_FullMethodName       = "/pb.travel/addComment"
-	Travel_LikeComment_FullMethodName      = "/pb.travel/likeComment"
-	Travel_WishList_FullMethodName         = "/pb.travel/wishList"
-	Travel_AddWishList_FullMethodName      = "/pb.travel/addWishList"
-	Travel_RemoveWishList_FullMethodName   = "/pb.travel/removeWishList"
-	Travel_AddGuess_FullMethodName         = "/pb.travel/addGuess"
-	Travel_HistoryList_FullMethodName      = "/pb.travel/historyList"
-	Travel_RemoveHistory_FullMethodName    = "/pb.travel/removeHistory"
-	Travel_ClearHistory_FullMethodName     = "/pb.travel/clearHistory"
-	Travel_SearchByLocation_FullMethodName = "/pb.travel/searchByLocation"
+	Travel_HomestayDetail_FullMethodName      = "/pb.travel/homestayDetail"
+	Travel_AddHomestay_FullMethodName         = "/pb.travel/addHomestay"
+	Travel_DeleteHomestay_FullMethodName      = "/pb.travel/deleteHomestay"
+	Travel_AdminDeleteHomestay_FullMethodName = "/pb.travel/adminDeleteHomestay"
+	Travel_AddComment_FullMethodName          = "/pb.travel/addComment"
+	Travel_LikeComment_FullMethodName         = "/pb.travel/likeComment"
+	Travel_WishList_FullMethodName            = "/pb.travel/wishList"
+	Travel_AddWishList_FullMethodName         = "/pb.travel/addWishList"
+	Travel_RemoveWishList_FullMethodName      = "/pb.travel/removeWishList"
+	Travel_AddGuess_FullMethodName            = "/pb.travel/addGuess"
+	Travel_HistoryList_FullMethodName         = "/pb.travel/historyList"
+	Travel_RemoveHistory_FullMethodName       = "/pb.travel/removeHistory"
+	Travel_ClearHistory_FullMethodName        = "/pb.travel/clearHistory"
+	Travel_SearchByLocation_FullMethodName    = "/pb.travel/searchByLocation"
 )
 
 // TravelClient is the client API for Travel service.
@@ -42,6 +43,7 @@ type TravelClient interface {
 	HomestayDetail(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error)
 	AddHomestay(ctx context.Context, in *AddHomestayReq, opts ...grpc.CallOption) (*AddHomestayResp, error)
 	DeleteHomestay(ctx context.Context, in *DeleteHomestayReq, opts ...grpc.CallOption) (*DeleteHomestayResp, error)
+	AdminDeleteHomestay(ctx context.Context, in *AdminDeleteHomestayReq, opts ...grpc.CallOption) (*AdminDeleteHomestayResp, error)
 	AddComment(ctx context.Context, in *AddCommentReq, opts ...grpc.CallOption) (*AddCommentResp, error)
 	LikeComment(ctx context.Context, in *LikeCommentReq, opts ...grpc.CallOption) (*LikeCommentResp, error)
 	WishList(ctx context.Context, in *WishListReq, opts ...grpc.CallOption) (*WishListResp, error)
@@ -83,6 +85,15 @@ func (c *travelClient) AddHomestay(ctx context.Context, in *AddHomestayReq, opts
 func (c *travelClient) DeleteHomestay(ctx context.Context, in *DeleteHomestayReq, opts ...grpc.CallOption) (*DeleteHomestayResp, error) {
 	out := new(DeleteHomestayResp)
 	err := c.cc.Invoke(ctx, Travel_DeleteHomestay_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *travelClient) AdminDeleteHomestay(ctx context.Context, in *AdminDeleteHomestayReq, opts ...grpc.CallOption) (*AdminDeleteHomestayResp, error) {
+	out := new(AdminDeleteHomestayResp)
+	err := c.cc.Invoke(ctx, Travel_AdminDeleteHomestay_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -187,6 +198,7 @@ type TravelServer interface {
 	HomestayDetail(context.Context, *HomestayDetailReq) (*HomestayDetailResp, error)
 	AddHomestay(context.Context, *AddHomestayReq) (*AddHomestayResp, error)
 	DeleteHomestay(context.Context, *DeleteHomestayReq) (*DeleteHomestayResp, error)
+	AdminDeleteHomestay(context.Context, *AdminDeleteHomestayReq) (*AdminDeleteHomestayResp, error)
 	AddComment(context.Context, *AddCommentReq) (*AddCommentResp, error)
 	LikeComment(context.Context, *LikeCommentReq) (*LikeCommentResp, error)
 	WishList(context.Context, *WishListReq) (*WishListResp, error)
@@ -212,6 +224,9 @@ func (UnimplementedTravelServer) AddHomestay(context.Context, *AddHomestayReq) (
 }
 func (UnimplementedTravelServer) DeleteHomestay(context.Context, *DeleteHomestayReq) (*DeleteHomestayResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteHomestay not implemented")
+}
+func (UnimplementedTravelServer) AdminDeleteHomestay(context.Context, *AdminDeleteHomestayReq) (*AdminDeleteHomestayResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AdminDeleteHomestay not implemented")
 }
 func (UnimplementedTravelServer) AddComment(context.Context, *AddCommentReq) (*AddCommentResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddComment not implemented")
@@ -306,6 +321,24 @@ func _Travel_DeleteHomestay_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TravelServer).DeleteHomestay(ctx, req.(*DeleteHomestayReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Travel_AdminDeleteHomestay_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminDeleteHomestayReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).AdminDeleteHomestay(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Travel_AdminDeleteHomestay_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).AdminDeleteHomestay(ctx, req.(*AdminDeleteHomestayReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -508,6 +541,10 @@ var Travel_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "deleteHomestay",
 			Handler:    _Travel_DeleteHomestay_Handler,
+		},
+		{
+			MethodName: "adminDeleteHomestay",
+			Handler:    _Travel_AdminDeleteHomestay_Handler,
 		},
 		{
 			MethodName: "addComment",

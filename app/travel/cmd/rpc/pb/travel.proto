@@ -63,6 +63,13 @@ message DeleteHomestayResp {
   bool success = 1;
 }
 
+message AdminDeleteHomestayReq {
+  int64 homestayId = 1;
+}
+message AdminDeleteHomestayResp {
+  bool success = 1;
+}
+
 message WishListReq {
   int64 id = 1;
 }
@@ -157,6 +164,7 @@ service travel {
   rpc homestayDetail(HomestayDetailReq) returns(HomestayDetailResp);
   rpc addHomestay(AddHomestayReq) returns (AddHomestayResp);
   rpc deleteHomestay(DeleteHomestayReq) returns (DeleteHomestayResp);
+  rpc adminDeleteHomestay(AdminDeleteHomestayReq) returns (AdminDeleteHomestayResp);
   rpc addComment(AddCommentReq) returns (AddCommentResp);
   rpc likeComment(LikeCommentReq) returns (LikeCommentResp);
   rpc wishList(WishListReq) returns (WishListResp);

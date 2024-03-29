@@ -13,41 +13,44 @@ import (
 )
 
 type (
-	AddCommentReq        = pb.AddCommentReq
-	AddCommentResp       = pb.AddCommentResp
-	AddGuessReq          = pb.AddGuessReq
-	AddGuessResp         = pb.AddGuessResp
-	AddHomestayReq       = pb.AddHomestayReq
-	AddHomestayResp      = pb.AddHomestayResp
-	AddWishListReq       = pb.AddWishListReq
-	AddWishListResp      = pb.AddWishListResp
-	ClearHistoryReq      = pb.ClearHistoryReq
-	ClearHistoryResp     = pb.ClearHistoryResp
-	DeleteHomestayReq    = pb.DeleteHomestayReq
-	DeleteHomestayResp   = pb.DeleteHomestayResp
-	History              = pb.History
-	HistoryListReq       = pb.HistoryListReq
-	HistoryListResp      = pb.HistoryListResp
-	Homestay             = pb.Homestay
-	HomestayComment      = pb.HomestayComment
-	HomestayDetailReq    = pb.HomestayDetailReq
-	HomestayDetailResp   = pb.HomestayDetailResp
-	LikeCommentReq       = pb.LikeCommentReq
-	LikeCommentResp      = pb.LikeCommentResp
-	RemoveHistoryReq     = pb.RemoveHistoryReq
-	RemoveHistoryResp    = pb.RemoveHistoryResp
-	RemoveWishListReq    = pb.RemoveWishListReq
-	RemoveWishListResp   = pb.RemoveWishListResp
-	SearchByLocationReq  = pb.SearchByLocationReq
-	SearchByLocationResp = pb.SearchByLocationResp
-	WishListReq          = pb.WishListReq
-	WishListResp         = pb.WishListResp
+	AddCommentReq           = pb.AddCommentReq
+	AddCommentResp          = pb.AddCommentResp
+	AddGuessReq             = pb.AddGuessReq
+	AddGuessResp            = pb.AddGuessResp
+	AddHomestayReq          = pb.AddHomestayReq
+	AddHomestayResp         = pb.AddHomestayResp
+	AddWishListReq          = pb.AddWishListReq
+	AddWishListResp         = pb.AddWishListResp
+	AdminDeleteHomestayReq  = pb.AdminDeleteHomestayReq
+	AdminDeleteHomestayResp = pb.AdminDeleteHomestayResp
+	ClearHistoryReq         = pb.ClearHistoryReq
+	ClearHistoryResp        = pb.ClearHistoryResp
+	DeleteHomestayReq       = pb.DeleteHomestayReq
+	DeleteHomestayResp      = pb.DeleteHomestayResp
+	History                 = pb.History
+	HistoryListReq          = pb.HistoryListReq
+	HistoryListResp         = pb.HistoryListResp
+	Homestay                = pb.Homestay
+	HomestayComment         = pb.HomestayComment
+	HomestayDetailReq       = pb.HomestayDetailReq
+	HomestayDetailResp      = pb.HomestayDetailResp
+	LikeCommentReq          = pb.LikeCommentReq
+	LikeCommentResp         = pb.LikeCommentResp
+	RemoveHistoryReq        = pb.RemoveHistoryReq
+	RemoveHistoryResp       = pb.RemoveHistoryResp
+	RemoveWishListReq       = pb.RemoveWishListReq
+	RemoveWishListResp      = pb.RemoveWishListResp
+	SearchByLocationReq     = pb.SearchByLocationReq
+	SearchByLocationResp    = pb.SearchByLocationResp
+	WishListReq             = pb.WishListReq
+	WishListResp            = pb.WishListResp
 
 	Travel interface {
 		// homestayDetail
 		HomestayDetail(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error)
 		AddHomestay(ctx context.Context, in *AddHomestayReq, opts ...grpc.CallOption) (*AddHomestayResp, error)
 		DeleteHomestay(ctx context.Context, in *DeleteHomestayReq, opts ...grpc.CallOption) (*DeleteHomestayResp, error)
+		AdminDeleteHomestay(ctx context.Context, in *AdminDeleteHomestayReq, opts ...grpc.CallOption) (*AdminDeleteHomestayResp, error)
 		AddComment(ctx context.Context, in *AddCommentReq, opts ...grpc.CallOption) (*AddCommentResp, error)
 		LikeComment(ctx context.Context, in *LikeCommentReq, opts ...grpc.CallOption) (*LikeCommentResp, error)
 		WishList(ctx context.Context, in *WishListReq, opts ...grpc.CallOption) (*WishListResp, error)
@@ -85,6 +88,11 @@ func (m *defaultTravel) AddHomestay(ctx context.Context, in *AddHomestayReq, opt
 func (m *defaultTravel) DeleteHomestay(ctx context.Context, in *DeleteHomestayReq, opts ...grpc.CallOption) (*DeleteHomestayResp, error) {
 	client := pb.NewTravelClient(m.cli.Conn())
 	return client.DeleteHomestay(ctx, in, opts...)
+}
+
+func (m *defaultTravel) AdminDeleteHomestay(ctx context.Context, in *AdminDeleteHomestayReq, opts ...grpc.CallOption) (*AdminDeleteHomestayResp, error) {
+	client := pb.NewTravelClient(m.cli.Conn())
+	return client.AdminDeleteHomestay(ctx, in, opts...)
 }
 
 func (m *defaultTravel) AddComment(ctx context.Context, in *AddCommentReq, opts ...grpc.CallOption) (*AddCommentResp, error) {

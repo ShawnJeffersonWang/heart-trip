@@ -34,7 +34,6 @@ type (
 	homestayModel interface {
 		Insert(ctx context.Context, session sqlx.Session, data *Homestay) (sql.Result, error)
 		FindOne(ctx context.Context, id int64) (*Homestay, error)
-		FindOneByUserId(ctx context.Context, userId int64) (*Homestay, error)
 		Update(ctx context.Context, session sqlx.Session, data *Homestay) (sql.Result, error)
 		UpdateWithVersion(ctx context.Context, session sqlx.Session, data *Homestay) error
 		Trans(ctx context.Context, fn func(context context.Context, session sqlx.Session) error) error
@@ -135,23 +134,6 @@ func (m *defaultHomestayModel) FindOne(ctx context.Context, id int64) (*Homestay
 	}
 }
 
-func (m *defaultHomestayModel) FindOneByUserId(ctx context.Context, userId int64) (*Homestay, error) {
-	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayIdPrefix, userId)
-	var resp Homestay
-	err := m.QueryRowCtx(ctx, &resp, looklookTravelHomestayIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
-		query := fmt.Sprintf("select %s from %s where `user_id` = ? and del_state = ? limit 1", homestayRows, m.table)
-		return conn.QueryRowCtx(ctx, v, query, userId, globalkey.DelStateNo)
-	})
-	switch err {
-	case nil:
-		return &resp, nil
-	case sqlc.ErrNotFound:
-		return nil, genModel.ErrNotFound
-	default:
-		return nil, err
-	}
-}
-
 func (m *defaultHomestayModel) Update(ctx context.Context, session sqlx.Session, data *Homestay) (sql.Result, error) {
 	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayIdPrefix, data.Id)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
@@ -165,7 +147,8 @@ func (m *defaultHomestayModel) Update(ctx context.Context, session sqlx.Session,
 
 func (m *defaultHomestayModel) UpdateWithVersion(ctx context.Context, session sqlx.Session, data *Homestay) error {
 
-	//oldVersion := data.Version
+	// bug 这里误注释了
+	oldVersion := data.Version
 	data.Version += 1
 
 	var sqlResult sql.Result
@@ -175,9 +158,11 @@ func (m *defaultHomestayModel) UpdateWithVersion(ctx context.Context, session sq
 	sqlResult, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, homestayRowsWithPlaceHolder)
 		if session != nil {
-			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.Cover, data.CleanVideo, data.ImageUrls, data.Intro, data.Location, data.HomestayBusinessId, data.UserId, data.RowState, data.RatingStars, data.PriceBefore, data.PriceAfter)
+			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.Cover, data.CleanVideo, data.ImageUrls, data.Intro, data.Location, data.HomestayBusinessId, data.UserId, data.RowState, data.RatingStars, data.PriceBefore, data.PriceAfter, data.Id, oldVersion)
 		}
-		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.Cover, data.CleanVideo, data.ImageUrls, data.Intro, data.Location, data.HomestayBusinessId, data.UserId, data.RowState, data.RatingStars, data.PriceBefore, data.PriceAfter)
+		// bug最后得带data.id和oldVersion，不然会报参数无法满足
+		// ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.SubTitle, data.Banner, data.Info, data.PeopleNum, data.HomestayBusinessId, data.UserId, data.RowState, data.RowType, data.FoodInfo, data.FoodPrice, data.HomestayPrice, data.MarketHomestayPrice, data.Id, oldVersion
+		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.Cover, data.CleanVideo, data.ImageUrls, data.Intro, data.Location, data.HomestayBusinessId, data.UserId, data.RowState, data.RatingStars, data.PriceBefore, data.PriceAfter, data.Id, oldVersion)
 	}, looklookTravelHomestayIdKey)
 	if err != nil {
 		return err

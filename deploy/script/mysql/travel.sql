@@ -4,7 +4,7 @@ create table guess
         primary key,
     homestay_id  bigint                                  not null,
     price_after  bigint                                  not null,
-    price_before bigint                                  null,
+    price_before bigint                                  not null,
     cover        varchar(4096) default ''                not null,
     location     varchar(4096) default ''                not null,
     title        varchar(4096) default ''                null,

@@ -34,6 +34,7 @@ type (
 	homestayActivityModel interface {
 		Insert(ctx context.Context, session sqlx.Session, data *HomestayActivity) (sql.Result, error)
 		FindOne(ctx context.Context, id int64) (*HomestayActivity, error)
+		FindOneByDataId(ctx context.Context, dataId int64) (*HomestayActivity, error)
 		Update(ctx context.Context, session sqlx.Session, data *HomestayActivity) (sql.Result, error)
 		UpdateWithVersion(ctx context.Context, session sqlx.Session, data *HomestayActivity) error
 		Trans(ctx context.Context, fn func(context context.Context, session sqlx.Session) error) error
@@ -93,6 +94,23 @@ func (m *defaultHomestayActivityModel) FindOne(ctx context.Context, id int64) (*
 	err := m.QueryRowCtx(ctx, &resp, looklookTravelHomestayActivityIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
 		query := fmt.Sprintf("select %s from %s where `id` = ? and del_state = ? limit 1", homestayActivityRows, m.table)
 		return conn.QueryRowCtx(ctx, v, query, id, globalkey.DelStateNo)
+	})
+	switch err {
+	case nil:
+		return &resp, nil
+	case sqlc.ErrNotFound:
+		return nil, genModel.ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
+func (m *defaultHomestayActivityModel) FindOneByDataId(ctx context.Context, dataId int64) (*HomestayActivity, error) {
+	looklookTravelHomestayActivityIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayActivityIdPrefix, dataId)
+	var resp HomestayActivity
+	err := m.QueryRowCtx(ctx, &resp, looklookTravelHomestayActivityIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
+		query := fmt.Sprintf("select %s from %s where `data_id` = ? and del_state = ? limit 1", homestayActivityRows, m.table)
+		return conn.QueryRowCtx(ctx, v, query, dataId, globalkey.DelStateNo)
 	})
 	switch err {
 	case nil:

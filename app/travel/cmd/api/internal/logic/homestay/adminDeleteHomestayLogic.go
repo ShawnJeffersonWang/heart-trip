@@ -5,37 +5,34 @@ import (
 	"golodge/app/travel/cmd/api/internal/svc"
 	"golodge/app/travel/cmd/api/internal/types"
 	"golodge/app/travel/cmd/rpc/pb"
-	"golodge/common/ctxdata"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type DeleteHomestayLogic struct {
+type AdminDeleteHomestayLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewDeleteHomestayLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DeleteHomestayLogic {
-	return &DeleteHomestayLogic{
+func NewAdminDeleteHomestayLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AdminDeleteHomestayLogic {
+	return &AdminDeleteHomestayLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *DeleteHomestayLogic) DeleteHomestay(req *types.DeleteHomestayReq) (*types.DeleteHomestayResp, error) {
+func (l *AdminDeleteHomestayLogic) AdminDeleteHomestay(req *types.AdminDeleteHomestayReq) (*types.AdminDeleteHomestayResp, error) {
 	// todo: add your logic here and delete this line
-	userId := ctxdata.GetUidFromCtx(l.ctx)
-	_, err := l.svcCtx.TravelRpc.DeleteHomestay(l.ctx, &pb.DeleteHomestayReq{
-		UserId:     userId,
+	_, err := l.svcCtx.TravelRpc.AdminDeleteHomestay(l.ctx, &pb.AdminDeleteHomestayReq{
 		HomestayId: req.HomestayId,
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	return &types.DeleteHomestayResp{
+	return &types.AdminDeleteHomestayResp{
 		Success: true,
 	}, nil
 }

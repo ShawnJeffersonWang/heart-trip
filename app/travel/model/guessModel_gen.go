@@ -45,6 +45,7 @@ type (
 		Id          int64     `db:"id"`
 		HomestayId  int64     `db:"homestay_id"`
 		PriceAfter  int64     `db:"price_after"`
+		// bug: 这里一定要加非空约束, 不然会出现sql.NullInt32, 非空约束也是最佳实践，可以优化性能
 		PriceBefore int64     `db:"price_before"`
 		Cover       string    `db:"cover"`
 		Location    string    `db:"location"`

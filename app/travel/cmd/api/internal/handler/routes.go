@@ -53,6 +53,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
+				Path:    "/homestay/adminDeleteHomestay",
+				Handler: homestay.AdminDeleteHomestayHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/homestay/deleteHomestay",
 				Handler: homestay.DeleteHomestayHandler(serverCtx),
 			},
