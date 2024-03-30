@@ -29,7 +29,10 @@ create table history
     homestay_business_id bigint                                  not null,
     rating_stars         float                                   not null,
     user_id              bigint                                  not null,
-    homestay_id          bigint                                  not null
+    homestay_id          bigint                                  not null,
+    del_state            tinyint       default 0                 not null,
+    version              bigint        default 0                 not null,
+    delete_time          datetime      default CURRENT_TIMESTAMP not null
 );
 
 create table homestay
@@ -127,17 +130,23 @@ create table homestay_comment
 
 create table user_history
 (
-    id         bigint auto_increment
+    id          bigint auto_increment
         primary key,
-    history_id bigint not null,
-    user_id    bigint not null
+    history_id  bigint                             not null,
+    user_id     bigint                             not null,
+    del_state   tinyint  default 0                 not null,
+    version     bigint   default 0                 not null,
+    delete_time datetime default CURRENT_TIMESTAMP not null
 );
 
 create table user_homestay
 (
     id          bigint auto_increment
         primary key,
-    user_id     bigint not null,
-    homestay_id bigint not null
+    user_id     bigint                             not null,
+    homestay_id bigint                             not null,
+    del_state   tinyint  default 0                 not null,
+    version     bigint   default 0                 not null,
+    delete_time datetime default CURRENT_TIMESTAMP not null
 );
 
