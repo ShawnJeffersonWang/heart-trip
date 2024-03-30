@@ -38,14 +38,11 @@ func (l *BusinessListLogic) BusinessList(req types.BusinessListReq) (*types.Busi
 	var resp []types.Homestay
 	if len(list) > 0 {
 		for _, homestay := range list {
-
 			var typeHomestay types.Homestay
 			_ = copier.Copy(&typeHomestay, homestay)
-
 			resp = append(resp, typeHomestay)
 		}
 	}
-
 	return &types.BusinessListResp{
 		List: resp,
 	}, nil

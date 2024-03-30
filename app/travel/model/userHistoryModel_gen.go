@@ -7,7 +7,11 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/Masterminds/squirrel"
+	"github.com/pkg/errors"
+	"golodge/common/globalkey"
+	"golodge/deploy/script/mysql/genModel"
 	"strings"
+	"time"
 
 	"github.com/zeromicro/go-zero/core/stores/builder"
 	"github.com/zeromicro/go-zero/core/stores/cache"
@@ -28,12 +32,16 @@ var (
 type (
 	userHistoryModel interface {
 		Insert(ctx context.Context, data *UserHistory) (sql.Result, error)
+		Trans(ctx context.Context, fn func(context context.Context, session sqlx.Session) error) error
 		FindOne(ctx context.Context, user_id, history_id int64) (*UserHistory, error)
+		//FindOneByUserIdAndHistoryId(ctx context.Context, user_id, history_id int64) (*UserHistory, error)
 		SelectBuilder() squirrel.SelectBuilder
 		FindAll(ctx context.Context, builder squirrel.SelectBuilder, orderBy string) ([]*UserHistory, error)
 		Update(ctx context.Context, data *UserHistory) error
 		Delete(ctx context.Context, user_id, history_id int64) error
 		DeleteAll(ctx context.Context, user_id int64) error
+		DeleteSoft(ctx context.Context, session sqlx.Session, data *UserHistory) error
+		UpdateWithVersion(ctx context.Context, session sqlx.Session, data *UserHistory) error
 	}
 
 	defaultUserHistoryModel struct {
@@ -42,9 +50,12 @@ type (
 	}
 
 	UserHistory struct {
-		Id        int64 `db:"id"`
-		HistoryId int64 `db:"history_id"`
-		UserId    int64 `db:"user_id"`
+		Id         int64     `db:"id"`
+		HistoryId  int64     `db:"history_id"`
+		UserId     int64     `db:"user_id"`
+		DelState   int64     `db:"del_state"`
+		Version    int64     `db:"version"`
+		DeleteTime time.Time `db:"delete_time"`
 	}
 )
 
@@ -62,6 +73,44 @@ func (m *defaultUserHistoryModel) Delete(ctx context.Context, user_id, history_i
 		return conn.ExecCtx(ctx, query, user_id, history_id)
 	}, looklookTravelUserHistoryIdKey)
 	return err
+}
+
+func (m *defaultUserHistoryModel) DeleteSoft(ctx context.Context, session sqlx.Session, data *UserHistory) error {
+	data.DelState = globalkey.DelStateYes
+	data.DeleteTime = time.Now()
+	if err := m.UpdateWithVersion(ctx, session, data); err != nil {
+		return errors.Wrapf(errors.New("delete soft failed "), " delete err : %+v", err)
+	}
+	return nil
+}
+
+func (m *defaultUserHistoryModel) UpdateWithVersion(ctx context.Context, session sqlx.Session, data *UserHistory) error {
+
+	oldVersion := data.Version
+	data.Version += 1
+
+	var sqlResult sql.Result
+	var err error
+
+	looklookTravelUserHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHistoryIdPrefix, data.Id)
+	sqlResult, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, userHistoryRowsWithPlaceHolder)
+		if session != nil {
+			return session.ExecCtx(ctx, query, data.UserId, data.HistoryId, data.DelState, data.Version, data.DeleteTime, data.Id, oldVersion)
+		}
+		return conn.ExecCtx(ctx, query, data.UserId, data.HistoryId, data.DelState, data.Version, data.DeleteTime, data.Id, oldVersion)
+	}, looklookTravelUserHistoryIdKey)
+	if err != nil {
+		return err
+	}
+	updateCount, err := sqlResult.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if updateCount == 0 {
+		return genModel.ErrNoRowsUpdate
+	}
+	return nil
 }
 
 func (m *defaultUserHistoryModel) DeleteAll(ctx context.Context, user_id int64) error {
@@ -138,19 +187,27 @@ func (m *defaultUserHistoryModel) FindAll(ctx context.Context, builder squirrel.
 }
 
 func (m *defaultUserHistoryModel) Insert(ctx context.Context, data *UserHistory) (sql.Result, error) {
+	data.DelState = globalkey.DelStateNo
+	data.DeleteTime = time.Unix(0, 0)
 	looklookTravelUserHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHistoryIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?)", m.table, userHistoryRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.HistoryId, data.UserId)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?)", m.table, userHistoryRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.HistoryId, data.UserId, data.DelState, data.Version, data.DeleteTime)
 	}, looklookTravelUserHistoryIdKey)
 	return ret, err
+}
+
+func (m *defaultUserHistoryModel) Trans(ctx context.Context, fn func(ctx context.Context, session sqlx.Session) error) error {
+	return m.TransactCtx(ctx, func(ctx context.Context, session sqlx.Session) error {
+		return fn(ctx, session)
+	})
 }
 
 func (m *defaultUserHistoryModel) Update(ctx context.Context, data *UserHistory) error {
 	looklookTravelUserHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHistoryIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, userHistoryRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.HistoryId, data.UserId, data.Id)
+		return conn.ExecCtx(ctx, query, data.HistoryId, data.UserId, data.DelState, data.Version, data.DeleteTime, data.Id)
 	}, looklookTravelUserHistoryIdKey)
 	return err
 }

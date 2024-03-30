@@ -67,7 +67,15 @@ type CommentListReq struct {
 }
 
 type CommentListResp struct {
-	List []HomestayComment `json:"list"`
+	HomestayId     int64             `json:"homestayId"`
+	Star           string            `json:"star"`
+	TidyRating     string            `json:"tidyRating"`
+	TrafficRating  string            `json:"trafficRating"`
+	SecurityRating string            `json:"securityRating"`
+	FoodRating     string            `json:"foodRating"`
+	CostRating     string            `json:"costRating"`
+	CommentCount   int64             `json:"commentCount"`
+	List           []HomestayComment `json:"list"`
 }
 
 type DeleteHomestayReq struct {

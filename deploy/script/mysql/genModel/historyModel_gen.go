@@ -41,7 +41,7 @@ type (
 	History struct {
 		Id                 int64     `db:"id"`
 		CreateTime         time.Time `db:"create_time"`
-		UpdateTime         time.Time `db:"update_time"`
+		LastBrowsingTime   time.Time `db:"last_browsing_time"`
 		Title              string    `db:"title"`
 		Cover              string    `db:"cover"`
 		Intro              string    `db:"intro"`
@@ -52,6 +52,10 @@ type (
 		HomestayBusinessId int64     `db:"homestay_business_id"`
 		RatingStars        float64   `db:"rating_stars"`
 		UserId             int64     `db:"user_id"`
+		HomestayId         int64     `db:"homestay_id"`
+		DelState           int64     `db:"del_state"`
+		Version            int64     `db:"version"`
+		DeleteTime         time.Time `db:"delete_time"`
 	}
 )
 
@@ -91,8 +95,8 @@ func (m *defaultHistoryModel) FindOne(ctx context.Context, id int64) (*History, 
 func (m *defaultHistoryModel) Insert(ctx context.Context, data *History) (sql.Result, error) {
 	looklookTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHistoryIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, historyRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.Title, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, historyRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.LastBrowsingTime, data.Title, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId, data.HomestayId, data.DelState, data.Version, data.DeleteTime)
 	}, looklookTravelHistoryIdKey)
 	return ret, err
 }
@@ -101,7 +105,7 @@ func (m *defaultHistoryModel) Update(ctx context.Context, data *History) error {
 	looklookTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHistoryIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, historyRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.Title, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId, data.Id)
+		return conn.ExecCtx(ctx, query, data.LastBrowsingTime, data.Title, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId, data.HomestayId, data.DelState, data.Version, data.DeleteTime, data.Id)
 	}, looklookTravelHistoryIdKey)
 	return err
 }

@@ -8,6 +8,7 @@ import (
 	"github.com/zeromicro/go-zero/core/mr"
 	"golodge/app/travel/model"
 	"golodge/common/xerr"
+	"strconv"
 
 	"golodge/app/travel/cmd/api/internal/svc"
 	"golodge/app/travel/cmd/api/internal/types"
@@ -41,6 +42,13 @@ func (l *CommentListLogic) CommentList(req types.CommentListReq) (*types.Comment
 	}
 
 	var resp []types.HomestayComment
+	var starSum float64 = 0
+	var TidyRatingSum float64 = 0
+	var TrafficRatingSum float64 = 0
+	var SecurityRatingSum float64 = 0
+	var FoodRatingSum float64 = 0
+	var CostRatingSum float64 = 0
+
 	if len(homestayCommentList) > 0 { // mapreduce example
 		mr.MapReduceVoid(func(source chan<- interface{}) {
 			for _, homestayComment := range homestayCommentList {
@@ -57,16 +65,36 @@ func (l *CommentListLogic) CommentList(req types.CommentListReq) (*types.Comment
 			writer.Write(homestayComment)
 		}, func(pipe <-chan *model.HomestayComment, cancel func(error)) {
 
-			for homestay := range pipe {
-				var tyHomestay types.HomestayComment
-				_ = copier.Copy(&tyHomestay, homestay)
-
-				resp = append(resp, tyHomestay)
+			for homestayComment := range pipe {
+				var comment types.HomestayComment
+				_ = copier.Copy(&comment, homestayComment)
+				star, _ := strconv.ParseFloat(comment.Star, 64)
+				tidyRating, _ := strconv.ParseFloat(comment.TidyRating, 64)
+				trafficRating, _ := strconv.ParseFloat(comment.TrafficRating, 64)
+				securityRating, _ := strconv.ParseFloat(comment.SecurityRating, 64)
+				foodRating, _ := strconv.ParseFloat(comment.FoodRating, 64)
+				costRating, _ := strconv.ParseFloat(comment.CostRating, 64)
+				starSum += star
+				TidyRatingSum += tidyRating
+				TrafficRatingSum += trafficRating
+				SecurityRatingSum += securityRating
+				FoodRatingSum += foodRating
+				CostRatingSum += costRating
+				resp = append(resp, comment)
 			}
 		})
 	}
-
+	count := len(homestayCommentList)
+	cnt := float64(count)
 	return &types.CommentListResp{
-		List: resp,
+		HomestayId:     req.HomestayId,
+		Star:           strconv.FormatFloat(starSum/cnt, 'f', 2, 64),
+		TidyRating:     strconv.FormatFloat(TidyRatingSum/cnt, 'f', 2, 64),
+		TrafficRating:  strconv.FormatFloat(TrafficRatingSum/cnt, 'f', 2, 64),
+		SecurityRating: strconv.FormatFloat(SecurityRatingSum/cnt, 'f', 2, 64),
+		FoodRating:     strconv.FormatFloat(FoodRatingSum/cnt, 'f', 2, 64),
+		CostRating:     strconv.FormatFloat(CostRatingSum/cnt, 'f', 2, 64),
+		CommentCount:   int64(count),
+		List:           resp,
 	}, nil
 }

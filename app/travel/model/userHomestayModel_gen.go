@@ -7,7 +7,11 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/Masterminds/squirrel"
+	"github.com/pkg/errors"
+	"golodge/common/globalkey"
+	"golodge/deploy/script/mysql/genModel"
 	"strings"
+	"time"
 
 	"github.com/zeromicro/go-zero/core/stores/builder"
 	"github.com/zeromicro/go-zero/core/stores/cache"
@@ -28,11 +32,14 @@ var (
 type (
 	userHomestayModel interface {
 		Insert(ctx context.Context, data *UserHomestay) (sql.Result, error)
+		Trans(ctx context.Context, fn func(context context.Context, session sqlx.Session) error) error
 		SelectBuilder() squirrel.SelectBuilder
-		FindOne(ctx context.Context, user_id, homestay_id int64) (*UserHomestay, error)
+		FindOneByUserIdAndHomestayId(ctx context.Context, user_id, homestay_id int64) (*UserHomestay, error)
 		FindAll(ctx context.Context, builder squirrel.SelectBuilder, orderBy string) ([]*UserHomestay, error)
 		Update(ctx context.Context, data *UserHomestay) error
 		Delete(ctx context.Context, user_id, homestay_id int64) error
+		DeleteSoft(ctx context.Context, session sqlx.Session, data *UserHomestay) error
+		UpdateWithVersion(ctx context.Context, session sqlx.Session, data *UserHomestay) error
 	}
 
 	defaultUserHomestayModel struct {
@@ -41,9 +48,12 @@ type (
 	}
 
 	UserHomestay struct {
-		Id         int64 `db:"id"`
-		UserId     int64 `db:"user_id"`
-		HomestayId int64 `db:"homestay_id"`
+		Id         int64     `db:"id"`
+		UserId     int64     `db:"user_id"`
+		HomestayId int64     `db:"homestay_id"`
+		DelState   int64     `db:"del_state"`
+		Version    int64     `db:"version"`
+		DeleteTime time.Time `db:"delete_time"`
 	}
 )
 
@@ -63,16 +73,56 @@ func (m *defaultUserHomestayModel) Delete(ctx context.Context, user_id, homestay
 	return err
 }
 
+func (m *defaultUserHomestayModel) DeleteSoft(ctx context.Context, session sqlx.Session, data *UserHomestay) error {
+	data.DelState = globalkey.DelStateYes
+	data.DeleteTime = time.Now()
+	if err := m.UpdateWithVersion(ctx, session, data); err != nil {
+		return errors.Wrapf(errors.New("delete soft failed "), " delete err : %+v", err)
+	}
+	return nil
+}
+
+func (m *defaultUserHomestayModel) UpdateWithVersion(ctx context.Context, session sqlx.Session, data *UserHomestay) error {
+
+	oldVersion := data.Version
+	data.Version += 1
+
+	var sqlResult sql.Result
+	var err error
+
+	looklookTravelUserHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHomestayIdPrefix, data.Id)
+	sqlResult, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, userHomestayRowsWithPlaceHolder)
+		if session != nil {
+			// bug: update语句的每个字段都要有，之前是没有data.Version
+			return session.ExecCtx(ctx, query, data.UserId, data.HomestayId, data.DelState, data.Version, data.DeleteTime, data.Id, oldVersion)
+		}
+		return conn.ExecCtx(ctx, query, data.UserId, data.HomestayId, data.DelState, data.Version, data.DeleteTime, data.Id, oldVersion)
+	}, looklookTravelUserHomestayIdKey)
+	if err != nil {
+		return err
+	}
+	updateCount, err := sqlResult.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if updateCount == 0 {
+		return genModel.ErrNoRowsUpdate
+	}
+
+	return nil
+}
+
 func (m *defaultUserHomestayModel) SelectBuilder() squirrel.SelectBuilder {
 	return squirrel.Select().From(m.table)
 }
 
-func (m *defaultUserHomestayModel) FindOne(ctx context.Context, user_id, homestay_id int64) (*UserHomestay, error) {
-	//looklookTravelUserHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHomestayIdPrefix, homestay_id)
+func (m *defaultUserHomestayModel) FindOneByUserIdAndHomestayId(ctx context.Context, user_id, homestay_id int64) (*UserHomestay, error) {
+	//looklookTravelUserHomestayIdKey := fmt.Sprintf("%s%v%v", cacheLooklookTravelUserHomestayIdPrefix, user_id, homestay_id)
 	var resp UserHomestay
 	//err := m.QueryRowCtx(ctx, &resp, looklookTravelUserHomestayIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
-	//	query := fmt.Sprintf("select %s from %s where `homestay_id` = ? limit 1", userHomestayRows, m.table)
-	//	return conn.QueryRowCtx(ctx, v, query, homestay_id)
+	//	query := fmt.Sprintf("select %s from %s where `user_id` = ? and `homestay_id` = ? limit 1", userHomestayRows, m.table)
+	//	return conn.QueryRowCtx(ctx, v, query, user_id, homestay_id)
 	//})
 
 	// FindOne里面查询不能带缓存会导致再次添加相同的名宿id可以成功，会出现缓存不一致的问题
@@ -130,19 +180,28 @@ func (m *defaultUserHomestayModel) FindAll(ctx context.Context, builder squirrel
 }
 
 func (m *defaultUserHomestayModel) Insert(ctx context.Context, data *UserHomestay) (sql.Result, error) {
+	// bug 都没初始化就直接插入
+	data.DeleteTime = time.Unix(0, 0)
+	data.DelState = globalkey.DelStateNo
 	looklookTravelUserHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHomestayIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?)", m.table, userHomestayRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.UserId, data.HomestayId)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?)", m.table, userHomestayRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.UserId, data.HomestayId, data.DelState, data.Version, data.DeleteTime)
 	}, looklookTravelUserHomestayIdKey)
 	return ret, err
+}
+
+func (m *defaultUserHomestayModel) Trans(ctx context.Context, fn func(ctx context.Context, session sqlx.Session) error) error {
+	return m.TransactCtx(ctx, func(ctx context.Context, session sqlx.Session) error {
+		return fn(ctx, session)
+	})
 }
 
 func (m *defaultUserHomestayModel) Update(ctx context.Context, data *UserHomestay) error {
 	looklookTravelUserHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHomestayIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, userHomestayRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.UserId, data.HomestayId, data.Id)
+		return conn.ExecCtx(ctx, query, data.UserId, data.HomestayId, data.DelState, data.Version, data.DeleteTime, data.Id)
 	}, looklookTravelUserHomestayIdKey)
 	return err
 }

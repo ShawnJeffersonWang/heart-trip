@@ -7,6 +7,7 @@ import (
 	"database/sql"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/zeromicro/go-zero/core/stores/builder"
 	"github.com/zeromicro/go-zero/core/stores/cache"
@@ -38,9 +39,12 @@ type (
 	}
 
 	UserHomestay struct {
-		Id         int64 `db:"id"`
-		UserId     int64 `db:"user_id"`
-		HomestayId int64 `db:"homestay_id"`
+		Id         int64     `db:"id"`
+		UserId     int64     `db:"user_id"`
+		HomestayId int64     `db:"homestay_id"`
+		DelState   int64     `db:"del_state"`
+		Version    int64     `db:"version"`
+		DeleteTime time.Time `db:"delete_time"`
 	}
 )
 
@@ -80,8 +84,8 @@ func (m *defaultUserHomestayModel) FindOne(ctx context.Context, id int64) (*User
 func (m *defaultUserHomestayModel) Insert(ctx context.Context, data *UserHomestay) (sql.Result, error) {
 	looklookTravelUserHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHomestayIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?)", m.table, userHomestayRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.UserId, data.HomestayId)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?)", m.table, userHomestayRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.UserId, data.HomestayId, data.DelState, data.Version, data.DeleteTime)
 	}, looklookTravelUserHomestayIdKey)
 	return ret, err
 }
@@ -90,7 +94,7 @@ func (m *defaultUserHomestayModel) Update(ctx context.Context, data *UserHomesta
 	looklookTravelUserHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHomestayIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, userHomestayRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.UserId, data.HomestayId, data.Id)
+		return conn.ExecCtx(ctx, query, data.UserId, data.HomestayId, data.DelState, data.Version, data.DeleteTime, data.Id)
 	}, looklookTravelUserHomestayIdKey)
 	return err
 }

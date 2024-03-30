@@ -8,6 +8,7 @@ import (
 	"golodge/app/travel/cmd/rpc/internal/svc"
 	"golodge/app/travel/cmd/rpc/pb"
 	"golodge/app/travel/model"
+	"golodge/common/globalkey"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -29,7 +30,8 @@ func NewWishListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *WishList
 func (l *WishListLogic) WishList(in *pb.WishListReq) (*pb.WishListResp, error) {
 	// todo: add your logic here and delete this line
 	whereBuilder := l.svcCtx.UserHomestayModel.SelectBuilder().Where(squirrel.Eq{
-		"user_id": in.Id,
+		"user_id":   in.Id,
+		"del_state": globalkey.DelStateNo,
 	})
 	homestayIdList, _ := l.svcCtx.UserHomestayModel.FindAll(l.ctx, whereBuilder, "id desc")
 

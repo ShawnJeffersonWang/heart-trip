@@ -2,6 +2,9 @@ package logic
 
 import (
 	"context"
+	"fmt"
+	"github.com/Masterminds/squirrel"
+	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
 	"golodge/app/travel/cmd/rpc/internal/svc"
 	"golodge/app/travel/cmd/rpc/pb"
@@ -25,8 +28,33 @@ func NewClearHistoryLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Clea
 
 func (l *ClearHistoryLogic) ClearHistory(in *pb.ClearHistoryReq) (*pb.ClearHistoryResp, error) {
 	// todo: add your logic here and delete this line
-	err := l.svcCtx.HistoryModel.DeleteAll(l.ctx, in.UserId)
-	err = l.svcCtx.UserHistoryModel.DeleteAll(l.ctx, in.UserId)
+	fmt.Println("userId: ", in.UserId)
+	whereBuilder := l.svcCtx.UserHistoryModel.SelectBuilder().Where(squirrel.Eq{
+		"user_id": in.UserId,
+	})
+	userHistories, err := l.svcCtx.UserHistoryModel.FindAll(l.ctx, whereBuilder, "")
+
+	whereBuilder = l.svcCtx.HistoryModel.SelectBuilder().Where(squirrel.Eq{
+		"user_id": in.UserId,
+	})
+	histories, err := l.svcCtx.HistoryModel.FindAll(l.ctx, whereBuilder, "")
+	err = l.svcCtx.UserHistoryModel.Trans(l.ctx, func(ctx context.Context, session sqlx.Session) error {
+		for _, userHistory := range userHistories {
+			err := l.svcCtx.UserHistoryModel.DeleteSoft(ctx, session, userHistory)
+			if err != nil {
+				return err
+			}
+		}
+		for _, history := range histories {
+			err = l.svcCtx.HistoryModel.DeleteSoft(ctx, session, history)
+			if err != nil {
+				return err
+			}
+		}
+		return nil
+	})
+	//err := l.svcCtx.HistoryModel.DeleteAll(l.ctx, in.UserId)
+	//err = l.svcCtx.UserHistoryModel.DeleteAll(l.ctx, in.UserId)
 	if err != nil {
 		return nil, err
 	}

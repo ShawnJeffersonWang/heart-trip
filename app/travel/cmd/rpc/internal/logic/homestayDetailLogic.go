@@ -34,7 +34,6 @@ func (l *HomestayDetailLogic) HomestayDetail(in *pb.HomestayDetailReq) (*pb.Home
 	if err != nil && err != model.ErrNotFound {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), " HomestayDetail db err , id : %d ", in.HomestayId)
 	}
-
 	// 缓存不一致, 查缓存发现是以前的历史记录id, 而删不掉真实的, 还是会添加历史记录
 	historyTemp, err := l.svcCtx.HistoryModel.FindOneByHomestayIdAndUserId(l.ctx, in.HomestayId, in.UserId)
 	// 类似LRU, 找到了先删除, 没找到才新建一个历史记录和建立关联

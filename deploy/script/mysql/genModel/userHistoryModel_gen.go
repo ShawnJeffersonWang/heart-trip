@@ -7,6 +7,7 @@ import (
 	"database/sql"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/zeromicro/go-zero/core/stores/builder"
 	"github.com/zeromicro/go-zero/core/stores/cache"
@@ -38,9 +39,12 @@ type (
 	}
 
 	UserHistory struct {
-		Id        int64 `db:"id"`
-		HistoryId int64 `db:"history_id"`
-		UserId    int64 `db:"user_id"`
+		Id         int64     `db:"id"`
+		HistoryId  int64     `db:"history_id"`
+		UserId     int64     `db:"user_id"`
+		DelState   int64     `db:"del_state"`
+		Version    int64     `db:"version"`
+		DeleteTime time.Time `db:"delete_time"`
 	}
 )
 
@@ -80,8 +84,8 @@ func (m *defaultUserHistoryModel) FindOne(ctx context.Context, id int64) (*UserH
 func (m *defaultUserHistoryModel) Insert(ctx context.Context, data *UserHistory) (sql.Result, error) {
 	looklookTravelUserHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHistoryIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?)", m.table, userHistoryRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.HistoryId, data.UserId)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?)", m.table, userHistoryRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.HistoryId, data.UserId, data.DelState, data.Version, data.DeleteTime)
 	}, looklookTravelUserHistoryIdKey)
 	return ret, err
 }
@@ -90,7 +94,7 @@ func (m *defaultUserHistoryModel) Update(ctx context.Context, data *UserHistory)
 	looklookTravelUserHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHistoryIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, userHistoryRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.HistoryId, data.UserId, data.Id)
+		return conn.ExecCtx(ctx, query, data.HistoryId, data.UserId, data.DelState, data.Version, data.DeleteTime, data.Id)
 	}, looklookTravelUserHistoryIdKey)
 	return err
 }
