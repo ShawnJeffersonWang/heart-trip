@@ -4,8 +4,8 @@ import (
 	"context"
 	"golodge/app/travel/cmd/api/internal/svc"
 	"golodge/app/travel/cmd/api/internal/types"
-	"golodge/app/travel/cmd/rpc/pb"
 	"golodge/app/travel/cmd/rpc/travel"
+	"golodge/app/usercenter/cmd/rpc/pb"
 	"golodge/common/ctxdata"
 
 	"github.com/zeromicro/go-zero/core/logx"
@@ -28,18 +28,27 @@ func NewAddHomestayLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddHo
 func (l *AddHomestayLogic) AddHomestay(req *types.AddHomestayReq) (*types.AddHomestayResp, error) {
 	// todo: add your logic here and delete this line
 	userId := ctxdata.GetUidFromCtx(l.ctx)
-
-	_, err := l.svcCtx.TravelRpc.AddHomestay(l.ctx, &travel.AddHomestayReq{
-		Homestay: &pb.Homestay{
-			UserId:      userId,
-			Title:       req.Title,
-			Cover:       req.Cover,
-			CleanVideo:  req.CleanVideo,
-			ImageUrls:   req.ImageUrls,
-			Intro:       req.Intro,
-			Location:    req.Location,
-			PriceBefore: req.PriceBefore,
-		},
+	getUserInfoResp, err := l.svcCtx.UsercenterRpc.GetUserInfo(l.ctx, &pb.GetUserInfoReq{
+		Id: userId,
+	})
+	if err != nil {
+		return nil, err
+	}
+	_, err = l.svcCtx.TravelRpc.AddHomestay(l.ctx, &travel.AddHomestayReq{
+		Title:        req.Title,
+		TitleTags:    req.TitleTags,
+		BannerUrls:   req.BannerUrls,
+		Latitude:     req.Latitude,
+		Longitude:    req.Longitude,
+		Facilities:   req.Facilities,
+		Area:         req.Area,
+		RoomConfig:   req.RoomConfig,
+		CleanVideo:   req.CleanVideo,
+		PriceBefore:  req.PriceBefore,
+		PriceAfter:   req.PriceAfter,
+		HostId:       userId,
+		HostAvatar:   getUserInfoResp.User.Avatar,
+		HostNickname: getUserInfoResp.User.Nickname,
 	})
 	if err != nil {
 		return nil, err

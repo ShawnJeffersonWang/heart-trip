@@ -8,7 +8,6 @@ import (
 	"golodge/common/ctxdata"
 	"golodge/common/xerr"
 
-	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -39,12 +38,27 @@ func (l *HomestayDetailLogic) HomestayDetail(req types.HomestayDetailReq) (*type
 			" get homestay detail db err , id : %d , err : %v ", req.HomestayId, err)
 	}
 
-	var typeHomestay types.Homestay
-	if homestayResp.Homestay != nil {
-		_ = copier.Copy(&typeHomestay, homestayResp.Homestay)
-	}
+	//var typeHomestay types.Homestay
+	//if homestayResp != nil {
+	//	_ = copier.Copy(&typeHomestay, homestayResp)
+	//}
 
 	return &types.HomestayDetailResp{
-		Homestay: typeHomestay,
+		Id:           homestayResp.Id,
+		Title:        homestayResp.Title,
+		RatingStars:  homestayResp.RatingStars,
+		CommentCount: homestayResp.CommentCount,
+		TitleTags:    homestayResp.TitleTags,
+		BannerUrls:   homestayResp.BannerUrls,
+		Latitude:     homestayResp.Latitude,
+		Longitude:    homestayResp.Longitude,
+		Facilities:   homestayResp.Facilities,
+		Area:         homestayResp.Area,
+		RoomConfig:   homestayResp.RoomConfig,
+		CleanVideo:   homestayResp.CleanVideo,
+		HostAvatar:   homestayResp.HostAvatar,
+		HostNickname: homestayResp.HostNickname,
+		PriceBefore:  homestayResp.PriceBefore,
+		PriceAfter:   homestayResp.PriceAfter,
 	}, nil
 }

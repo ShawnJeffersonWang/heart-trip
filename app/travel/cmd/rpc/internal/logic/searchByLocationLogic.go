@@ -40,7 +40,7 @@ func (l *SearchByLocationLogic) SearchByLocation(in *pb.SearchByLocationReq) (*p
 	// 按地名或者详情查询
 	whereBuilder := l.svcCtx.HomestayModel.SelectBuilder().Where(squirrel.Or{
 		squirrel.Like{"location": fmt.Sprint("%", in.Location, "%")},
-		squirrel.Like{"intro": fmt.Sprint("%", in.Location, "%")},
+		squirrel.Like{"title_tags": fmt.Sprint("%", in.Location, "%")},
 	})
 	homestays, err := l.svcCtx.HomestayModel.FindAll(l.ctx, whereBuilder, "id desc")
 	if err != nil {

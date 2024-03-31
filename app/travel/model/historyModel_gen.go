@@ -62,7 +62,7 @@ type (
 		PriceAfter         int64     `db:"price_after"`
 		RowState           int64     `db:"row_state"`
 		HomestayBusinessId int64     `db:"homestay_business_id"`
-		RatingStars        float32   `db:"rating_stars"`
+		RatingStars        float64   `db:"rating_stars"`
 		UserId             int64     `db:"user_id"`
 		HomestayId         int64     `db:"homestay_id"`
 		DelState           int64     `db:"del_state"`

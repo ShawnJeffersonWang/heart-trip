@@ -46,7 +46,7 @@ func (l *HomestayDetailLogic) HomestayDetail(in *pb.HomestayDetailReq) (*pb.Home
 	history := model.History{
 		Title:              homestay.Title,
 		HomestayBusinessId: homestay.HomestayBusinessId,
-		Intro:              homestay.Intro,
+		Intro:              homestay.RoomConfig,
 		Cover:              homestay.Cover,
 		Location:           homestay.Location,
 		PriceAfter:         homestay.PriceAfter,
@@ -80,6 +80,21 @@ func (l *HomestayDetailLogic) HomestayDetail(in *pb.HomestayDetailReq) (*pb.Home
 	}
 
 	return &pb.HomestayDetailResp{
-		Homestay: &pbHomestay,
+		Id:           homestay.Id,
+		Title:        homestay.Title,
+		RatingStars:  homestay.RatingStars,
+		CommentCount: homestay.CommentCount,
+		TitleTags:    homestay.TitleTags,
+		BannerUrls:   homestay.BannerUrls,
+		Latitude:     homestay.Latitude,
+		Longitude:    homestay.Longitude,
+		Facilities:   homestay.Facilities,
+		Area:         homestay.Area,
+		RoomConfig:   homestay.RoomConfig,
+		CleanVideo:   homestay.CleanVideo,
+		HostAvatar:   homestay.HostAvatar,
+		HostNickname: homestay.HostNickname,
+		PriceBefore:  homestay.PriceBefore,
+		PriceAfter:   homestay.PriceAfter,
 	}, nil
 }

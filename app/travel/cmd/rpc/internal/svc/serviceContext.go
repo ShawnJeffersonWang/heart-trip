@@ -3,6 +3,7 @@ package svc
 import (
 	"golodge/app/travel/cmd/rpc/internal/config"
 	"golodge/app/travel/model"
+	"golodge/app/usercenter/cmd/rpc/usercenter"
 
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
@@ -10,6 +11,7 @@ import (
 type ServiceContext struct {
 	Config config.Config
 
+	usercenter.Usercenter
 	HomestayModel         model.HomestayModel
 	HomestayActivityModel model.HomestayActivityModel
 	GuessModel            model.GuessModel

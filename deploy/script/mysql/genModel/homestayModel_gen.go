@@ -44,19 +44,27 @@ type (
 		UpdateTime         time.Time `db:"update_time"`
 		DeleteTime         time.Time `db:"delete_time"`
 		DelState           int64     `db:"del_state"`
-		Version            int64     `db:"version"`              // 版本号
-		Title              string    `db:"title"`                // 标题
-		Cover              string    `db:"cover"`                // 轮播图，第一张封面
-		Intro              string    `db:"intro"`                // 介绍
-		Location           string    `db:"location"`             // 位置
-		HomestayBusinessId int64     `db:"homestay_business_id"` // 民宿店铺id
-		UserId             int64     `db:"user_id"`              // 房东id，冗余字段
-		RowState           int64     `db:"row_state"`            // 0:下架 1:上架
-		RatingStars        float64   `db:"rating_stars"`         // 评分
-		PriceBefore        int64     `db:"price_before"`         // 民宿价格（分）
-		PriceAfter         int64     `db:"price_after"`
+		Version            int64     `db:"version"`      // 版本号
+		Title              string    `db:"title"`        // 标题
+		RatingStars        float64   `db:"rating_stars"` // 评分
+		BannerUrls         string    `db:"banner_urls"`
+		TitleTags          string    `db:"title_tags"`
+		CommentCount       int64     `db:"comment_count"`
+		Location           string    `db:"location"` // 位置
+		Latitude           int64     `db:"latitude"`
+		Longitude          int64     `db:"longitude"`
+		Facilities         string    `db:"facilities"`
+		Cover              string    `db:"cover"` // 轮播图，第一张封面
+		Area               string    `db:"area"`
+		RoomConfig         string    `db:"room_config"` // 介绍
 		CleanVideo         string    `db:"clean_video"`
-		ImageUrls          string    `db:"image_urls"`
+		HomestayBusinessId int64     `db:"homestay_business_id"` // 民宿店铺id
+		HostId             int64     `db:"host_id"`              // 房东id，冗余字段
+		HostAvatar         string    `db:"host_avatar"`
+		HostNickname       string    `db:"host_nickname"`
+		RowState           int64     `db:"row_state"`    // 0:下架 1:上架
+		PriceBefore        int64     `db:"price_before"` // 民宿价格（分）
+		PriceAfter         int64     `db:"price_after"`
 	}
 )
 
@@ -96,8 +104,8 @@ func (m *defaultHomestayModel) FindOne(ctx context.Context, id int64) (*Homestay
 func (m *defaultHomestayModel) Insert(ctx context.Context, data *Homestay) (sql.Result, error) {
 	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, homestayRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.Cover, data.Intro, data.Location, data.HomestayBusinessId, data.UserId, data.RowState, data.RatingStars, data.PriceBefore, data.PriceAfter, data.CleanVideo, data.ImageUrls)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, homestayRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.RatingStars, data.BannerUrls, data.TitleTags, data.CommentCount, data.Location, data.Latitude, data.Longitude, data.Facilities, data.Cover, data.Area, data.RoomConfig, data.CleanVideo, data.HomestayBusinessId, data.HostId, data.HostAvatar, data.HostNickname, data.RowState, data.PriceBefore, data.PriceAfter)
 	}, looklookTravelHomestayIdKey)
 	return ret, err
 }
@@ -106,7 +114,7 @@ func (m *defaultHomestayModel) Update(ctx context.Context, data *Homestay) error
 	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, homestayRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.Cover, data.Intro, data.Location, data.HomestayBusinessId, data.UserId, data.RowState, data.RatingStars, data.PriceBefore, data.PriceAfter, data.CleanVideo, data.ImageUrls, data.Id)
+		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.RatingStars, data.BannerUrls, data.TitleTags, data.CommentCount, data.Location, data.Latitude, data.Longitude, data.Facilities, data.Cover, data.Area, data.RoomConfig, data.CleanVideo, data.HomestayBusinessId, data.HostId, data.HostAvatar, data.HostNickname, data.RowState, data.PriceBefore, data.PriceAfter, data.Id)
 	}, looklookTravelHomestayIdKey)
 	return err
 }

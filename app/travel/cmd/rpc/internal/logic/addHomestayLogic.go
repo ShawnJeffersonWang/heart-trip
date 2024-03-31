@@ -2,13 +2,13 @@ package logic
 
 import (
 	"context"
+	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"golodge/app/travel/cmd/rpc/internal/svc"
 	"golodge/app/travel/cmd/rpc/pb"
 	"golodge/app/travel/cmd/rpc/travel"
 	"golodge/app/travel/model"
-
-	"github.com/zeromicro/go-zero/core/logx"
+	"strings"
 )
 
 type AddHomestayLogic struct {
@@ -27,24 +27,33 @@ func NewAddHomestayLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddHo
 
 func (l *AddHomestayLogic) AddHomestay(in *pb.AddHomestayReq) (*pb.AddHomestayResp, error) {
 	// todo: add your logic here and delete this line
-
 	//_, err := l.svcCtx.HomestayModel.FindOne(l.ctx, in.Homestay.Id)
 	//if err == nil {
 	//	return nil, errors.Wrapf(ErrHomestayAlreadyAdded,
 	//		"homestay has been added in homestayList homestayId:%d,err:%v", in.Homestay.Id, err)
 	//}
-
+	splitUrls := strings.Split(in.BannerUrls, ",")
+	firstUrl := splitUrls[0]
 	if err := l.svcCtx.HomestayModel.Trans(l.ctx, func(ctx context.Context, session sqlx.Session) error {
 		homestay := model.Homestay{
-			Title:       in.Homestay.Title,
-			Cover:       in.Homestay.Cover,
-			CleanVideo:  in.Homestay.CleanVideo,
-			ImageUrls:   in.Homestay.ImageUrls,
-			Intro:       in.Homestay.Intro,
-			Location:    in.Homestay.Location,
-			UserId:      in.Homestay.UserId,
-			PriceBefore: in.Homestay.PriceBefore,
-			RowState:    1,
+			DelState:     0,
+			Version:      0,
+			Title:        in.Title,
+			BannerUrls:   in.BannerUrls,
+			TitleTags:    in.TitleTags,
+			Latitude:     in.Latitude,
+			Longitude:    in.Longitude,
+			Facilities:   in.Facilities,
+			Cover:        firstUrl,
+			Area:         in.Area,
+			RoomConfig:   in.RoomConfig,
+			CleanVideo:   in.CleanVideo,
+			HostId:       in.HostId,
+			HostAvatar:   in.HostAvatar,
+			HostNickname: in.HostNickname,
+			RowState:     1,
+			PriceBefore:  in.PriceBefore,
+			PriceAfter:   in.PriceAfter,
 		}
 
 		res, err := l.svcCtx.HomestayModel.Insert(ctx, session, &homestay)

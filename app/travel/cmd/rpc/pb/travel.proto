@@ -9,17 +9,25 @@ package pb;
 message Homestay {
   int64   id = 1;
   string  title = 2;
-  string  cover = 3;
-  string cleanVideo = 4;
-  string imageUrls = 5;
-  string  intro = 6;
-  string location = 7;
-  int64   homestayBusinessId = 8;   //店铺id
-  int64   userId = 9;               //房东id
-  int64   rowState = 10;             //0:下架 1:上架
-  float   ratingStars = 11;
-  int64   priceBefore = 12;       //民宿价格(分)
-  int64   priceAfter = 13;
+  float   ratingStars = 3;
+  int64 commentCount = 4;
+  string titleTags = 5;
+  string  bannerUrls = 6;
+  int64 latitude = 7;
+  int64 longitude = 8;
+  string location = 9;
+  string facilities = 10;
+  string cover = 11;
+  string area = 12;
+  string roomConfig = 13;
+  string cleanVideo = 14;
+  int64   homestayBusinessId = 15;   //店铺id
+  int64   hostId = 16;               //房东id
+  string hostAvatar = 17;
+  string hostNickname = 18;
+  int64   rowState = 19;             //0:下架 1:上架
+  int64   priceBefore = 20;       //民宿价格(分)
+  int64   priceAfter = 21;
 }
 
 message HomestayComment {
@@ -46,11 +54,39 @@ message HomestayDetailReq {
   int64 userId = 2;
 }
 message HomestayDetailResp {
-  Homestay homestay = 1;
+  int64 id = 1;
+  string title = 2;
+  double ratingStars = 3;
+  int64 commentCount = 4;
+  string titleTags = 5;
+  string bannerUrls = 6;
+  int64 latitude = 7;
+  int64 longitude = 8;
+  string facilities = 9;
+  string area = 10;
+  string roomConfig = 11;
+  string cleanVideo = 12;
+  string hostAvatar = 13;             // 房东头像
+  string hostNickname = 14;             // 房东昵称
+  int64 priceBefore = 15;                //民宿价格
+  int64 priceAfter = 16;
 }
 
 message AddHomestayReq {
-  Homestay homestay = 1;
+  string title = 1;
+  string titleTags = 2;
+  string bannerUrls = 3;
+  int64 latitude = 4;
+  int64 longitude = 5;
+  string facilities = 6;
+  string area = 7;
+  string roomConfig = 8;
+  string cleanVideo = 9;
+  int64 priceBefore = 10;              //民宿价格
+  int64 priceAfter = 11;
+  int64 hostId = 12;
+  string hostAvatar = 13;
+  string hostNickname = 14;
 }
 message AddHomestayResp {
 }
@@ -109,7 +145,7 @@ message History {
   int64   homestayBusinessId = 6;   //店铺id
   int64   userId = 7;               //房东id
   int64   rowState = 8;             //0:下架 1:上架
-  float   ratingStars = 9;
+  double  ratingStars = 9;
   int64   priceBefore = 10;       //民宿价格(分)
   int64   priceAfter = 11;
   int64   lastBrowsingTime = 12;

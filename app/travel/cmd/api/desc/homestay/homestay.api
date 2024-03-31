@@ -11,15 +11,23 @@ info(
 type Homestay {
     Id int64 `json:"id"`
     Title string `json:"title"`
-    Cover string `json:"cover"`
-    CleanVideo string `json:"cleanVideo"`
-    ImageUrls string `json:"imageUrls"`
-    Intro string `json:"intro"`
-    Location string `json:"location"`
-    HomestayBusinessId int64 `json:"homestayBusinessId"`  //店铺id
-    UserId int64 `json:"userId"`                          //房东id
-    RowState int64 `json:"rowState"`                      //0:下架 1:上架
     RatingStars float64 `json:"ratingStars"`
+    CommentCount int64 `json:"commentCount"`
+    TitleTags string `json:"titleTags"`
+    BannerUrls string `json:"bannerUrls"`
+    Latitude int64 `json:"latitude"`
+    Longitude int64 `json:"longitude"`
+    Location string `json:"location"`
+    Facilities string `json:"facilities"`
+    Cover string `json:"cover"`
+    Area string `json:"area"`
+    RoomConfig string `json:"roomConfig"`
+    CleanVideo string `json:"cleanVideo"`
+    HomestayBusinessId int64 `json:"homestayBusinessId"`  //店铺id
+    HostId int64 `json:"hostId"`                          //房东id
+    HostAvatar string `json:"hostAvatar"`                 // 房东头像
+    HostNickname string `json:"hostNickname"`             // 房东昵称
+    RowState int64 `json:"rowState"`                      //0:下架 1:上架
     PriceBefore int64 `json:"priceBefore"`                //民宿价格
     PriceAfter int64 `json:"priceAfter"`
 }
@@ -39,12 +47,16 @@ type Guess {
 type (
     AddHomestayReq {
         Title string `json:"title"`
-        Cover string `json:"cover"`
+        TitleTags string `json:"titleTags"`
+        BannerUrls string `json:"bannerUrls"`
+        Latitude int64 `json:"latitude"`
+        Longitude int64 `json:"longitude"`
+        Facilities string `json:"facilities"`
+        Area string `json:"area"`
+        RoomConfig string `json:"roomConfig"`
         CleanVideo string `json:"cleanVideo"`
-        ImageUrls string `json:"imageUrls"`
-        Intro string `json:"intro"`
-        Location string `json:"location"`
-        PriceBefore int64 `json:"priceBefore"` //民宿价格
+        PriceBefore int64 `json:"priceBefore"`                //民宿价格
+        PriceAfter int64 `json:"priceAfter"`
     }
     AddHomestayResp {
         Success bool `json:"success"`
@@ -121,6 +133,21 @@ type (
         HomestayId int64 `json:"homestayId"`
     }
     HomestayDetailResp {
-        Homestay Homestay `json:"homestay"`
+        Id int64 `json:"id"`
+        Title string `json:"title"`
+        RatingStars float64 `json:"ratingStars"`
+        CommentCount int64 `json:"commentCount"`
+        TitleTags string `json:"titleTags"`
+        BannerUrls string `json:"bannerUrls"`
+        Latitude int64 `json:"latitude"`
+        Longitude int64 `json:"longitude"`
+        Facilities string `json:"facilities"`
+        Area string `json:"area"`
+        RoomConfig string `json:"roomConfig"`
+        CleanVideo string `json:"cleanVideo"`
+        HostAvatar string `json:"hostAvatar"`                 // 房东头像
+        HostNickname string `json:"hostNickname"`             // 房东昵称
+        PriceBefore int64 `json:"priceBefore"`                //民宿价格
+        PriceAfter int64 `json:"priceAfter"`
     }
 )

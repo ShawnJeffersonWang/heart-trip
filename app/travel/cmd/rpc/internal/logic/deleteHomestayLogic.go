@@ -32,7 +32,7 @@ func (l *DeleteHomestayLogic) DeleteHomestay(in *pb.DeleteHomestayReq) (*pb.Dele
 	homestay, err := l.svcCtx.HomestayModel.FindOne(l.ctx, in.HomestayId)
 	homestayActivity, err := l.svcCtx.HomestayActivityModel.FindOneByDataId(l.ctx, in.HomestayId)
 	// bug 不能写FindOneByHomestayIdAndUserId id本身就是唯一的
-	if in.UserId != homestay.UserId {
+	if in.UserId != homestay.HostId {
 		return nil, errors.Wrapf(xerr.NewErrMsg(" not authorization "), "userId : %d ", in.UserId)
 	}
 	err = l.svcCtx.HomestayModel.Trans(l.ctx, func(ctx context.Context, session sqlx.Session) error {

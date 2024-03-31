@@ -27,6 +27,7 @@ func NewAddCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddCom
 
 func (l *AddCommentLogic) AddComment(req *types.AddCommentReq) (*types.AddCommentResp, error) {
 	// todo: add your logic here and delete this line
+	// 为什么感觉到微服务越写越快，因为轮子造好了，rpc调用就完事了
 	userId := ctxdata.GetUidFromCtx(l.ctx)
 	homestayComment := pb.HomestayComment{
 		HomestayId:     req.HomestayId,
