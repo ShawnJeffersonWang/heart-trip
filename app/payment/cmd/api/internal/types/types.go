@@ -22,6 +22,16 @@ type ThirdPaymentWxPayResp struct {
 	SignType  string `json:"signType"`
 }
 
+type FakePayCallbackReq struct {
+	ServiceType string `json:"serviceType"`
+	OrderSn     string `json:"orderSn"`
+	PayerTotal  int64  `json:"payerTotal"`
+}
+
+type FakePayCallbackResp struct {
+	ReturnCode string `json:"returnCode"`
+}
+
 type FakePaymentReq struct {
 	OrderSn     string `json:"orderSn"`
 	ServiceType string `json:"serviceType"`

@@ -1,0 +1,15 @@
+Name: travel-mq
+Host: 0.0.0.0
+Port: 3003
+Mode: dev
+
+#kq
+KqConsumerConf:
+  Name: kqConsumer
+  Brokers:
+    - kafka:9092
+  Group: kqConsumer
+  Topic: comment-success-topic
+  Offset: first
+  Consumers: 8
+  Processors: 8

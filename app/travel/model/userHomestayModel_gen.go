@@ -79,6 +79,7 @@ func (m *defaultUserHomestayModel) DeleteSoft(ctx context.Context, session sqlx.
 	if err := m.UpdateWithVersion(ctx, session, data); err != nil {
 		return errors.Wrapf(errors.New("delete soft failed "), " delete err : %+v", err)
 	}
+	fmt.Println("00000000000000000000")
 	return nil
 }
 

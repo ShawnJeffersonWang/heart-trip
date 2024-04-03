@@ -88,8 +88,8 @@ type (
 		TitleTags          string    `db:"title_tags"`
 		CommentCount       int64     `db:"comment_count"`
 		Location           string    `db:"location"` // 位置
-		Latitude           int64     `db:"latitude"`
-		Longitude          int64     `db:"longitude"`
+		Latitude           string    `db:"latitude"`
+		Longitude          string    `db:"longitude"`
 		Facilities         string    `db:"facilities"`
 		Cover              string    `db:"cover"` // 轮播图，第一张封面
 		Area               string    `db:"area"`

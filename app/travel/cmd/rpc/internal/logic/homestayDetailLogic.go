@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"fmt"
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -38,7 +37,6 @@ func (l *HomestayDetailLogic) HomestayDetail(in *pb.HomestayDetailReq) (*pb.Home
 	historyTemp, err := l.svcCtx.HistoryModel.FindOneByHomestayIdAndUserId(l.ctx, in.HomestayId, in.UserId)
 	// 类似LRU, 找到了先删除, 没找到才新建一个历史记录和建立关联
 	if historyTemp != nil {
-		fmt.Println("==========id: ", historyTemp.Id)
 		_ = l.svcCtx.HistoryModel.Delete(l.ctx, historyTemp.Id)
 		_ = l.svcCtx.UserHistoryModel.Delete(l.ctx, in.UserId, historyTemp.Id)
 	}
@@ -80,21 +78,24 @@ func (l *HomestayDetailLogic) HomestayDetail(in *pb.HomestayDetailReq) (*pb.Home
 	}
 
 	return &pb.HomestayDetailResp{
-		Id:           homestay.Id,
-		Title:        homestay.Title,
-		RatingStars:  homestay.RatingStars,
-		CommentCount: homestay.CommentCount,
-		TitleTags:    homestay.TitleTags,
-		BannerUrls:   homestay.BannerUrls,
-		Latitude:     homestay.Latitude,
-		Longitude:    homestay.Longitude,
-		Facilities:   homestay.Facilities,
-		Area:         homestay.Area,
-		RoomConfig:   homestay.RoomConfig,
-		CleanVideo:   homestay.CleanVideo,
-		HostAvatar:   homestay.HostAvatar,
-		HostNickname: homestay.HostNickname,
-		PriceBefore:  homestay.PriceBefore,
-		PriceAfter:   homestay.PriceAfter,
+		Id:                 homestay.Id,
+		Title:              homestay.Title,
+		RatingStars:        homestay.RatingStars,
+		CommentCount:       homestay.CommentCount,
+		TitleTags:          homestay.TitleTags,
+		BannerUrls:         homestay.BannerUrls,
+		Latitude:           homestay.Latitude,
+		Longitude:          homestay.Longitude,
+		Location:           homestay.Location,
+		Facilities:         homestay.Facilities,
+		Area:               homestay.Area,
+		RoomConfig:         homestay.RoomConfig,
+		CleanVideo:         homestay.CleanVideo,
+		HostAvatar:         homestay.HostAvatar,
+		HostNickname:       homestay.HostNickname,
+		PriceBefore:        homestay.PriceBefore,
+		PriceAfter:         homestay.PriceAfter,
+		HostId:             homestay.HostId,
+		HomestayBusinessId: homestay.HomestayBusinessId,
 	}, nil
 }

@@ -26,6 +26,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
+				Path:    "/thirdPayment/fakePayCallback",
+				Handler: thirdPayment.FakePayCallbackHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/thirdPayment/fakePayment",
 				Handler: thirdPayment.FakePaymentHandler(serverCtx),
 			},

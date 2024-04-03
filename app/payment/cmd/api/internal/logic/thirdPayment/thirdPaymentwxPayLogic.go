@@ -2,6 +2,8 @@ package thirdPayment
 
 import (
 	"context"
+	"github.com/wechatpay-apiv3/wechatpay-go/core"
+	"github.com/wechatpay-apiv3/wechatpay-go/services/payments/jsapi"
 
 	"golodge/app/order/cmd/rpc/order"
 	"golodge/app/payment/cmd/api/internal/svc"
@@ -14,8 +16,6 @@ import (
 	"golodge/common/xerr"
 
 	"github.com/pkg/errors"
-	"github.com/wechatpay-apiv3/wechatpay-go/core"
-	"github.com/wechatpay-apiv3/wechatpay-go/services/payments/jsapi"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -108,7 +108,6 @@ func (l *ThirdPaymentwxPayLogic) createWxPrePayOrder(serviceType, orderSn string
 		return nil, err
 	}
 	jsApiSvc := jsapi.JsapiApiService{Client: wxPayClient}
-
 	// Get the prepay_id, as well as the parameters and signatures needed to invoke the payment
 	resp, _, err := jsApiSvc.PrepayWithRequestPayment(l.ctx,
 		jsapi.PrepayRequest{

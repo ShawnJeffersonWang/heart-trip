@@ -43,6 +43,7 @@ func (l *AddHomestayLogic) AddHomestay(in *pb.AddHomestayReq) (*pb.AddHomestayRe
 			TitleTags:    in.TitleTags,
 			Latitude:     in.Latitude,
 			Longitude:    in.Longitude,
+			Location:     in.Location,
 			Facilities:   in.Facilities,
 			Cover:        firstUrl,
 			Area:         in.Area,

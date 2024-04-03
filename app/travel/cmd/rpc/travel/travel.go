@@ -42,6 +42,8 @@ type (
 	RemoveWishListResp      = pb.RemoveWishListResp
 	SearchByLocationReq     = pb.SearchByLocationReq
 	SearchByLocationResp    = pb.SearchByLocationResp
+	SearchHistoryReq        = pb.SearchHistoryReq
+	SearchHistoryResp       = pb.SearchHistoryResp
 	WishListReq             = pb.WishListReq
 	WishListResp            = pb.WishListResp
 
@@ -60,6 +62,7 @@ type (
 		HistoryList(ctx context.Context, in *HistoryListReq, opts ...grpc.CallOption) (*HistoryListResp, error)
 		RemoveHistory(ctx context.Context, in *RemoveHistoryReq, opts ...grpc.CallOption) (*RemoveHistoryResp, error)
 		ClearHistory(ctx context.Context, in *ClearHistoryReq, opts ...grpc.CallOption) (*ClearHistoryResp, error)
+		SearchHistory(ctx context.Context, in *SearchHistoryReq, opts ...grpc.CallOption) (*SearchHistoryResp, error)
 		SearchByLocation(ctx context.Context, in *SearchByLocationReq, opts ...grpc.CallOption) (*SearchByLocationResp, error)
 	}
 
@@ -138,6 +141,11 @@ func (m *defaultTravel) RemoveHistory(ctx context.Context, in *RemoveHistoryReq,
 func (m *defaultTravel) ClearHistory(ctx context.Context, in *ClearHistoryReq, opts ...grpc.CallOption) (*ClearHistoryResp, error) {
 	client := pb.NewTravelClient(m.cli.Conn())
 	return client.ClearHistory(ctx, in, opts...)
+}
+
+func (m *defaultTravel) SearchHistory(ctx context.Context, in *SearchHistoryReq, opts ...grpc.CallOption) (*SearchHistoryResp, error) {
+	client := pb.NewTravelClient(m.cli.Conn())
+	return client.SearchHistory(ctx, in, opts...)
 }
 
 func (m *defaultTravel) SearchByLocation(ctx context.Context, in *SearchByLocationReq, opts ...grpc.CallOption) (*SearchByLocationResp, error) {

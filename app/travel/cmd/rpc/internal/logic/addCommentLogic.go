@@ -43,6 +43,10 @@ func (l *AddCommentLogic) AddComment(in *pb.AddCommentReq) (*pb.AddCommentResp, 
 		SecurityRating: in.HomestayComment.SecurityRating,
 		FoodRating:     in.HomestayComment.FoodRating,
 	}
+	data := "zhangsan============"
+	if err := l.svcCtx.KqPusherClient.Push(data); err != nil {
+		l.Logger.Errorf("===========error: %v", err)
+	}
 	homestay, err := l.svcCtx.HomestayModel.FindOne(l.ctx, in.HomestayComment.HomestayId)
 	if err != nil {
 		return nil, err

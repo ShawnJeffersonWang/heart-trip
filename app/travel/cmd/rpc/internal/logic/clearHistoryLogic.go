@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"fmt"
 	"github.com/Masterminds/squirrel"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
@@ -28,7 +27,6 @@ func NewClearHistoryLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Clea
 
 func (l *ClearHistoryLogic) ClearHistory(in *pb.ClearHistoryReq) (*pb.ClearHistoryResp, error) {
 	// todo: add your logic here and delete this line
-	fmt.Println("userId: ", in.UserId)
 	whereBuilder := l.svcCtx.UserHistoryModel.SelectBuilder().Where(squirrel.Eq{
 		"user_id": in.UserId,
 	})

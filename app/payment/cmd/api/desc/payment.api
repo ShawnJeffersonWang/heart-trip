@@ -38,5 +38,9 @@ service payment {
 	@doc "fake payment"
 	@handler fakePayment
 	post /thirdPayment/fakePayment (fakePaymentReq) returns (fakePaymentResp)
+
+	@doc "fake pay callback"
+	@handler fakePayCallback
+	post /thirdPayment/fakePayCallback (fakePayCallbackReq) returns (fakePayCallbackResp)
 }
 

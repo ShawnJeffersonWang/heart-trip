@@ -33,14 +33,13 @@ func (l *WishListLogic) WishList(in *pb.WishListReq) (*pb.WishListResp, error) {
 		"user_id":   in.Id,
 		"del_state": globalkey.DelStateNo,
 	})
-	homestayIdList, _ := l.svcCtx.UserHomestayModel.FindAll(l.ctx, whereBuilder, "id desc")
-
-	//fmt.Println("homestayIdList: ", *homestayIdList[0], *homestayIdList[1])
+	userHomestays, _ := l.svcCtx.UserHomestayModel.FindAll(l.ctx, whereBuilder, "id desc")
+	//fmt.Println("userHomestays: ", *userHomestays[0], *userHomestays[1])
 	var resp []*pb.Homestay
-	if len(homestayIdList) > 0 { // mapreduce example
+	if len(userHomestays) > 0 { // mapreduce example
 		mr.MapReduceVoid(func(source chan<- interface{}) {
-			for _, homestayId := range homestayIdList {
-				source <- homestayId.HomestayId
+			for _, userHomestay := range userHomestays {
+				source <- userHomestay.HomestayId
 			}
 		}, func(item interface{}, writer mr.Writer[*model.Homestay], cancel func(error)) {
 			id := item.(int64)
@@ -54,10 +53,9 @@ func (l *WishListLogic) WishList(in *pb.WishListReq) (*pb.WishListResp, error) {
 		}, func(pipe <-chan *model.Homestay, cancel func(error)) {
 
 			for homestay := range pipe {
-				var tyHomestay pb.Homestay
-				_ = copier.Copy(&tyHomestay, homestay)
-
-				resp = append(resp, &tyHomestay)
+				var pbHomestay pb.Homestay
+				_ = copier.Copy(&pbHomestay, homestay)
+				resp = append(resp, &pbHomestay)
 			}
 		})
 	}

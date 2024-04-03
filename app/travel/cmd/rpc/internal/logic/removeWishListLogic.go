@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"fmt"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
 	"golodge/app/travel/cmd/rpc/internal/svc"
@@ -28,7 +27,6 @@ func NewRemoveWishListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Re
 func (l *RemoveWishListLogic) RemoveWishList(in *pb.RemoveWishListReq) (*pb.RemoveWishListResp, error) {
 	// todo: add your logic here and delete this line
 	userHomestay, err := l.svcCtx.UserHomestayModel.FindOneByUserIdAndHomestayId(l.ctx, in.UserId, in.HomestayId)
-	fmt.Println("userHomestay: ", userHomestay)
 	err = l.svcCtx.UserHistoryModel.Trans(l.ctx, func(ctx context.Context, session sqlx.Session) error {
 		err := l.svcCtx.UserHomestayModel.DeleteSoft(ctx, session, userHomestay)
 		if err != nil {

@@ -36,7 +36,6 @@ func NewWxMiniAuthLogic(ctx context.Context, svcCtx *svc.ServiceContext) WxMiniA
 
 // Wechat-Mini auth
 func (l *WxMiniAuthLogic) WxMiniAuth(req types.WXMiniAuthReq) (*types.WXMiniAuthResp, error) {
-
 	//1、Wechat-Mini
 	miniprogram := wechat.NewWechat().GetMiniProgram(&miniConfig.Config{
 		AppID:     l.svcCtx.Config.WxMiniConf.AppId,

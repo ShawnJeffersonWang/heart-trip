@@ -32,8 +32,9 @@ type AddHomestayReq struct {
 	Title       string `json:"title"`
 	TitleTags   string `json:"titleTags"`
 	BannerUrls  string `json:"bannerUrls"`
-	Latitude    int64  `json:"latitude"`
-	Longitude   int64  `json:"longitude"`
+	Latitude    string `json:"latitude"`
+	Longitude   string `json:"longitude"`
+	Location    string `json:"location"`
 	Facilities  string `json:"facilities"`
 	Area        string `json:"area"`
 	RoomConfig  string `json:"roomConfig"`
@@ -123,8 +124,8 @@ type Homestay struct {
 	CommentCount       int64   `json:"commentCount"`
 	TitleTags          string  `json:"titleTags"`
 	BannerUrls         string  `json:"bannerUrls"`
-	Latitude           int64   `json:"latitude"`
-	Longitude          int64   `json:"longitude"`
+	Latitude           string  `json:"latitude"`
+	Longitude          string  `json:"longitude"`
 	Location           string  `json:"location"`
 	Facilities         string  `json:"facilities"`
 	Cover              string  `json:"cover"`
@@ -206,22 +207,25 @@ type HomestayDetailReq struct {
 }
 
 type HomestayDetailResp struct {
-	Id           int64   `json:"id"`
-	Title        string  `json:"title"`
-	RatingStars  float64 `json:"ratingStars"`
-	CommentCount int64   `json:"commentCount"`
-	TitleTags    string  `json:"titleTags"`
-	BannerUrls   string  `json:"bannerUrls"`
-	Latitude     int64   `json:"latitude"`
-	Longitude    int64   `json:"longitude"`
-	Facilities   string  `json:"facilities"`
-	Area         string  `json:"area"`
-	RoomConfig   string  `json:"roomConfig"`
-	CleanVideo   string  `json:"cleanVideo"`
-	HostAvatar   string  `json:"hostAvatar"`   // 房东头像
-	HostNickname string  `json:"hostNickname"` // 房东昵称
-	PriceBefore  int64   `json:"priceBefore"`  //民宿价格
-	PriceAfter   int64   `json:"priceAfter"`
+	Id                 int64   `json:"id"`
+	Title              string  `json:"title"`
+	RatingStars        float64 `json:"ratingStars"`
+	CommentCount       int64   `json:"commentCount"`
+	TitleTags          string  `json:"titleTags"`
+	BannerUrls         string  `json:"bannerUrls"`
+	Latitude           string  `json:"latitude"`
+	Longitude          string  `json:"longitude"`
+	Location           string  `json:"location"`
+	Facilities         string  `json:"facilities"`
+	Area               string  `json:"area"`
+	RoomConfig         string  `json:"roomConfig"`
+	CleanVideo         string  `json:"cleanVideo"`
+	HomestayBusinessId int64   `json:"homestayBusinessId"`
+	HostId             int64   `json:"hostId"`
+	HostAvatar         string  `json:"hostAvatar"`   // 房东头像
+	HostNickname       string  `json:"hostNickname"` // 房东昵称
+	PriceBefore        int64   `json:"priceBefore"`  //民宿价格
+	PriceAfter         int64   `json:"priceAfter"`
 }
 
 type HomestayListReq struct {

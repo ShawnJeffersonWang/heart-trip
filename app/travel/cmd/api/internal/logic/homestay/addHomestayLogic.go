@@ -40,6 +40,7 @@ func (l *AddHomestayLogic) AddHomestay(req *types.AddHomestayReq) (*types.AddHom
 		BannerUrls:   req.BannerUrls,
 		Latitude:     req.Latitude,
 		Longitude:    req.Longitude,
+		Location:     req.Location,
 		Facilities:   req.Facilities,
 		Area:         req.Area,
 		RoomConfig:   req.RoomConfig,

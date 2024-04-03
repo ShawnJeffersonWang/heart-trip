@@ -32,6 +32,7 @@ const (
 	Travel_HistoryList_FullMethodName         = "/pb.travel/historyList"
 	Travel_RemoveHistory_FullMethodName       = "/pb.travel/removeHistory"
 	Travel_ClearHistory_FullMethodName        = "/pb.travel/clearHistory"
+	Travel_SearchHistory_FullMethodName       = "/pb.travel/searchHistory"
 	Travel_SearchByLocation_FullMethodName    = "/pb.travel/searchByLocation"
 )
 
@@ -53,6 +54,7 @@ type TravelClient interface {
 	HistoryList(ctx context.Context, in *HistoryListReq, opts ...grpc.CallOption) (*HistoryListResp, error)
 	RemoveHistory(ctx context.Context, in *RemoveHistoryReq, opts ...grpc.CallOption) (*RemoveHistoryResp, error)
 	ClearHistory(ctx context.Context, in *ClearHistoryReq, opts ...grpc.CallOption) (*ClearHistoryResp, error)
+	SearchHistory(ctx context.Context, in *SearchHistoryReq, opts ...grpc.CallOption) (*SearchHistoryResp, error)
 	SearchByLocation(ctx context.Context, in *SearchByLocationReq, opts ...grpc.CallOption) (*SearchByLocationResp, error)
 }
 
@@ -181,6 +183,15 @@ func (c *travelClient) ClearHistory(ctx context.Context, in *ClearHistoryReq, op
 	return out, nil
 }
 
+func (c *travelClient) SearchHistory(ctx context.Context, in *SearchHistoryReq, opts ...grpc.CallOption) (*SearchHistoryResp, error) {
+	out := new(SearchHistoryResp)
+	err := c.cc.Invoke(ctx, Travel_SearchHistory_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *travelClient) SearchByLocation(ctx context.Context, in *SearchByLocationReq, opts ...grpc.CallOption) (*SearchByLocationResp, error) {
 	out := new(SearchByLocationResp)
 	err := c.cc.Invoke(ctx, Travel_SearchByLocation_FullMethodName, in, out, opts...)
@@ -208,6 +219,7 @@ type TravelServer interface {
 	HistoryList(context.Context, *HistoryListReq) (*HistoryListResp, error)
 	RemoveHistory(context.Context, *RemoveHistoryReq) (*RemoveHistoryResp, error)
 	ClearHistory(context.Context, *ClearHistoryReq) (*ClearHistoryResp, error)
+	SearchHistory(context.Context, *SearchHistoryReq) (*SearchHistoryResp, error)
 	SearchByLocation(context.Context, *SearchByLocationReq) (*SearchByLocationResp, error)
 	mustEmbedUnimplementedTravelServer()
 }
@@ -254,6 +266,9 @@ func (UnimplementedTravelServer) RemoveHistory(context.Context, *RemoveHistoryRe
 }
 func (UnimplementedTravelServer) ClearHistory(context.Context, *ClearHistoryReq) (*ClearHistoryResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ClearHistory not implemented")
+}
+func (UnimplementedTravelServer) SearchHistory(context.Context, *SearchHistoryReq) (*SearchHistoryResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchHistory not implemented")
 }
 func (UnimplementedTravelServer) SearchByLocation(context.Context, *SearchByLocationReq) (*SearchByLocationResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchByLocation not implemented")
@@ -505,6 +520,24 @@ func _Travel_ClearHistory_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Travel_SearchHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchHistoryReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).SearchHistory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Travel_SearchHistory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).SearchHistory(ctx, req.(*SearchHistoryReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Travel_SearchByLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SearchByLocationReq)
 	if err := dec(in); err != nil {
@@ -581,6 +614,10 @@ var Travel_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "clearHistory",
 			Handler:    _Travel_ClearHistory_Handler,
+		},
+		{
+			MethodName: "searchHistory",
+			Handler:    _Travel_SearchHistory_Handler,
 		},
 		{
 			MethodName: "searchByLocation",

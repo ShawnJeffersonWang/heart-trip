@@ -46,3 +46,14 @@ type (
 		SignType  string `json:"signType"`
 	}
 )
+
+type (
+	fakePayCallbackReq {
+		ServiceType string `json:"serviceType"`
+		OrderSn string `json:"orderSn"`
+		PayerTotal int64  `json:"payerTotal"`
+	}
+	fakePayCallbackResp {
+		ReturnCode string `json:"returnCode"`
+	}
+)

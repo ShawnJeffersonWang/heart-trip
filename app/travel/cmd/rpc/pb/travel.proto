@@ -13,8 +13,8 @@ message Homestay {
   int64 commentCount = 4;
   string titleTags = 5;
   string  bannerUrls = 6;
-  int64 latitude = 7;
-  int64 longitude = 8;
+  string latitude = 7;
+  string longitude = 8;
   string location = 9;
   string facilities = 10;
   string cover = 11;
@@ -60,33 +60,37 @@ message HomestayDetailResp {
   int64 commentCount = 4;
   string titleTags = 5;
   string bannerUrls = 6;
-  int64 latitude = 7;
-  int64 longitude = 8;
-  string facilities = 9;
-  string area = 10;
-  string roomConfig = 11;
-  string cleanVideo = 12;
-  string hostAvatar = 13;             // 房东头像
-  string hostNickname = 14;             // 房东昵称
-  int64 priceBefore = 15;                //民宿价格
-  int64 priceAfter = 16;
+  string latitude = 7;
+  string longitude = 8;
+  string location = 9;
+  string facilities = 10;
+  string area = 11;
+  string roomConfig = 12;
+  string cleanVideo = 13;
+  string hostAvatar = 14;             // 房东头像
+  string hostNickname = 15;             // 房东昵称
+  int64 priceBefore = 16;                //民宿价格
+  int64 priceAfter = 17;
+  int64 hostId = 18;
+  int64 homestayBusinessId = 19;
 }
 
 message AddHomestayReq {
   string title = 1;
   string titleTags = 2;
   string bannerUrls = 3;
-  int64 latitude = 4;
-  int64 longitude = 5;
-  string facilities = 6;
-  string area = 7;
-  string roomConfig = 8;
-  string cleanVideo = 9;
-  int64 priceBefore = 10;              //民宿价格
-  int64 priceAfter = 11;
-  int64 hostId = 12;
-  string hostAvatar = 13;
-  string hostNickname = 14;
+  string latitude = 4;
+  string longitude = 5;
+  string location = 6;
+  string facilities = 7;
+  string area = 8;
+  string roomConfig = 9;
+  string cleanVideo = 10;
+  int64 priceBefore = 11;              //民宿价格
+  int64 priceAfter = 12;
+  int64 hostId = 13;
+  string hostAvatar = 14;
+  string hostNickname = 15;
 }
 message AddHomestayResp {
 }
@@ -173,6 +177,14 @@ message ClearHistoryResp {
   bool success = 1;
 }
 
+message SearchHistoryReq {
+  int64 userId = 1;
+  int64 homestayId = 2;
+}
+message SearchHistoryResp {
+  History history = 1;
+}
+
 message AddCommentReq {
   HomestayComment homestayComment = 1;
 }
@@ -210,5 +222,6 @@ service travel {
   rpc historyList(HistoryListReq) returns (HistoryListResp);
   rpc removeHistory(RemoveHistoryReq) returns (RemoveHistoryResp);
   rpc clearHistory(ClearHistoryReq) returns (ClearHistoryResp);
+  rpc searchHistory(SearchHistoryReq) returns (SearchHistoryResp);
   rpc searchByLocation(SearchByLocationReq) returns (SearchByLocationResp);
 }

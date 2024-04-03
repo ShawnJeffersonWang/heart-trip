@@ -1,6 +1,7 @@
 package svc
 
 import (
+	"github.com/zeromicro/go-queue/kq"
 	"golodge/app/travel/cmd/rpc/internal/config"
 	"golodge/app/travel/model"
 	"golodge/app/usercenter/cmd/rpc/usercenter"
@@ -12,6 +13,9 @@ type ServiceContext struct {
 	Config config.Config
 
 	usercenter.Usercenter
+
+	KqPusherClient *kq.Pusher
+
 	HomestayModel         model.HomestayModel
 	HomestayActivityModel model.HomestayActivityModel
 	GuessModel            model.GuessModel
@@ -28,6 +32,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
 		Config: c,
 
+		KqPusherClient: kq.NewPusher(c.KqPusherConf.Brokers, c.KqPusherConf.Topic),
 		// 我了个骚刚bug: 没有初始化HomestayModel导致，travel模块的RPC调不动model
 		HomestayModel:         model.NewHomestayModel(sqlConn, c.Cache),
 		HomestayActivityModel: model.NewHomestayActivityModel(sqlConn, c.Cache),

@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"fmt"
 	"github.com/Masterminds/squirrel"
 	"github.com/zeromicro/go-zero/core/mr"
 	"golodge/app/travel/model"
@@ -79,7 +78,6 @@ func (l *HistoryListLogic) HistoryList(in *pb.HistoryListReq) (*pb.HistoryListRe
 					PriceAfter:         history.PriceAfter,
 					LastBrowsingTime:   history.LastBrowsingTime.Unix(),
 				}
-				fmt.Println("browing time: ", tyHistory.LastBrowsingTime)
 				//_ = copier.Copy(&tyHistory, history)
 				resp = append(resp, &tyHistory)
 			}

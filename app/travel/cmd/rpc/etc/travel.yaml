@@ -24,3 +24,8 @@ DB:
 Cache:
   - Host: redis:6379
     Pass: G62m50oigInC30sf
+
+KqPusherConf:
+  Brokers:
+    - kafka:9092
+  Topic: comment-success-topic

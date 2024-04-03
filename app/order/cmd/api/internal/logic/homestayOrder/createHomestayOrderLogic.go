@@ -37,7 +37,10 @@ func (l *CreateHomestayOrderLogic) CreateHomestayOrder(req types.CreateHomestayO
 	if err != nil {
 		return nil, err
 	}
-	if homestayResp.Homestay == nil || homestayResp.Homestay.Id == 0 {
+	//if homestayResp.Homestay == nil || homestayResp.Homestay.Id == 0 {
+	//	return nil, errors.Wrapf(xerr.NewErrMsg("homestay no exists"), "CreateHomestayOrder homestay no exists id : %d", req.HomestayId)
+	//}
+	if homestayResp == nil || homestayResp.Id == 0 {
 		return nil, errors.Wrapf(xerr.NewErrMsg("homestay no exists"), "CreateHomestayOrder homestay no exists id : %d", req.HomestayId)
 	}
 
