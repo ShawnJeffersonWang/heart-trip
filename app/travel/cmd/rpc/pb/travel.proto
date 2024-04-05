@@ -73,6 +73,7 @@ message HomestayDetailResp {
   int64 priceAfter = 17;
   int64 hostId = 18;
   int64 homestayBusinessId = 19;
+  bool isCollected = 20;
 }
 
 message AddHomestayReq {

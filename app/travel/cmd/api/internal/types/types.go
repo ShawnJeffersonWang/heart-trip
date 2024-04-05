@@ -226,6 +226,7 @@ type HomestayDetailResp struct {
 	HostNickname       string  `json:"hostNickname"` // 房东昵称
 	PriceBefore        int64   `json:"priceBefore"`  //民宿价格
 	PriceAfter         int64   `json:"priceAfter"`
+	IsCollected        bool    `json:"isCollected"`
 }
 
 type HomestayListReq struct {

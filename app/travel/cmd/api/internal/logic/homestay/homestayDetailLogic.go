@@ -65,5 +65,6 @@ func (l *HomestayDetailLogic) HomestayDetail(req types.HomestayDetailReq) (*type
 		PriceAfter:         homestayResp.PriceAfter,
 		HostId:             homestayResp.HostId,
 		HomestayBusinessId: homestayResp.HomestayBusinessId,
+		IsCollected:        homestayResp.IsCollected,
 	}, nil
 }

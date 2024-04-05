@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"fmt"
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -72,6 +73,12 @@ func (l *HomestayDetailLogic) HomestayDetail(in *pb.HomestayDetailReq) (*pb.Home
 		return nil, err
 	}
 
+	userHomestay, err := l.svcCtx.UserHomestayModel.FindOneByUserIdAndHomestayId(l.ctx, in.UserId, in.HomestayId)
+	fmt.Println("userHomestay: ", userHomestay)
+	isAddWishList := false
+	if userHomestay != nil {
+		isAddWishList = true
+	}
 	var pbHomestay pb.Homestay
 	if homestay != nil {
 		_ = copier.Copy(&pbHomestay, homestay)
@@ -97,5 +104,6 @@ func (l *HomestayDetailLogic) HomestayDetail(in *pb.HomestayDetailReq) (*pb.Home
 		PriceAfter:         homestay.PriceAfter,
 		HostId:             homestay.HostId,
 		HomestayBusinessId: homestay.HomestayBusinessId,
+		IsCollected:        isAddWishList,
 	}, nil
 }
