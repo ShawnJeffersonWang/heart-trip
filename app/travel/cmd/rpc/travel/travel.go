@@ -50,6 +50,7 @@ type (
 	Travel interface {
 		// homestayDetail
 		HomestayDetail(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error)
+		HomestayDetailWithoutLogin(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error)
 		AddHomestay(ctx context.Context, in *AddHomestayReq, opts ...grpc.CallOption) (*AddHomestayResp, error)
 		DeleteHomestay(ctx context.Context, in *DeleteHomestayReq, opts ...grpc.CallOption) (*DeleteHomestayResp, error)
 		AdminDeleteHomestay(ctx context.Context, in *AdminDeleteHomestayReq, opts ...grpc.CallOption) (*AdminDeleteHomestayResp, error)
@@ -81,6 +82,11 @@ func NewTravel(cli zrpc.Client) Travel {
 func (m *defaultTravel) HomestayDetail(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error) {
 	client := pb.NewTravelClient(m.cli.Conn())
 	return client.HomestayDetail(ctx, in, opts...)
+}
+
+func (m *defaultTravel) HomestayDetailWithoutLogin(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error) {
+	client := pb.NewTravelClient(m.cli.Conn())
+	return client.HomestayDetailWithoutLogin(ctx, in, opts...)
 }
 
 func (m *defaultTravel) AddHomestay(ctx context.Context, in *AddHomestayReq, opts ...grpc.CallOption) (*AddHomestayResp, error) {

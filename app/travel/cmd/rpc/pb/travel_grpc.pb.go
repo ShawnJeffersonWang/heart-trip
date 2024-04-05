@@ -19,21 +19,22 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Travel_HomestayDetail_FullMethodName      = "/pb.travel/homestayDetail"
-	Travel_AddHomestay_FullMethodName         = "/pb.travel/addHomestay"
-	Travel_DeleteHomestay_FullMethodName      = "/pb.travel/deleteHomestay"
-	Travel_AdminDeleteHomestay_FullMethodName = "/pb.travel/adminDeleteHomestay"
-	Travel_AddComment_FullMethodName          = "/pb.travel/addComment"
-	Travel_LikeComment_FullMethodName         = "/pb.travel/likeComment"
-	Travel_WishList_FullMethodName            = "/pb.travel/wishList"
-	Travel_AddWishList_FullMethodName         = "/pb.travel/addWishList"
-	Travel_RemoveWishList_FullMethodName      = "/pb.travel/removeWishList"
-	Travel_AddGuess_FullMethodName            = "/pb.travel/addGuess"
-	Travel_HistoryList_FullMethodName         = "/pb.travel/historyList"
-	Travel_RemoveHistory_FullMethodName       = "/pb.travel/removeHistory"
-	Travel_ClearHistory_FullMethodName        = "/pb.travel/clearHistory"
-	Travel_SearchHistory_FullMethodName       = "/pb.travel/searchHistory"
-	Travel_SearchByLocation_FullMethodName    = "/pb.travel/searchByLocation"
+	Travel_HomestayDetail_FullMethodName             = "/pb.travel/homestayDetail"
+	Travel_HomestayDetailWithoutLogin_FullMethodName = "/pb.travel/homestayDetailWithoutLogin"
+	Travel_AddHomestay_FullMethodName                = "/pb.travel/addHomestay"
+	Travel_DeleteHomestay_FullMethodName             = "/pb.travel/deleteHomestay"
+	Travel_AdminDeleteHomestay_FullMethodName        = "/pb.travel/adminDeleteHomestay"
+	Travel_AddComment_FullMethodName                 = "/pb.travel/addComment"
+	Travel_LikeComment_FullMethodName                = "/pb.travel/likeComment"
+	Travel_WishList_FullMethodName                   = "/pb.travel/wishList"
+	Travel_AddWishList_FullMethodName                = "/pb.travel/addWishList"
+	Travel_RemoveWishList_FullMethodName             = "/pb.travel/removeWishList"
+	Travel_AddGuess_FullMethodName                   = "/pb.travel/addGuess"
+	Travel_HistoryList_FullMethodName                = "/pb.travel/historyList"
+	Travel_RemoveHistory_FullMethodName              = "/pb.travel/removeHistory"
+	Travel_ClearHistory_FullMethodName               = "/pb.travel/clearHistory"
+	Travel_SearchHistory_FullMethodName              = "/pb.travel/searchHistory"
+	Travel_SearchByLocation_FullMethodName           = "/pb.travel/searchByLocation"
 )
 
 // TravelClient is the client API for Travel service.
@@ -42,6 +43,7 @@ const (
 type TravelClient interface {
 	// homestayDetail
 	HomestayDetail(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error)
+	HomestayDetailWithoutLogin(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error)
 	AddHomestay(ctx context.Context, in *AddHomestayReq, opts ...grpc.CallOption) (*AddHomestayResp, error)
 	DeleteHomestay(ctx context.Context, in *DeleteHomestayReq, opts ...grpc.CallOption) (*DeleteHomestayResp, error)
 	AdminDeleteHomestay(ctx context.Context, in *AdminDeleteHomestayReq, opts ...grpc.CallOption) (*AdminDeleteHomestayResp, error)
@@ -69,6 +71,15 @@ func NewTravelClient(cc grpc.ClientConnInterface) TravelClient {
 func (c *travelClient) HomestayDetail(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error) {
 	out := new(HomestayDetailResp)
 	err := c.cc.Invoke(ctx, Travel_HomestayDetail_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *travelClient) HomestayDetailWithoutLogin(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error) {
+	out := new(HomestayDetailResp)
+	err := c.cc.Invoke(ctx, Travel_HomestayDetailWithoutLogin_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -207,6 +218,7 @@ func (c *travelClient) SearchByLocation(ctx context.Context, in *SearchByLocatio
 type TravelServer interface {
 	// homestayDetail
 	HomestayDetail(context.Context, *HomestayDetailReq) (*HomestayDetailResp, error)
+	HomestayDetailWithoutLogin(context.Context, *HomestayDetailReq) (*HomestayDetailResp, error)
 	AddHomestay(context.Context, *AddHomestayReq) (*AddHomestayResp, error)
 	DeleteHomestay(context.Context, *DeleteHomestayReq) (*DeleteHomestayResp, error)
 	AdminDeleteHomestay(context.Context, *AdminDeleteHomestayReq) (*AdminDeleteHomestayResp, error)
@@ -230,6 +242,9 @@ type UnimplementedTravelServer struct {
 
 func (UnimplementedTravelServer) HomestayDetail(context.Context, *HomestayDetailReq) (*HomestayDetailResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HomestayDetail not implemented")
+}
+func (UnimplementedTravelServer) HomestayDetailWithoutLogin(context.Context, *HomestayDetailReq) (*HomestayDetailResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HomestayDetailWithoutLogin not implemented")
 }
 func (UnimplementedTravelServer) AddHomestay(context.Context, *AddHomestayReq) (*AddHomestayResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddHomestay not implemented")
@@ -300,6 +315,24 @@ func _Travel_HomestayDetail_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TravelServer).HomestayDetail(ctx, req.(*HomestayDetailReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Travel_HomestayDetailWithoutLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HomestayDetailReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).HomestayDetailWithoutLogin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Travel_HomestayDetailWithoutLogin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).HomestayDetailWithoutLogin(ctx, req.(*HomestayDetailReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -566,6 +599,10 @@ var Travel_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "homestayDetail",
 			Handler:    _Travel_HomestayDetail_Handler,
+		},
+		{
+			MethodName: "homestayDetailWithoutLogin",
+			Handler:    _Travel_HomestayDetailWithoutLogin_Handler,
 		},
 		{
 			MethodName: "addHomestay",

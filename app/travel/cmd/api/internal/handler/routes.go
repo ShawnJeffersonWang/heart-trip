@@ -27,6 +27,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
+				Path:    "/homestay/homestayDetailWithoutLogin",
+				Handler: homestay.HomestayDetailWithoutLoginHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/homestay/homestayList",
 				Handler: homestay.HomestayListHandler(serverCtx),
 			},

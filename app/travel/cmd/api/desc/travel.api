@@ -21,6 +21,10 @@ import (
 	group:  homestay
 )
 service travel {
+	@doc "homestay room detail"
+	@handler homestayDetailWithoutLogin
+	post /homestay/homestayDetailWithoutLogin (HomestayDetailReq) returns (HomestayDetailResp)
+
 	@doc "homestay room list"
 	@handler homestayList
 	post /homestay/homestayList (HomestayListReq) returns (HomestayListResp)

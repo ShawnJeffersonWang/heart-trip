@@ -210,6 +210,7 @@ message SearchByLocationResp {
 service travel {
   //homestayDetail
   rpc homestayDetail(HomestayDetailReq) returns(HomestayDetailResp);
+  rpc homestayDetailWithoutLogin(HomestayDetailReq) returns (HomestayDetailResp);
   rpc addHomestay(AddHomestayReq) returns (AddHomestayResp);
   rpc deleteHomestay(DeleteHomestayReq) returns (DeleteHomestayResp);
   rpc adminDeleteHomestay(AdminDeleteHomestayReq) returns (AdminDeleteHomestayResp);
