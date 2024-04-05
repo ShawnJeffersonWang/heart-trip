@@ -2,6 +2,7 @@ package homestay
 
 import (
 	"context"
+	"fmt"
 	"golodge/app/travel/cmd/api/internal/svc"
 	"golodge/app/travel/cmd/api/internal/types"
 	"golodge/app/travel/cmd/rpc/travel"
@@ -29,6 +30,7 @@ func NewHomestayDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) Hom
 func (l *HomestayDetailLogic) HomestayDetail(req types.HomestayDetailReq) (*types.HomestayDetailResp, error) {
 
 	userId := ctxdata.GetUidFromCtx(l.ctx)
+	fmt.Println("userId: ", userId)
 	homestayResp, err := l.svcCtx.TravelRpc.HomestayDetail(l.ctx, &travel.HomestayDetailReq{
 		HomestayId: req.HomestayId,
 		UserId:     userId,

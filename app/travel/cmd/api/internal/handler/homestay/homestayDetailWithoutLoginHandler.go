@@ -1,7 +1,6 @@
 package homestay
 
 import (
-	"fmt"
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"golodge/app/travel/cmd/api/internal/logic/homestay"
 	"golodge/app/travel/cmd/api/internal/svc"
@@ -20,19 +19,18 @@ func HomestayDetailWithoutLoginHandler(svcCtx *svc.ServiceContext) http.HandlerF
 			result.ParamErrorResult(r, w, err)
 			return
 		}
-		Authorization := r.Header.Get("Authorization")
-		fmt.Println("Authorization: ", Authorization)
-		if Authorization != "" {
-			l := homestay.NewHomestayDetailLogic(r.Context(), svcCtx)
-			resp, err := l.HomestayDetail(req)
-			result.HttpResult(r, w, resp, err)
-			//response, err := httpc.Do(r.Context(), http.MethodPost, *domain+"/travel/v1/homestay/homestayDetail", req)
-			//if err != nil {
-			//	fmt.Println("httpc.Do err", err)
-			//	return
-			//}
-			//io.Copy(os.Stdout, response.Body)
-		}
+		//if len(r.Header.Get("Authorization")) > 0 {
+		//	l := homestay.NewHomestayDetailLogic(r.Context(), svcCtx)
+		//	resp, err := l.HomestayDetail(req)
+		//	result.HttpResult(r, w, resp, err)
+		//	//response, err := httpc.Do(r.Context(), http.MethodPost, *domain+"/travel/v1/homestay/homestayDetail", req)
+		//	//if err != nil {
+		//	//	fmt.Println("httpc.Do err", err)
+		//	//	return
+		//	//}
+		//	//io.Copy(os.Stdout, response.Body)
+		//	return
+		//}
 		l := homestay.NewHomestayDetailWithoutLoginLogic(r.Context(), svcCtx)
 		resp, err := l.HomestayDetailWithoutLogin(&req)
 		result.HttpResult(r, w, resp, err)
