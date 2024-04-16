@@ -101,11 +101,11 @@ func (m *defaultHistoryModel) UpdateWithVersion(ctx context.Context, session sql
 	sqlResult, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, historyRowsWithPlaceHolder)
 		if session != nil {
-			return session.ExecCtx(ctx, query, data.Title, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId, data.HomestayId, data.DelState, data.Version, data.DeleteTime, data.Id, oldVersion)
+			return session.ExecCtx(ctx, query, data.HomestayId, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId, data.Title, data.DelState, data.Version, data.DeleteTime, data.Id, oldVersion)
 		}
 		// bug最后得带data.id和oldVersion，不然会报参数无法满足
 		// ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.SubTitle, data.Banner, data.Info, data.PeopleNum, data.HomestayBusinessId, data.UserId, data.RowState, data.RowType, data.FoodInfo, data.FoodPrice, data.HomestayPrice, data.MarketHomestayPrice, data.Id, oldVersion
-		return conn.ExecCtx(ctx, query, data.Title, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId, data.HomestayId, data.DelState, data.Version, data.DeleteTime, data.Id, oldVersion)
+		return conn.ExecCtx(ctx, query, data.HomestayId, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId, data.Title, data.DelState, data.Version, data.DeleteTime, data.Id, oldVersion)
 	}, looklookTravelHistoryIdKey)
 	if err != nil {
 		return err
@@ -233,8 +233,10 @@ func (m *defaultHistoryModel) Insert(ctx context.Context, data *History) (sql.Re
 	data.DeleteTime = time.Unix(0, 0)
 	looklookTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHistoryIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		// bug: 这里insert into %s (%s) values (?, ?, ...) ()里的字段顺序必须和History struct里的字段顺序一致, 否则就对应不上
+		// 也就是说History struct里的字段顺序不能随意上下更改
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, historyRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.Title, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId, data.HomestayId, data.DelState, data.Version, data.DeleteTime)
+		return conn.ExecCtx(ctx, query, data.HomestayId, data.Title, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId, data.DelState, data.Version, data.DeleteTime)
 	}, looklookTravelHistoryIdKey)
 	return ret, err
 }
