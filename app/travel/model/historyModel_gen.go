@@ -101,11 +101,12 @@ func (m *defaultHistoryModel) UpdateWithVersion(ctx context.Context, session sql
 	sqlResult, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, historyRowsWithPlaceHolder)
 		if session != nil {
-			return session.ExecCtx(ctx, query, data.HomestayId, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId, data.Title, data.DelState, data.Version, data.DeleteTime, data.Id, oldVersion)
+			// 这里顺序也要按照History struct里的字段顺序，要不然会报错
+			return session.ExecCtx(ctx, query, data.HomestayId, data.Title, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId, data.DelState, data.Version, data.DeleteTime, data.Id, oldVersion)
 		}
 		// bug最后得带data.id和oldVersion，不然会报参数无法满足
 		// ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.SubTitle, data.Banner, data.Info, data.PeopleNum, data.HomestayBusinessId, data.UserId, data.RowState, data.RowType, data.FoodInfo, data.FoodPrice, data.HomestayPrice, data.MarketHomestayPrice, data.Id, oldVersion
-		return conn.ExecCtx(ctx, query, data.HomestayId, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId, data.Title, data.DelState, data.Version, data.DeleteTime, data.Id, oldVersion)
+		return conn.ExecCtx(ctx, query, data.HomestayId, data.Title, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId, data.DelState, data.Version, data.DeleteTime, data.Id, oldVersion)
 	}, looklookTravelHistoryIdKey)
 	if err != nil {
 		return err
