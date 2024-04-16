@@ -8,7 +8,7 @@ version: '3'
 services:
 #  jaeger链路追踪 — Jaeger for tracing
 #  jaeger:
-#    image: jaegertracing/all-in-one:1.55.0
+#    image: jaegertracing/all-in-one:latest
 #    container_name: jaeger
 #    restart: always
 #    ports:
@@ -65,7 +65,7 @@ services:
 #
 #  #搜集kafka业务日志、存储prometheus监控数据 - Kafka for collecting business logs and storing Prometheus monitoring data
 #  elasticsearch:
-#    image: elasticsearch:8.12.2
+#    image: elasticsearch:8.13.0
 #    container_name: elasticsearch
 #    user: elasticsearch
 #    environment:
@@ -83,7 +83,7 @@ services:
 #
 #  #查看elasticsearch数据 - Kibana to view Elasticsearch data
 #  kibana:
-#    image: kibana:8.12.2
+#    image: kibana:8.13.0
 #    container_name: kibana
 #    environment:
 #      - elasticsearch.hosts=http://elasticsearch:9200
@@ -98,7 +98,7 @@ services:
 #
 #  #消费kafka中filebeat收集的数据输出到es - The data output collected by FileBeat in Kafka is output to ES
 #  go-stash:
-#    image: kevinwan/go-stash:1.0 # if you "macOs intel" or "linux amd"
+#    image: kevinwan/go-stash:latest # if you "macOs intel" or "linux amd"
 ##    image: kevinwan/go-stash:1.0-arm64 #  if you "macOs m1" or "linux arm"
 #    container_name: go-stash
 #    environment:
@@ -116,7 +116,7 @@ services:
 #
 #  #收集业务数据 - Collect business data
 #  filebeat:
-#    image: elastic/filebeat:8.12.2
+#    image: elastic/filebeat:8.13.1
 #    container_name: filebeat
 #    environment:
 #      # 时区上海 - Time zone Shanghai (Change if needed)
@@ -134,7 +134,7 @@ services:
 #      - golodge_net
 #    depends_on:
 #      - kafka
-#
+
 
   #zookeeper是kafka的依赖 - Zookeeper is the dependencies of Kafka
   zookeeper:

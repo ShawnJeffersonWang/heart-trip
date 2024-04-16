@@ -22,6 +22,7 @@ type FileUploadResp struct {
 
 type History struct {
 	Id               int64  `json:"id"`
+	HomestayId       int64  `json:"homestayId"`
 	Title            string `json:"title"`
 	Cover            string `json:"cover"`
 	Intro            string `json:"intro"`

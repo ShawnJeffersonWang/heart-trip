@@ -52,6 +52,7 @@ type (
 	//UpdateTime         time.Time `db:"update_time"`
 	History struct {
 		Id                 int64     `db:"id"`
+		HomestayId         int64     `db:"homestay_id"`
 		CreateTime         time.Time `db:"create_time"`
 		LastBrowsingTime   time.Time `db:"last_browsing_time"`
 		Title              string    `db:"title"`
@@ -64,7 +65,6 @@ type (
 		HomestayBusinessId int64     `db:"homestay_business_id"`
 		RatingStars        float64   `db:"rating_stars"`
 		UserId             int64     `db:"user_id"`
-		HomestayId         int64     `db:"homestay_id"`
 		DelState           int64     `db:"del_state"`
 		Version            int64     `db:"version"`
 		DeleteTime         time.Time `db:"delete_time"`

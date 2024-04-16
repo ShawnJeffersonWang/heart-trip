@@ -143,17 +143,18 @@ message AddGuessResp {
 
 message History {
   int64   id = 1;
-  string  title = 2;
-  string  cover = 3;
-  string  intro = 4;
-  string  location = 5;
-  int64   homestayBusinessId = 6;   //店铺id
-  int64   userId = 7;               //房东id
-  int64   rowState = 8;             //0:下架 1:上架
-  double  ratingStars = 9;
-  int64   priceBefore = 10;       //民宿价格(分)
-  int64   priceAfter = 11;
-  int64   lastBrowsingTime = 12;
+  int64   homestayId = 2;
+  string  title = 3;
+  string  cover = 4;
+  string  intro = 5;
+  string  location = 6;
+  int64   homestayBusinessId = 7;   //店铺id
+  int64   userId = 8;               //房东id
+  int64   rowState = 9;             //0:下架 1:上架
+  double  ratingStars = 10;
+  int64   priceBefore = 11;       //民宿价格(分)
+  int64   priceAfter = 12;
+  int64   lastBrowsingTime = 13;
 }
 
 message HistoryListReq {

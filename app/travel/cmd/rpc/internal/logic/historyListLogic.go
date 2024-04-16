@@ -61,11 +61,12 @@ func (l *HistoryListLogic) HistoryList(in *pb.HistoryListReq) (*pb.HistoryListRe
 			writer.Write(history)
 		}, func(pipe <-chan *model.History, cancel func(error)) {
 			for history := range pipe {
-				//var tyHistory pb.History
+				//var pbHistory pb.History
 				// 爽, 可以用Fill all fields一键填充所有字段
 				// 不用copier.Copy, 手动映射lastBrowsingTime
-				tyHistory := pb.History{
+				pbHistory := pb.History{
 					Id:                 history.Id,
+					HomestayId:         history.HomestayId,
 					Title:              history.Title,
 					Cover:              history.Cover,
 					Intro:              history.Intro,
@@ -78,8 +79,8 @@ func (l *HistoryListLogic) HistoryList(in *pb.HistoryListReq) (*pb.HistoryListRe
 					PriceAfter:         history.PriceAfter,
 					LastBrowsingTime:   history.LastBrowsingTime.Unix(),
 				}
-				//_ = copier.Copy(&tyHistory, history)
-				resp = append(resp, &tyHistory)
+				//_ = copier.Copy(&pbHistory, history)
+				resp = append(resp, &pbHistory)
 			}
 		})
 	}

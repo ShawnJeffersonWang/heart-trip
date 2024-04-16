@@ -43,6 +43,7 @@ func (l *HomestayDetailLogic) HomestayDetail(in *pb.HomestayDetailReq) (*pb.Home
 	}
 	// bug: 这里用的是homestay.UserId, 导致一直是0, 应该用in.UserId
 	history := model.History{
+		HomestayId:         homestay.Id,
 		Title:              homestay.Title,
 		HomestayBusinessId: homestay.HomestayBusinessId,
 		Intro:              homestay.RoomConfig,
@@ -52,12 +53,13 @@ func (l *HomestayDetailLogic) HomestayDetail(in *pb.HomestayDetailReq) (*pb.Home
 		PriceBefore:        homestay.PriceBefore,
 		RatingStars:        homestay.RatingStars,
 		UserId:             in.UserId,
-		HomestayId:         homestay.Id,
 		CreateTime:         time.Now(),
 		LastBrowsingTime:   time.Now(),
 	}
 	res, err := l.svcCtx.HistoryModel.Insert(l.ctx, &history)
-
+	if err != nil {
+		return nil, err
+	}
 	// bug: 当时没想到可以用&history, 传出参数, 就想的再去通过UserId查历史记录, 其实根本不一定是刚插入的这条历史记录
 	//historyTemp, err := l.svcCtx.HistoryModel.FindOneByUserId(l.ctx, in.UserId)
 	//fmt.Println("history: ", historyTemp)
@@ -80,9 +82,7 @@ func (l *HomestayDetailLogic) HomestayDetail(in *pb.HomestayDetailReq) (*pb.Home
 		isAddWishList = true
 	}
 	var pbHomestay pb.Homestay
-	if homestay != nil {
-		_ = copier.Copy(&pbHomestay, homestay)
-	}
+	_ = copier.Copy(&pbHomestay, homestay)
 
 	return &pb.HomestayDetailResp{
 		Id:                 homestay.Id,
