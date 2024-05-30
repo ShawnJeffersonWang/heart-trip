@@ -34,6 +34,7 @@ func (l *RegisterLogic) Register(req types.RegisterReq) (*types.RegisterResp, er
 		AuthKey:  req.Mobile,
 		AuthType: model.UserAuthTypeSystem,
 	})
+	l.Infof("usercenter.Register", req)
 	if err != nil {
 		return nil, errors.Wrapf(err, "req: %+v", req)
 	}
