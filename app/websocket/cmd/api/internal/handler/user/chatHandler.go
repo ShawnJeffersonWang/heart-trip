@@ -3,8 +3,8 @@ package user
 import (
 	"net/http"
 
-	"golodge/app/usercenter/cmd/api/internal/logic/user"
-	"golodge/app/usercenter/cmd/api/internal/svc"
+	"golodge/app/websocket/cmd/api/internal/logic/user"
+	"golodge/app/websocket/cmd/api/internal/svc"
 )
 
 // chat

@@ -2,12 +2,14 @@ package user
 
 import (
 	"context"
+	"fmt"
 	"github.com/gorilla/websocket"
-	"golodge/app/usercenter/cmd/api/internal/logic/ws"
+	"golodge/app/websocket/cmd/api/internal/logic/ws"
+	"log"
 	"net/http"
 
 	"github.com/zeromicro/go-zero/core/logx"
-	"golodge/app/usercenter/cmd/api/internal/svc"
+	"golodge/app/websocket/cmd/api/internal/svc"
 )
 
 var upgrader = websocket.Upgrader{
@@ -36,14 +38,17 @@ type ChatRequest struct {
 
 func (l *ChatLogic) Chat(w http.ResponseWriter, r *http.Request) {
 	// todo: add your logic here and delete this line
-	userID := r.Header.Get("User-ID")
-	if userID == "" {
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
-		return
-	}
+	userID := "1"
+	//userID := r.Header.Get("User-ID")
+	//if userID == "" {
+	//	http.Error(w, "Unauthorized", http.StatusUnauthorized)
+	//	return
+	//}
 
+	fmt.Println("  --userID: ", userID)
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
+		log.Println("Chat: ", err)
 		return
 	}
 	client := &ws.Client{
