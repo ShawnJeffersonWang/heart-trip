@@ -9,13 +9,13 @@ info (
 )
 
 import (
-	"user/user.api"
+	"ws/ws.api"
 )
 
 //need login
 @server (
 	prefix: websocket/v1
-	group:  user
+	group:  ws
 	jwt:    JwtAuth
 )
 service websocket {

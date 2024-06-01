@@ -38,7 +38,7 @@ func (l *UserHomestayOrderListLogic) UserHomestayOrderList(in *pb.UserHomestayOr
 
 	list, err := l.svcCtx.HomestayOrderModel.FindPageListByIdDESC(l.ctx, whereBuilder, in.LastId, in.PageSize)
 	if err != nil && err != model.ErrNotFound {
-		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to get user's homestay order err : %v , in :%+v", err, in)
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Failed to get ws's homestay order err : %v , in :%+v", err, in)
 	}
 
 	var resp []*pb.HomestayOrder

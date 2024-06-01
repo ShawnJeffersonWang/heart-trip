@@ -73,17 +73,17 @@ func (l *ThirdPaymentwxPayLogic) ThirdPaymentwxPay(req types.ThirdPaymentWxPayRe
 // Get the price and description information of the current order of the paid B&B
 func (l *ThirdPaymentwxPayLogic) createWxPrePayOrder(serviceType, orderSn string, totalPrice int64, description string) (*jsapi.PrepayWithRequestPaymentResponse, error) {
 
-	// 1、get user openId
+	// 1、get ws openId
 	userId := ctxdata.GetUidFromCtx(l.ctx)
 	userResp, err := l.svcCtx.UsercenterRpc.GetUserAuthByUserId(l.ctx, &usercenter.GetUserAuthByUserIdReq{
 		UserId:   userId,
 		AuthType: usercenterModel.UserAuthTypeSmallWX,
 	})
 	if err != nil {
-		return nil, errors.Wrapf(ErrWxPayError, "Get user wechat openid err : %v , userId: %d , orderSn:%s", err, userId, orderSn)
+		return nil, errors.Wrapf(ErrWxPayError, "Get ws wechat openid err : %v , userId: %d , orderSn:%s", err, userId, orderSn)
 	}
 	if userResp.UserAuth == nil || userResp.UserAuth.Id == 0 {
-		return nil, errors.Wrapf(xerr.NewErrMsg("Get user wechat openid fail，Please pay before authorization by weChat"), "Get user WeChat openid does not exist  userId: %d , orderSn:%s", userId, orderSn)
+		return nil, errors.Wrapf(xerr.NewErrMsg("Get ws wechat openid fail，Please pay before authorization by weChat"), "Get ws WeChat openid does not exist  userId: %d , orderSn:%s", userId, orderSn)
 	}
 	openId := userResp.UserAuth.AuthKey
 
@@ -138,7 +138,7 @@ func (l *ThirdPaymentwxPayLogic) getPayHomestayPriceDescription(orderSn string) 
 
 	description := "homestay pay"
 
-	// get user openid
+	// get ws openid
 	resp, err := l.svcCtx.OrderRpc.HomestayOrderDetail(l.ctx, &order.HomestayOrderDetailReq{
 		Sn: orderSn,
 	})

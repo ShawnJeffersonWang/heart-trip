@@ -2,7 +2,7 @@ package ws
 
 import (
 	"encoding/json"
-	"golodge/app/usercenter/cmd/api/internal/types"
+	"golodge/app/websocket/cmd/api/internal/types"
 )
 
 type Hub struct {

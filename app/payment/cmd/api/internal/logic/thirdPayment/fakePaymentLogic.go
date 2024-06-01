@@ -70,10 +70,10 @@ func (l *FakePaymentLogic) createWxPrePayOrder(serviceType, orderSn string, tota
 	//	AuthType: usercenterModel.UserAuthTypeSmallWX,
 	//})
 	//if err != nil {
-	//	return nil, errors.New("Get user wechat openid err")
+	//	return nil, errors.New("Get ws wechat openid err")
 	//}
 	//if userResp.UserAuth == nil || userResp.UserAuth.Id == 0 {
-	//	return nil, errors.WithMessage(err, "Get user wechat openid fail, Please pay before authorization by wechat")
+	//	return nil, errors.WithMessage(err, "Get ws wechat openid fail, Please pay before authorization by wechat")
 	//}
 	//openId := userResp.UserAuth.AuthKey
 

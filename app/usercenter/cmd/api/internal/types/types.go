@@ -65,13 +65,6 @@ type LoginResp struct {
 	RefreshAfter int64  `json:"refreshAfter"`
 }
 
-type Message struct {
-	ToUserId   string `json:"toUserId"`
-	FromUserId string `json:"fromUserId"`
-	Content    string `json:"content"`
-	Type       string `json:"type"`
-}
-
 type RegisterReq struct {
 	Mobile   string `json:"mobile"`
 	Password string `json:"password"`

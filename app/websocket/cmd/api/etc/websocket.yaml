@@ -1,6 +1,6 @@
-Name: usercenter-api
+Name: websocket-api
 Host: 0.0.0.0
-Port: 1004
+Port: 1005
 Mode: dev
 
 #jwtAuth

@@ -2,9 +2,9 @@ package svc
 
 import (
 	"golodge/app/travel/cmd/rpc/travel"
-	"golodge/app/usercenter/cmd/api/internal/config"
-	"golodge/app/usercenter/cmd/api/internal/logic/ws"
 	"golodge/app/usercenter/cmd/rpc/usercenter"
+	"golodge/app/websocket/cmd/api/internal/config"
+	"golodge/app/websocket/cmd/api/internal/logic/ws"
 
 	"github.com/zeromicro/go-zero/rest"
 	"github.com/zeromicro/go-zero/zrpc"

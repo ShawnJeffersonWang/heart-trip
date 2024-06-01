@@ -1,11 +1,8 @@
-package user
+package ws
 
 import (
 	"context"
-	"fmt"
 	"github.com/gorilla/websocket"
-	"golodge/app/websocket/cmd/api/internal/logic/ws"
-	"log"
 	"net/http"
 
 	"github.com/zeromicro/go-zero/core/logx"
@@ -38,24 +35,23 @@ type ChatRequest struct {
 
 func (l *ChatLogic) Chat(w http.ResponseWriter, r *http.Request) {
 	// todo: add your logic here and delete this line
-	userID := "1"
-	//userID := r.Header.Get("User-ID")
-	//if userID == "" {
-	//	http.Error(w, "Unauthorized", http.StatusUnauthorized)
-	//	return
-	//}
+	fromUserId := r.Header.Get("From-User-ID")
+	toUserId := r.Header.Get("To-User-ID")
 
-	fmt.Println("  --userID: ", userID)
-	conn, err := upgrader.Upgrade(w, r, nil)
-	if err != nil {
-		log.Println("Chat: ", err)
+	if fromUserId == "" || toUserId == "" {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
-	client := &ws.Client{
+
+	conn, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		return
+	}
+	client := &Client{
 		Hub:    l.svcCtx.Hub,
 		Conn:   conn,
-		Send:   make(chan []byte, ws.BufSize),
-		UserId: userID,
+		Send:   make(chan []byte, BufSize),
+		UserId: fromUserId,
 	}
 	client.Hub.Register <- client
 

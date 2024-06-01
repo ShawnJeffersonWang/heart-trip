@@ -78,9 +78,5 @@ service usercenter {
 	@doc "upload"
 	@handler fileUpload
 	post /upload returns (FileUploadResp)
-
-	@doc "chat"
-	@handler chat
-	get /chat
 }
 

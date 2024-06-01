@@ -13,7 +13,6 @@ type Config struct {
 	}
 	//OSS_ACCESS_KEY_ID     string `json:",env=OSS_ACCESS_KEY_ID"`
 	//OSS_ACCESS_KEY_SECRET string `json:",env=OSS_ACCESS_KEY_SECRET"`
-	WxMiniConf        WxMiniConf
 	UsercenterRpcConf zrpc.RpcClientConf
 	TravelRpcConf     zrpc.RpcClientConf
 }

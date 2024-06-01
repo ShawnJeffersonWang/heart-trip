@@ -32,12 +32,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
-				// chat
-				Method:  http.MethodGet,
-				Path:    "/chat",
-				Handler: user.ChatHandler(serverCtx),
-			},
-			{
 				// upload
 				Method:  http.MethodPost,
 				Path:    "/upload",
