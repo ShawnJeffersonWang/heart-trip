@@ -81,6 +81,6 @@ service usercenter {
 
 	@doc "chat"
 	@handler chat
-	post /chat
+	get /chat
 }
 
