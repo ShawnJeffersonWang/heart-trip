@@ -33,7 +33,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				// chat
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/chat",
 				Handler: user.ChatHandler(serverCtx),
 			},
