@@ -37,7 +37,7 @@ const (
 	Travel_SearchByLocation_FullMethodName           = "/pb.travel/searchByLocation"
 )
 
-// TravelClient is the client API for Travel service.
+// TravelClient is the ws API for Travel service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TravelClient interface {

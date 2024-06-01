@@ -163,3 +163,10 @@ type (
 type FileUploadResp {
     URL string `json:"url"`
 }
+
+type Message {
+    ToUserId string `json:"toUserId"`
+    FromUserId string `json:"fromUserId"`
+    Content string `json:"content"`
+    Type string `json:"type"`
+}

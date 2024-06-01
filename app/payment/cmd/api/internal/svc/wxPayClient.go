@@ -19,13 +19,13 @@ func NewWxPayClientV3(c config.Config) (*core.Client, error) {
 	}
 
 	ctx := context.Background()
-	// Initialize the client with the merchant's private key, etc., and make it have the ability to automatically obtain WeChat payment platform certificates at regular intervals
+	// Initialize the ws with the merchant's private key, etc., and make it have the ability to automatically obtain WeChat payment platform certificates at regular intervals
 	opts := []core.ClientOption{
 		option.WithWechatPayAutoAuthCipher(c.WxPayConf.MchId, c.WxPayConf.SerialNo, mchPrivateKey, c.WxPayConf.APIv3Key),
 	}
 	client, err := core.NewClient(ctx, opts...)
 	if err != nil {
-		return nil, errors.Wrapf(xerr.NewErrMsg("wechat pay fail"), "new wechat pay client err:%s", err)
+		return nil, errors.Wrapf(xerr.NewErrMsg("wechat pay fail"), "new wechat pay ws err:%s", err)
 	}
 
 	return client, nil

@@ -25,7 +25,7 @@ const (
 	Order_UserHomestayOrderList_FullMethodName         = "/pb.order/userHomestayOrderList"
 )
 
-// OrderClient is the client API for Order service.
+// OrderClient is the ws API for Order service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrderClient interface {

@@ -17,6 +17,7 @@ require (
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
 	github.com/golang-module/carbon/v2 v2.0.1
 	github.com/google/uuid v1.5.0
+	github.com/gorilla/websocket v1.4.2
 )
 
 require (
