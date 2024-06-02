@@ -5,10 +5,10 @@ import (
 	"github.com/Masterminds/squirrel"
 	"github.com/jinzhu/copier"
 	"github.com/zeromicro/go-zero/core/mr"
-	"golodge/app/usercenter/model"
-
 	"golodge/app/usercenter/cmd/rpc/internal/svc"
 	"golodge/app/usercenter/cmd/rpc/pb"
+	"golodge/app/usercenter/model"
+	"sort"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -55,7 +55,9 @@ func (l *UserListLogic) UserList(in *pb.UserListReq) (*pb.UserListResp, error) {
 			}
 		})
 	}
-
+	sort.SliceStable(resp, func(i, j int) bool {
+		return resp[i].Id > resp[j].Id
+	})
 	return &pb.UserListResp{
 		List: resp,
 	}, nil
