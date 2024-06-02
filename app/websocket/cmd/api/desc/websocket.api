@@ -3,19 +3,19 @@ syntax = "v1"
 info (
 	title:   "用户中心服务"
 	desc:    "用户中心服务"
-	author:  "Mikael"
-	email:   "13247629622@163.com"
+	author:  "Shawn"
+	email:   "xw2002121@gmail.com"
 	version: "v1"
 )
 
 import (
-	"ws/ws.api"
+	"websock/ws.api"
 )
 
 //need login
 @server (
 	prefix: websocket/v1
-	group:  ws
+	group:  websock
 	jwt:    JwtAuth
 )
 service websocket {
