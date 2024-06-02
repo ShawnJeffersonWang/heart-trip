@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/gorilla/websocket"
 	"github.com/zeromicro/go-zero/core/logx"
-	"golodge/app/websocket/cmd/api/internal/logic/process"
 	"golodge/app/websocket/cmd/api/internal/svc"
 	"golodge/common/ctxdata"
 	"net/http"
@@ -34,7 +33,7 @@ func NewChatLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ChatLogic {
 	}
 }
 
-func (l *ChatLogic) Chat(w http.ResponseWriter, r *http.Request, hub *process.Hub) {
+func (l *ChatLogic) Chat(w http.ResponseWriter, r *http.Request, hub *svc.Hub) {
 	// todo: add your logic here and delete this line
 	// bug: 不能fromUserId := string(ctxdata.GetUidFromCtx(l.ctx))
 	fromUserId := strconv.FormatInt(ctxdata.GetUidFromCtx(l.ctx), 10)
@@ -50,10 +49,10 @@ func (l *ChatLogic) Chat(w http.ResponseWriter, r *http.Request, hub *process.Hu
 	if err != nil {
 		return
 	}
-	client := &process.Client{
+	client := &svc.Client{
 		Hub:    hub,
 		Conn:   conn,
-		Send:   make(chan []byte, process.BufSize),
+		Send:   make(chan []byte, svc.BufSize),
 		UserId: fromUserId,
 	}
 	client.Hub.Register <- client

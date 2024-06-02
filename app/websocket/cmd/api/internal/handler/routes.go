@@ -2,7 +2,6 @@
 package handler
 
 import (
-	"golodge/app/websocket/cmd/api/internal/logic/process"
 	"net/http"
 
 	websock "golodge/app/websocket/cmd/api/internal/handler/websock"
@@ -11,14 +10,20 @@ import (
 	"github.com/zeromicro/go-zero/rest"
 )
 
-func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext, hub *process.Hub) {
+func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
 				// chat
 				Method:  http.MethodGet,
 				Path:    "/chat",
-				Handler: websock.ChatHandler(serverCtx, hub),
+				Handler: websock.ChatHandler(serverCtx),
+			},
+			{
+				// get inbox messages
+				Method:  http.MethodPost,
+				Path:    "/getInbox",
+				Handler: websock.GetInboxHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),

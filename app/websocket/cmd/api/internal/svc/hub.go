@@ -1,4 +1,4 @@
-package process
+package svc
 
 import (
 	"encoding/json"

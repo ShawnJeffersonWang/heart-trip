@@ -7,7 +7,6 @@ import (
 	"github.com/zeromicro/go-zero/rest"
 	"golodge/app/websocket/cmd/api/internal/config"
 	"golodge/app/websocket/cmd/api/internal/handler"
-	"golodge/app/websocket/cmd/api/internal/logic/process"
 	"golodge/app/websocket/cmd/api/internal/svc"
 )
 
@@ -22,9 +21,7 @@ func main() {
 	server := rest.MustNewServer(c.RestConf, rest.WithCors("*"))
 	defer server.Stop()
 
-	hub := process.NewHub()
-	go hub.Run()
-	handler.RegisterHandlers(server, ctx, hub)
+	handler.RegisterHandlers(server, ctx)
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()

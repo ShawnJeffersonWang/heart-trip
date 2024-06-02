@@ -1,10 +1,9 @@
-package websock
+package svc
 
 import (
 	"bytes"
 	"context"
 	"github.com/gorilla/websocket"
-	"golodge/app/websocket/cmd/api/internal/svc"
 	"golodge/app/websocket/cmd/api/internal/types"
 	"golodge/app/websocket/model"
 	"log"
@@ -26,13 +25,13 @@ var (
 )
 
 type Client struct {
-	Hub    *svc.Hub
+	Hub    *Hub
 	Conn   *websocket.Conn
 	Send   chan []byte
 	UserId string
 }
 
-func (c *Client) ReadPump(fromUserId, toUserId string, svcCtx *svc.ServiceContext) {
+func (c *Client) ReadPump(fromUserId, toUserId string, svcCtx *ServiceContext) {
 	defer func() {
 		c.Hub.Unregister <- c
 		c.Conn.Close()

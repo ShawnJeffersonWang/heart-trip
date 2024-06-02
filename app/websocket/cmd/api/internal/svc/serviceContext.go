@@ -12,8 +12,9 @@ import (
 
 type ServiceContext struct {
 	Config                config.Config
+	Hub                   *Hub
 	UsercenterRpc         usercenter.Usercenter
-	MessageModel          model.MessagesModel
+	MessageModel          model.MessageModel
 	TravelRpc             travel.Travel
 	SetUidToCtxMiddleware rest.Middleware
 }
@@ -21,10 +22,14 @@ type ServiceContext struct {
 func NewServiceContext(c config.Config) *ServiceContext {
 	sqlConn := sqlx.NewMysql(c.DB.DataSource)
 
+	hub := NewHub()
+	go hub.Run()
+
 	return &ServiceContext{
 		Config:        c,
+		Hub:           hub,
 		UsercenterRpc: usercenter.NewUsercenter(zrpc.MustNewClient(c.UsercenterRpcConf)),
-		MessageModel:  model.NewMessagesModel(sqlConn, c.Cache),
+		MessageModel:  model.NewMessageModel(sqlConn, c.Cache),
 		TravelRpc:     travel.NewTravel(zrpc.MustNewClient(c.TravelRpcConf)),
 	}
 }
