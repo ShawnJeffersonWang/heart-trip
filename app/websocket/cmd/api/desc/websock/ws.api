@@ -22,4 +22,12 @@ type Message {
     FromUserId string `json:"fromUserId"`
     Content string `json:"content"`
     Type string `json:"type"`
+    CreateTime int64 `json:"createTime"`
+}
+
+type GetInboxReq {
+}
+
+type GetInboxResp {
+    Messages []Message `json:"messages"`
 }

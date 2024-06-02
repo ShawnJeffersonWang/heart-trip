@@ -1,4 +1,4 @@
-package process
+package websock
 
 import (
 	"bytes"
@@ -26,7 +26,7 @@ var (
 )
 
 type Client struct {
-	Hub    *Hub
+	Hub    *svc.Hub
 	Conn   *websocket.Conn
 	Send   chan []byte
 	UserId string
@@ -64,12 +64,12 @@ func (c *Client) ReadPump(fromUserId, toUserId string, svcCtx *svc.ServiceContex
 		c.Hub.Broadcast <- msg
 		fromId, _ := strconv.Atoi(fromUserId)
 		toId, _ := strconv.Atoi(toUserId)
-		messages := model.Messages{
+		insertMsg := model.Message{
 			FromUserId: int64(fromId),
 			ToUserId:   int64(toId),
 			Content:    string(message),
 		}
-		svcCtx.MessageModel.Insert(context.Background(), &messages)
+		svcCtx.MessageModel.Insert(context.Background(), &insertMsg)
 	}
 }
 
