@@ -96,6 +96,28 @@ message AddHomestayReq {
 message AddHomestayResp {
 }
 
+message UpdateHomestayReq {
+  int64 homestayId=1;
+  string title = 2;
+  string titleTags = 3;
+  string bannerUrls = 4;
+  string latitude = 5;
+  string longitude = 6;
+  string location = 7;
+  string facilities = 8;
+  string area = 9;
+  string roomConfig = 10;
+  string cleanVideo = 11;
+  int64 priceBefore = 12;              //民宿价格
+  int64 priceAfter = 13;
+  int64 hostId = 14;
+  string hostAvatar = 15;
+  string hostNickname = 16;
+  int64 rowState=17;
+}
+message UpdateHomestayResp {
+}
+
 message DeleteHomestayReq {
   int64 userId = 1;
   int64 homestayId = 2;
@@ -214,6 +236,7 @@ service travel {
   rpc homestayDetail(HomestayDetailReq) returns(HomestayDetailResp);
   rpc homestayDetailWithoutLogin(HomestayDetailReq) returns (HomestayDetailResp);
   rpc addHomestay(AddHomestayReq) returns (AddHomestayResp);
+  rpc updateHomestay(UpdateHomestayReq) returns (UpdateHomestayResp);
   rpc deleteHomestay(DeleteHomestayReq) returns (DeleteHomestayResp);
   rpc adminDeleteHomestay(AdminDeleteHomestayReq) returns (AdminDeleteHomestayResp);
   rpc addComment(AddCommentReq) returns (AddCommentResp);

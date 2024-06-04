@@ -65,6 +65,28 @@ type (
 )
 
 type (
+    UpdateHomestayReq {
+        HomestayId int64 `json:"homestayId"`
+        Title string `json:"title"`
+        TitleTags string `json:"titleTags"`
+        BannerUrls string `json:"bannerUrls"`
+        Latitude string `json:"latitude"`
+        Longitude string `json:"longitude"`
+        Location string `json:"location"`
+        Facilities string `json:"facilities"`
+        Area string `json:"area"`
+        RoomConfig string `json:"roomConfig"`
+        CleanVideo string `json:"cleanVideo"`
+        PriceBefore int64 `json:"priceBefore"`                //民宿价格
+        PriceAfter int64 `json:"priceAfter"`
+        RowState int64 `json:"rowState"`
+    }
+    UpdateHomestayResp {
+        Success bool `json:"success"`
+    }
+)
+
+type (
     DeleteHomestayReq {
         HomestayId int64 `json:"homestayId"`
     }
@@ -108,6 +130,16 @@ type (
         PageSize int64 `json:"pageSize"`
     }
     HomestayListResp {
+        List []Homestay `json:"list"`
+    }
+)
+
+type (
+    MyHomestayListReq {
+        Page int64 `json:"page"`
+        PageSize int64 `json:"pageSize"`
+    }
+    MyHomestayListResp {
         List []Homestay `json:"list"`
     }
 )

@@ -44,6 +44,8 @@ type (
 	SearchByLocationResp    = pb.SearchByLocationResp
 	SearchHistoryReq        = pb.SearchHistoryReq
 	SearchHistoryResp       = pb.SearchHistoryResp
+	UpdateHomestayReq       = pb.UpdateHomestayReq
+	UpdateHomestayResp      = pb.UpdateHomestayResp
 	WishListReq             = pb.WishListReq
 	WishListResp            = pb.WishListResp
 
@@ -52,6 +54,7 @@ type (
 		HomestayDetail(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error)
 		HomestayDetailWithoutLogin(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error)
 		AddHomestay(ctx context.Context, in *AddHomestayReq, opts ...grpc.CallOption) (*AddHomestayResp, error)
+		UpdateHomestay(ctx context.Context, in *UpdateHomestayReq, opts ...grpc.CallOption) (*UpdateHomestayResp, error)
 		DeleteHomestay(ctx context.Context, in *DeleteHomestayReq, opts ...grpc.CallOption) (*DeleteHomestayResp, error)
 		AdminDeleteHomestay(ctx context.Context, in *AdminDeleteHomestayReq, opts ...grpc.CallOption) (*AdminDeleteHomestayResp, error)
 		AddComment(ctx context.Context, in *AddCommentReq, opts ...grpc.CallOption) (*AddCommentResp, error)
@@ -92,6 +95,11 @@ func (m *defaultTravel) HomestayDetailWithoutLogin(ctx context.Context, in *Home
 func (m *defaultTravel) AddHomestay(ctx context.Context, in *AddHomestayReq, opts ...grpc.CallOption) (*AddHomestayResp, error) {
 	client := pb.NewTravelClient(m.cli.Conn())
 	return client.AddHomestay(ctx, in, opts...)
+}
+
+func (m *defaultTravel) UpdateHomestay(ctx context.Context, in *UpdateHomestayReq, opts ...grpc.CallOption) (*UpdateHomestayResp, error) {
+	client := pb.NewTravelClient(m.cli.Conn())
+	return client.UpdateHomestay(ctx, in, opts...)
 }
 
 func (m *defaultTravel) DeleteHomestay(ctx context.Context, in *DeleteHomestayReq, opts ...grpc.CallOption) (*DeleteHomestayResp, error) {

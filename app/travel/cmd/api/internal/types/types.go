@@ -246,10 +246,40 @@ type LikeCommentResp struct {
 	Success bool `json:"success"`
 }
 
+type MyHomestayListReq struct {
+	Page     int64 `json:"page"`
+	PageSize int64 `json:"pageSize"`
+}
+
+type MyHomestayListResp struct {
+	List []Homestay `json:"list"`
+}
+
 type SearchByLocationReq struct {
 	Location string `json:"location"`
 }
 
 type SearchByLocationResp struct {
 	List []Homestay `json:"list"`
+}
+
+type UpdateHomestayReq struct {
+	HomestayId  int64  `json:"homestayId"`
+	Title       string `json:"title"`
+	TitleTags   string `json:"titleTags"`
+	BannerUrls  string `json:"bannerUrls"`
+	Latitude    string `json:"latitude"`
+	Longitude   string `json:"longitude"`
+	Location    string `json:"location"`
+	Facilities  string `json:"facilities"`
+	Area        string `json:"area"`
+	RoomConfig  string `json:"roomConfig"`
+	CleanVideo  string `json:"cleanVideo"`
+	PriceBefore int64  `json:"priceBefore"` //民宿价格
+	PriceAfter  int64  `json:"priceAfter"`
+	RowState    int64  `json:"rowState"`
+}
+
+type UpdateHomestayResp struct {
+	Success bool `json:"success"`
 }

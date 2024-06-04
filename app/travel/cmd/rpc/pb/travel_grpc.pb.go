@@ -22,6 +22,7 @@ const (
 	Travel_HomestayDetail_FullMethodName             = "/pb.travel/homestayDetail"
 	Travel_HomestayDetailWithoutLogin_FullMethodName = "/pb.travel/homestayDetailWithoutLogin"
 	Travel_AddHomestay_FullMethodName                = "/pb.travel/addHomestay"
+	Travel_UpdateHomestay_FullMethodName             = "/pb.travel/updateHomestay"
 	Travel_DeleteHomestay_FullMethodName             = "/pb.travel/deleteHomestay"
 	Travel_AdminDeleteHomestay_FullMethodName        = "/pb.travel/adminDeleteHomestay"
 	Travel_AddComment_FullMethodName                 = "/pb.travel/addComment"
@@ -37,7 +38,7 @@ const (
 	Travel_SearchByLocation_FullMethodName           = "/pb.travel/searchByLocation"
 )
 
-// TravelClient is the ws API for Travel service.
+// TravelClient is the client API for Travel service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TravelClient interface {
@@ -45,6 +46,7 @@ type TravelClient interface {
 	HomestayDetail(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error)
 	HomestayDetailWithoutLogin(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error)
 	AddHomestay(ctx context.Context, in *AddHomestayReq, opts ...grpc.CallOption) (*AddHomestayResp, error)
+	UpdateHomestay(ctx context.Context, in *UpdateHomestayReq, opts ...grpc.CallOption) (*UpdateHomestayResp, error)
 	DeleteHomestay(ctx context.Context, in *DeleteHomestayReq, opts ...grpc.CallOption) (*DeleteHomestayResp, error)
 	AdminDeleteHomestay(ctx context.Context, in *AdminDeleteHomestayReq, opts ...grpc.CallOption) (*AdminDeleteHomestayResp, error)
 	AddComment(ctx context.Context, in *AddCommentReq, opts ...grpc.CallOption) (*AddCommentResp, error)
@@ -89,6 +91,15 @@ func (c *travelClient) HomestayDetailWithoutLogin(ctx context.Context, in *Homes
 func (c *travelClient) AddHomestay(ctx context.Context, in *AddHomestayReq, opts ...grpc.CallOption) (*AddHomestayResp, error) {
 	out := new(AddHomestayResp)
 	err := c.cc.Invoke(ctx, Travel_AddHomestay_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *travelClient) UpdateHomestay(ctx context.Context, in *UpdateHomestayReq, opts ...grpc.CallOption) (*UpdateHomestayResp, error) {
+	out := new(UpdateHomestayResp)
+	err := c.cc.Invoke(ctx, Travel_UpdateHomestay_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -220,6 +231,7 @@ type TravelServer interface {
 	HomestayDetail(context.Context, *HomestayDetailReq) (*HomestayDetailResp, error)
 	HomestayDetailWithoutLogin(context.Context, *HomestayDetailReq) (*HomestayDetailResp, error)
 	AddHomestay(context.Context, *AddHomestayReq) (*AddHomestayResp, error)
+	UpdateHomestay(context.Context, *UpdateHomestayReq) (*UpdateHomestayResp, error)
 	DeleteHomestay(context.Context, *DeleteHomestayReq) (*DeleteHomestayResp, error)
 	AdminDeleteHomestay(context.Context, *AdminDeleteHomestayReq) (*AdminDeleteHomestayResp, error)
 	AddComment(context.Context, *AddCommentReq) (*AddCommentResp, error)
@@ -248,6 +260,9 @@ func (UnimplementedTravelServer) HomestayDetailWithoutLogin(context.Context, *Ho
 }
 func (UnimplementedTravelServer) AddHomestay(context.Context, *AddHomestayReq) (*AddHomestayResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddHomestay not implemented")
+}
+func (UnimplementedTravelServer) UpdateHomestay(context.Context, *UpdateHomestayReq) (*UpdateHomestayResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateHomestay not implemented")
 }
 func (UnimplementedTravelServer) DeleteHomestay(context.Context, *DeleteHomestayReq) (*DeleteHomestayResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteHomestay not implemented")
@@ -351,6 +366,24 @@ func _Travel_AddHomestay_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TravelServer).AddHomestay(ctx, req.(*AddHomestayReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Travel_UpdateHomestay_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateHomestayReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).UpdateHomestay(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Travel_UpdateHomestay_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).UpdateHomestay(ctx, req.(*UpdateHomestayReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -607,6 +640,10 @@ var Travel_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "addHomestay",
 			Handler:    _Travel_AddHomestay_Handler,
+		},
+		{
+			MethodName: "updateHomestay",
+			Handler:    _Travel_UpdateHomestay_Handler,
 		},
 		{
 			MethodName: "deleteHomestay",
