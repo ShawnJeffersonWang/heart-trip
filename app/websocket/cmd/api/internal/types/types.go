@@ -5,7 +5,7 @@ type GetInboxReq struct {
 }
 
 type GetInboxResp struct {
-	Messages []*Message `json:"messages"`
+	Messages []Message `json:"messages"`
 }
 
 type Message struct {

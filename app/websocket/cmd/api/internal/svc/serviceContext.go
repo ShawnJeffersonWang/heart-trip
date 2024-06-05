@@ -20,7 +20,7 @@ type ServiceContext struct {
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
-	sqlConn := sqlx.NewMysql(c.DB.DataSource)
+	conn := sqlx.NewMysql(c.DB.DataSource)
 
 	hub := NewHub()
 	go hub.Run()
@@ -29,7 +29,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		Config:        c,
 		Hub:           hub,
 		UsercenterRpc: usercenter.NewUsercenter(zrpc.MustNewClient(c.UsercenterRpcConf)),
-		MessageModel:  model.NewMessageModel(sqlConn, c.Cache),
+		MessageModel:  model.NewMessageModel(conn),
 		TravelRpc:     travel.NewTravel(zrpc.MustNewClient(c.TravelRpcConf)),
 	}
 }

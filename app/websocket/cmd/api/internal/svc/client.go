@@ -3,6 +3,7 @@ package svc
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"github.com/gorilla/websocket"
 	"golodge/app/websocket/cmd/api/internal/types"
 	"golodge/app/websocket/model"
@@ -68,7 +69,11 @@ func (c *Client) ReadPump(fromUserId, toUserId string, svcCtx *ServiceContext) {
 			ToUserId:   int64(toId),
 			Content:    string(message),
 		}
-		svcCtx.MessageModel.Insert(context.Background(), &insertMsg)
+		_, err = svcCtx.MessageModel.Insert(context.Background(), &insertMsg)
+		if err != nil {
+			fmt.Println("插入失败")
+			return
+		}
 	}
 }
 
