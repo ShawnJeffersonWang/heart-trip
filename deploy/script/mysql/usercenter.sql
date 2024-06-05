@@ -1,3 +1,14 @@
+create table message
+(
+    id           bigint auto_increment
+        primary key,
+    from_user_id bigint                             not null,
+    to_user_id   bigint                             not null,
+    content      text                               not null,
+    del_state    tinyint  default 0                 not null,
+    create_time  datetime default CURRENT_TIMESTAMP not null
+);
+
 create table user
 (
     id          bigint auto_increment

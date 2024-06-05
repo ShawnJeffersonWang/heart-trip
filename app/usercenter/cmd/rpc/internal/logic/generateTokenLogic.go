@@ -46,6 +46,7 @@ func (l *GenerateTokenLogic) getJwtToken(secretKey string, iat, seconds, userId 
 
 	claims := make(jwt.MapClaims)
 	claims["exp"] = iat + seconds
+	// iat: issued at
 	claims["iat"] = iat
 	claims[ctxdata.CtxKeyJwtUserId] = userId
 	token := jwt.New(jwt.SigningMethodHS256)
