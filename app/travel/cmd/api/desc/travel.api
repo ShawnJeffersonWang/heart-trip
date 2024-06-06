@@ -3,8 +3,8 @@ syntax = "v1"
 info (
 	title:   "旅游服务"
 	desc:    "旅游服务"
-	author:  "Mikael"
-	email:   "13247629622@163.com"
+	author:  "Shawn"
+	email:   "xw2002121@gmail.com"
 	version: "v1"
 )
 
@@ -23,23 +23,23 @@ import (
 service travel {
 	@doc "homestay room detail"
 	@handler homestayDetailWithoutLogin
-	post /homestay/homestayDetailWithoutLogin (HomestayDetailReq) returns (HomestayDetailResp)
+	get /homestay/homestayDetailWithoutLogin (HomestayDetailReq) returns (HomestayDetailResp)
 
 	@doc "homestay room list"
 	@handler homestayList
-	post /homestay/homestayList (HomestayListReq) returns (HomestayListResp)
+	get /homestay/homestayList (HomestayListReq) returns (HomestayListResp)
 
 	@doc "search by location"
 	@handler searchByLocation
-	post /homestay/searchByLocation (SearchByLocationReq) returns (SearchByLocationResp)
+	get /homestay/searchByLocation (SearchByLocationReq) returns (SearchByLocationResp)
 
 	@doc "boss all homestay room"
 	@handler businessList
-	post /homestay/businessList (BusinessListReq) returns (BusinessListResp)
+	get /homestay/businessList (BusinessListReq) returns (BusinessListResp)
 
 	@doc "guess homestay room"
 	@handler guessList
-	post /homestay/guessList (GuessListReq) returns (GuessListResp)
+	get /homestay/guessList (GuessListReq) returns (GuessListResp)
 }
 
 // bug: 一直根据jwt校验不出userId, 原因是这里没有加jwt中间件
@@ -52,7 +52,7 @@ service travel {
 service travel {
 	@doc "homestay room detail"
 	@handler homestayDetail
-	post /homestay/homestayDetail (HomestayDetailReq) returns (HomestayDetailResp)
+	get /homestay/homestayDetail (HomestayDetailReq) returns (HomestayDetailResp)
 
 	@doc "add homestay"
 	@handler addHomestay
@@ -60,15 +60,15 @@ service travel {
 
 	@doc "delete homestay"
 	@handler deleteHomestay
-	post /homestay/deleteHomestay (DeleteHomestayReq) returns (DeleteHomestayResp)
+	delete /homestay/deleteHomestay (DeleteHomestayReq) returns (DeleteHomestayResp)
 
 	@doc "update homestay"
 	@handler updateHomestay
-	post /homestay/updateHomestay (UpdateHomestayReq) returns (UpdateHomestayResp)
+	put /homestay/updateHomestay (UpdateHomestayReq) returns (UpdateHomestayResp)
 
 	@doc "admin delete homestay"
 	@handler adminDeleteHomestay
-	post /homestay/adminDeleteHomestay (AdminDeleteHomestayReq) returns (AdminDeleteHomestayResp)
+	delete /homestay/adminDeleteHomestay (AdminDeleteHomestayReq) returns (AdminDeleteHomestayResp)
 
 	@doc "add guess"
 	@handler addGuess
@@ -76,7 +76,7 @@ service travel {
 
 	@doc "my homestay room list"
 	@handler myHomestayList
-	post /homestay/myHomestayList (MyHomestayListReq) returns (MyHomestayListResp)
+	get /homestay/myHomestayList (MyHomestayListReq) returns (MyHomestayListResp)
 }
 
 //====================================> travel-homestayBusiness v1 <====================================
@@ -88,15 +88,15 @@ service travel {
 service travel {
 	@doc "good boss"
 	@handler goodBoss
-	post /homestayBussiness/goodBoss (GoodBossReq) returns (GoodBossResp)
+	get /homestayBussiness/goodBoss (GoodBossReq) returns (GoodBossResp)
 
 	@doc "business list"
 	@handler homestayBussinessList
-	post /homestayBussiness/homestayBussinessList (HomestayBussinessListReq) returns (HomestayBussinessListResp)
+	get /homestayBussiness/homestayBussinessList (HomestayBussinessListReq) returns (HomestayBussinessListResp)
 
 	@doc "boss detail"
 	@handler homestayBussinessDetail
-	post /homestayBussiness/homestayBussinessDetail (HomestayBussinessDetailReq) returns (HomestayBussinessDetailResp)
+	get /homestayBussiness/homestayBussinessDetail (HomestayBussinessDetailReq) returns (HomestayBussinessDetailResp)
 }
 
 //========================> homestay-homestayComment v1 <===================================
@@ -108,7 +108,7 @@ service travel {
 service travel {
 	@doc "homestay comment list"
 	@handler commentList
-	post /homestayComment/commentList (CommentListReq) returns (CommentListResp)
+	get /homestayComment/commentList (CommentListReq) returns (CommentListResp)
 
 	@doc "like comment"
 	@handler likeComment

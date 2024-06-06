@@ -17,31 +17,31 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				// boss all homestay room
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/homestay/businessList",
 				Handler: homestay.BusinessListHandler(serverCtx),
 			},
 			{
 				// guess homestay room
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/homestay/guessList",
 				Handler: homestay.GuessListHandler(serverCtx),
 			},
 			{
 				// homestay room detail
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/homestay/homestayDetailWithoutLogin",
 				Handler: homestay.HomestayDetailWithoutLoginHandler(serverCtx),
 			},
 			{
 				// homestay room list
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/homestay/homestayList",
 				Handler: homestay.HomestayListHandler(serverCtx),
 			},
 			{
 				// search by location
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/homestay/searchByLocation",
 				Handler: homestay.SearchByLocationHandler(serverCtx),
 			},
@@ -65,31 +65,31 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				// admin delete homestay
-				Method:  http.MethodPost,
+				Method:  http.MethodDelete,
 				Path:    "/homestay/adminDeleteHomestay",
 				Handler: homestay.AdminDeleteHomestayHandler(serverCtx),
 			},
 			{
 				// delete homestay
-				Method:  http.MethodPost,
+				Method:  http.MethodDelete,
 				Path:    "/homestay/deleteHomestay",
 				Handler: homestay.DeleteHomestayHandler(serverCtx),
 			},
 			{
 				// homestay room detail
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/homestay/homestayDetail",
 				Handler: homestay.HomestayDetailHandler(serverCtx),
 			},
 			{
 				// my homestay room list
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/homestay/myHomestayList",
 				Handler: homestay.MyHomestayListHandler(serverCtx),
 			},
 			{
 				// update homestay
-				Method:  http.MethodPost,
+				Method:  http.MethodPut,
 				Path:    "/homestay/updateHomestay",
 				Handler: homestay.UpdateHomestayHandler(serverCtx),
 			},
@@ -102,19 +102,19 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				// good boss
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/homestayBussiness/goodBoss",
 				Handler: homestayBussiness.GoodBossHandler(serverCtx),
 			},
 			{
 				// boss detail
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/homestayBussiness/homestayBussinessDetail",
 				Handler: homestayBussiness.HomestayBussinessDetailHandler(serverCtx),
 			},
 			{
 				// business list
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/homestayBussiness/homestayBussinessList",
 				Handler: homestayBussiness.HomestayBussinessListHandler(serverCtx),
 			},
@@ -126,7 +126,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				// homestay comment list
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/homestayComment/commentList",
 				Handler: homestayComment.CommentListHandler(serverCtx),
 			},

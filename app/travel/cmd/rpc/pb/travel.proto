@@ -97,7 +97,7 @@ message AddHomestayResp {
 }
 
 message UpdateHomestayReq {
-  int64 homestayId=1;
+  int64 homestayId = 1;
   string title = 2;
   string titleTags = 3;
   string bannerUrls = 4;
@@ -113,7 +113,7 @@ message UpdateHomestayReq {
   int64 hostId = 14;
   string hostAvatar = 15;
   string hostNickname = 16;
-  int64 rowState=17;
+  int64 rowState = 17;
 }
 message UpdateHomestayResp {
 }
@@ -134,7 +134,7 @@ message AdminDeleteHomestayResp {
 }
 
 message WishListReq {
-  int64 id = 1;
+  int64 userId = 1;
 }
 message WishListResp {
   repeated Homestay list = 1;
@@ -145,7 +145,7 @@ message AddWishListReq {
   int64 homestayId = 2;
 }
 message AddWishListResp {
-  Homestay homestay = 1;
+  bool success = 1;
 }
 
 message RemoveWishListReq {

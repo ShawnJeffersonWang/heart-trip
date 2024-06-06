@@ -17,6 +17,7 @@ create table history
 (
     id                   bigint auto_increment
         primary key,
+    homestay_id          bigint                                  not null,
     create_time          datetime      default CURRENT_TIMESTAMP not null,
     last_browsing_time   datetime      default CURRENT_TIMESTAMP not null,
     title                varchar(32)   default ''                not null,
@@ -29,7 +30,6 @@ create table history
     homestay_business_id bigint                                  not null,
     rating_stars         float                                   not null,
     user_id              bigint                                  not null,
-    homestay_id          bigint                                  not null,
     del_state            tinyint       default 0                 not null,
     version              bigint        default 0                 not null,
     delete_time          datetime      default CURRENT_TIMESTAMP not null

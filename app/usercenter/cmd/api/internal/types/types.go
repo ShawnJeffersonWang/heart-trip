@@ -6,7 +6,7 @@ type AddWishListReq struct {
 }
 
 type AddWishListResp struct {
-	Homestay Homestay `json:"homestay"`
+	Success bool `json:"success"`
 }
 
 type ClearHistoryReq struct {

@@ -45,49 +45,49 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				// browing history list
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/user/browinghistory",
 				Handler: user.HistoryListHandler(serverCtx),
 			},
 			{
 				// clear history
-				Method:  http.MethodPost,
+				Method:  http.MethodDelete,
 				Path:    "/user/clearHistory",
 				Handler: user.ClearHistoryHandler(serverCtx),
 			},
 			{
 				// get user info
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/user/detail",
 				Handler: user.DetailHandler(serverCtx),
 			},
 			{
 				// remove history
-				Method:  http.MethodPost,
+				Method:  http.MethodDelete,
 				Path:    "/user/removeHistory",
 				Handler: user.RemoveHistoryHandler(serverCtx),
 			},
 			{
 				// remove wish list
-				Method:  http.MethodPost,
+				Method:  http.MethodDelete,
 				Path:    "/user/removeWishList",
 				Handler: user.RemoveWishListHandler(serverCtx),
 			},
 			{
 				// update user info
-				Method:  http.MethodPost,
+				Method:  http.MethodPut,
 				Path:    "/user/updateUserInfo",
 				Handler: user.UpdateUserInfoHandler(serverCtx),
 			},
 			{
 				// show user list
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/user/userList",
 				Handler: user.UserListHandler(serverCtx),
 			},
 			{
 				// wishList
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/user/wishList",
 				Handler: user.WishListHandler(serverCtx),
 			},

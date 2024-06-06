@@ -2,7 +2,6 @@ package user
 
 import (
 	"context"
-	"github.com/jinzhu/copier"
 	"golodge/app/travel/cmd/rpc/travel"
 	"golodge/common/ctxdata"
 
@@ -30,7 +29,7 @@ func (l *AddWishListLogic) AddWishList(req *types.AddWishListReq) (*types.AddWis
 	// todo: add your logic here and delete this line
 	userId := ctxdata.GetUidFromCtx(l.ctx)
 
-	wishListResp, err := l.svcCtx.TravelRpc.AddWishList(l.ctx, &travel.AddWishListReq{
+	_, err := l.svcCtx.TravelRpc.AddWishList(l.ctx, &travel.AddWishListReq{
 		UserId:     userId,
 		HomestayId: req.HomestayId,
 	})
@@ -38,10 +37,10 @@ func (l *AddWishListLogic) AddWishList(req *types.AddWishListReq) (*types.AddWis
 		return nil, err
 	}
 
-	var resp types.Homestay
-	_ = copier.Copy(&resp, wishListResp.Homestay)
+	//var resp types.Homestay
+	//_ = copier.Copy(&resp, wishListResp.Homestay)
 
 	return &types.AddWishListResp{
-		Homestay: resp,
+		Success: true,
 	}, nil
 }

@@ -36,15 +36,15 @@ func (l *DeleteHomestayLogic) DeleteHomestay(in *pb.DeleteHomestayReq) (*pb.Dele
 		return nil, errors.Wrapf(xerr.NewErrMsg(" not authorization "), "userId : %d ", in.UserId)
 	}
 	homestayActivity, err := l.svcCtx.HomestayActivityModel.FindOneByDataId(l.ctx, in.HomestayId)
-	whereBuilder := l.svcCtx.UserHomestayModel.SelectBuilder().Where(squirrel.Eq{
-		"homestay_id": in.HomestayId,
-	})
-	userHomestays, err := l.svcCtx.UserHomestayModel.FindAll(l.ctx, whereBuilder, "id desc")
+	//whereBuilder := l.svcCtx.UserHomestayModel.SelectBuilder().Where(squirrel.Eq{
+	//	"homestay_id": in.HomestayId,
+	//})
+	userHomestays, err := l.svcCtx.UserHomestayModel.FindAllByHomestayId(l.ctx, in.HomestayId)
 	// bug: 不能直接用userId查，结果不对
 	//userHomestay, err := l.svcCtx.UserHomestayModel.FindOneByUserIdAndHomestayId(l.ctx, in.UserId, in.HomestayId)
 	// bug: 不能直接用userId查
 	//history, err := l.svcCtx.HistoryModel.FindOneByHomestayIdAndUserId(l.ctx, in.HomestayId, in.UserId)
-	whereBuilder = l.svcCtx.HistoryModel.SelectBuilder().Where(squirrel.Eq{
+	whereBuilder := l.svcCtx.HistoryModel.SelectBuilder().Where(squirrel.Eq{
 		"homestay_id": in.HomestayId,
 	})
 	histories, err := l.svcCtx.HistoryModel.FindAll(l.ctx, whereBuilder, "id desc")
@@ -58,7 +58,7 @@ func (l *DeleteHomestayLogic) DeleteHomestay(in *pb.DeleteHomestayReq) (*pb.Dele
 			return err
 		}
 		for _, userHomestay := range userHomestays {
-			err := l.svcCtx.UserHomestayModel.DeleteSoft(ctx, session, userHomestay)
+			err := l.svcCtx.UserHomestayModel.UpdateDelState(l.ctx, userHomestay.UserId, userHomestay.HomestayId, 1)
 			if err != nil {
 				return err
 			}

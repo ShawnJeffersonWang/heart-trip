@@ -3,8 +3,8 @@ syntax = "v1"
 info(
     title: "用户实例"
     desc: "用户实例"
-    author: "Mikael"
-    email: "13247629622@163.com"
+    author: "Shawn"
+    email: "xw2002121@gmail.com"
 )
 
 type User {
@@ -122,7 +122,7 @@ type (
         HomestayId int64 `json:"homestayId"`
     }
     AddWishListResp {
-        homestay Homestay `json:"homestay"`
+        Success bool `json:"success"`
     }
 )
 

@@ -14,17 +14,20 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// 创建民宿订单
 				Method:  http.MethodPost,
 				Path:    "/homestayOrder/createHomestayOrder",
 				Handler: homestayOrder.CreateHomestayOrderHandler(serverCtx),
 			},
 			{
-				Method:  http.MethodPost,
+				// 用户订单明细
+				Method:  http.MethodGet,
 				Path:    "/homestayOrder/userHomestayOrderDetail",
 				Handler: homestayOrder.UserHomestayOrderDetailHandler(serverCtx),
 			},
 			{
-				Method:  http.MethodPost,
+				// 用户订单列表
+				Method:  http.MethodGet,
 				Path:    "/homestayOrder/userHomestayOrderList",
 				Handler: homestayOrder.UserHomestayOrderListHandler(serverCtx),
 			},

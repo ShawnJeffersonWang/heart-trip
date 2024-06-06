@@ -75,11 +75,9 @@ func (l *HomestayDetailLogic) HomestayDetail(in *pb.HomestayDetailReq) (*pb.Home
 		return nil, err
 	}
 
-	userHomestay, err := l.svcCtx.UserHomestayModel.FindOneByUserIdAndHomestayId(l.ctx, in.UserId, in.HomestayId)
-	fmt.Println("userHomestay: ", userHomestay)
-	isAddWishList := false
-	if userHomestay != nil {
-		isAddWishList = true
+	isAddWishList, err := l.svcCtx.UserHomestayModel.CheckIfExists(l.ctx, in.UserId, in.HomestayId)
+	if err != nil {
+		fmt.Println(" travel.homestayDetailLogic.查找是否存在失败")
 	}
 	var pbHomestay pb.Homestay
 	_ = copier.Copy(&pbHomestay, homestay)

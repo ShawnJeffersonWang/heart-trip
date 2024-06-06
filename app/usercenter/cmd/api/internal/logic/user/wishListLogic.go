@@ -31,7 +31,7 @@ func (l *WishListLogic) WishList(req *types.WishListReq) (*types.WishListResp, e
 	userId := ctxdata.GetUidFromCtx(l.ctx)
 
 	wishListResp, err := l.svcCtx.TravelRpc.WishList(l.ctx, &travel.WishListReq{
-		Id: userId,
+		UserId: userId,
 	})
 	if err != nil {
 		return nil, err
