@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"fmt"
 
 	"golodge/app/order/cmd/rpc/internal/svc"
 	"golodge/app/order/cmd/rpc/pb"
@@ -35,6 +36,7 @@ func (l *HomestayOrderDetailLogic) HomestayOrderDetail(in *pb.HomestayOrderDetai
 	}
 
 	var resp pb.HomestayOrder
+	fmt.Println("homestayOrder: ", homestayOrder)
 	if homestayOrder != nil {
 		_ = copier.Copy(&resp, homestayOrder)
 

@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/hibiken/asynq"
 	"golodge/app/mqueue/cmd/job/jobtype"
 	"strings"
@@ -85,6 +86,7 @@ func (l *CreateHomestayOrderLogic) CreateHomestayOrder(in *pb.CreateHomestayOrde
 	liveDays := int64(order.LiveEndDate.Sub(order.LiveStartDate).Seconds() / 86400) //Stayed a few days in total
 
 	order.HomestayTotalPrice = int64(resp.HostId * liveDays) //Calculate the total price of the B&B
+	fmt.Println(order.HomestayTotalPrice)
 
 	_, err = l.svcCtx.HomestayOrderModel.Insert(l.ctx, nil, order)
 	if err != nil {

@@ -9,7 +9,6 @@ import (
 	"golodge/app/order/model"
 	"golodge/app/payment/cmd/rpc/payment"
 	"golodge/common/ctxdata"
-	"golodge/common/tool"
 	"golodge/common/xerr"
 
 	"github.com/jinzhu/copier"
@@ -48,9 +47,9 @@ func (l *UserHomestayOrderDetailLogic) UserHomestayOrderDetail(req types.UserHom
 		copier.Copy(&typesOrderDetail, resp.HomestayOrder)
 
 		//重置价格.
-		typesOrderDetail.OrderTotalPrice = tool.Fen2Yuan(resp.HomestayOrder.OrderTotalPrice)
-		typesOrderDetail.HomestayTotalPrice = tool.Fen2Yuan(resp.HomestayOrder.HomestayTotalPrice)
-		typesOrderDetail.HomestayPrice = tool.Fen2Yuan(resp.HomestayOrder.HomestayPrice)
+		//typesOrderDetail.OrderTotalPrice = tool.Fen2Yuan(resp.HomestayOrder.OrderTotalPrice)
+		//typesOrderDetail.HomestayTotalPrice = tool.Fen2Yuan(resp.HomestayOrder.HomestayTotalPrice)
+		//typesOrderDetail.HomestayPrice = tool.Fen2Yuan(resp.HomestayOrder.HomestayPrice)
 
 		//支付信息.
 		if typesOrderDetail.TradeState != model.HomestayOrderTradeStateCancel && typesOrderDetail.TradeState != model.HomestayOrderTradeStateWaitPay {
