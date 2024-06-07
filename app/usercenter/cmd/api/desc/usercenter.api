@@ -37,7 +37,7 @@ service usercenter {
 service usercenter {
 	@doc "get user info"
 	@handler detail
-	get /user/detail (UserInfoReq) returns (UserInfoResp)
+	post /user/detail (UserInfoReq) returns (UserInfoResp)
 
 	@doc "update user info"
 	@handler updateUserInfo
@@ -45,7 +45,7 @@ service usercenter {
 
 	@doc "show user list"
 	@handler userList
-	get /user/userList (UserListReq) returns (UserListResp)
+	post /user/userList (UserListReq) returns (UserListResp)
 
 	@doc "wechat mini auth"
 	@handler wxMiniAuth
@@ -53,7 +53,7 @@ service usercenter {
 
 	@doc "wishList"
 	@handler wishList
-	get /user/wishList (WishListReq) returns (WishListResp)
+	post /user/wishList (WishListReq) returns (WishListResp)
 
 	@doc "add wish list"
 	@handler addWishList
@@ -65,7 +65,7 @@ service usercenter {
 
 	@doc "browing history list"
 	@handler historyList
-	get /user/browinghistory (HistoryListReq) returns (HistoryListResp)
+	post /user/browinghistory (HistoryListReq) returns (HistoryListResp)
 
 	@doc "remove history"
 	@handler removeHistory

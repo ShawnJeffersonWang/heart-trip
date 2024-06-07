@@ -23,23 +23,23 @@ import (
 service travel {
 	@doc "homestay room detail"
 	@handler homestayDetailWithoutLogin
-	get /homestay/homestayDetailWithoutLogin (HomestayDetailReq) returns (HomestayDetailResp)
+	post /homestay/homestayDetailWithoutLogin (HomestayDetailReq) returns (HomestayDetailResp)
 
 	@doc "homestay room list"
 	@handler homestayList
-	get /homestay/homestayList (HomestayListReq) returns (HomestayListResp)
+	post /homestay/homestayList (HomestayListReq) returns (HomestayListResp)
 
 	@doc "search by location"
 	@handler searchByLocation
-	get /homestay/searchByLocation (SearchByLocationReq) returns (SearchByLocationResp)
+	post /homestay/searchByLocation (SearchByLocationReq) returns (SearchByLocationResp)
 
 	@doc "boss all homestay room"
 	@handler businessList
-	get /homestay/businessList (BusinessListReq) returns (BusinessListResp)
+	post /homestay/businessList (BusinessListReq) returns (BusinessListResp)
 
 	@doc "guess homestay room"
 	@handler guessList
-	get /homestay/guessList (GuessListReq) returns (GuessListResp)
+	post /homestay/guessList (GuessListReq) returns (GuessListResp)
 }
 
 // bug: 一直根据jwt校验不出userId, 原因是这里没有加jwt中间件
@@ -52,7 +52,7 @@ service travel {
 service travel {
 	@doc "homestay room detail"
 	@handler homestayDetail
-	get /homestay/homestayDetail (HomestayDetailReq) returns (HomestayDetailResp)
+	post /homestay/homestayDetail (HomestayDetailReq) returns (HomestayDetailResp)
 
 	@doc "add homestay"
 	@handler addHomestay
@@ -76,7 +76,7 @@ service travel {
 
 	@doc "my homestay room list"
 	@handler myHomestayList
-	get /homestay/myHomestayList (MyHomestayListReq) returns (MyHomestayListResp)
+	post /homestay/myHomestayList (MyHomestayListReq) returns (MyHomestayListResp)
 }
 
 //====================================> travel-homestayBusiness v1 <====================================
@@ -108,7 +108,7 @@ service travel {
 service travel {
 	@doc "homestay comment list"
 	@handler commentList
-	get /homestayComment/commentList (CommentListReq) returns (CommentListResp)
+	post /homestayComment/commentList (CommentListReq) returns (CommentListResp)
 
 	@doc "like comment"
 	@handler likeComment
