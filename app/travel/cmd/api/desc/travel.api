@@ -60,7 +60,7 @@ service travel {
 
 	@doc "delete homestay"
 	@handler deleteHomestay
-	delete /homestay/deleteHomestay (DeleteHomestayReq) returns (DeleteHomestayResp)
+	post /homestay/deleteHomestay (DeleteHomestayReq) returns (DeleteHomestayResp)
 
 	@doc "update homestay"
 	@handler updateHomestay
@@ -68,7 +68,7 @@ service travel {
 
 	@doc "admin delete homestay"
 	@handler adminDeleteHomestay
-	delete /homestay/adminDeleteHomestay (AdminDeleteHomestayReq) returns (AdminDeleteHomestayResp)
+	post /homestay/adminDeleteHomestay (AdminDeleteHomestayReq) returns (AdminDeleteHomestayResp)
 
 	@doc "add guess"
 	@handler addGuess

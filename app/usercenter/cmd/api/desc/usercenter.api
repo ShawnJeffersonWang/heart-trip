@@ -61,7 +61,7 @@ service usercenter {
 
 	@doc "remove wish list"
 	@handler removeWishList
-	delete /user/removeWishList (RemoveWishListReq) returns (RemoveWishListResp)
+	post /user/removeWishList (RemoveWishListReq) returns (RemoveWishListResp)
 
 	@doc "browing history list"
 	@handler historyList
@@ -69,11 +69,11 @@ service usercenter {
 
 	@doc "remove history"
 	@handler removeHistory
-	delete /user/removeHistory (RemoveHistoryReq) returns (RemoveHistoryResp)
+	post /user/removeHistory (RemoveHistoryReq) returns (RemoveHistoryResp)
 
 	@doc "clear history"
 	@handler clearHistory
-	delete /user/clearHistory (ClearHistoryReq) returns (ClearHistoryResp)
+	post /user/clearHistory (ClearHistoryReq) returns (ClearHistoryResp)
 
 	@doc "upload"
 	@handler fileUpload
