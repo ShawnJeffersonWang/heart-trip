@@ -51,7 +51,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				// clear history
-				Method:  http.MethodDelete,
+				Method:  http.MethodPost,
 				Path:    "/user/clearHistory",
 				Handler: user.ClearHistoryHandler(serverCtx),
 			},
@@ -63,13 +63,13 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				// remove history
-				Method:  http.MethodDelete,
+				Method:  http.MethodPost,
 				Path:    "/user/removeHistory",
 				Handler: user.RemoveHistoryHandler(serverCtx),
 			},
 			{
 				// remove wish list
-				Method:  http.MethodDelete,
+				Method:  http.MethodPost,
 				Path:    "/user/removeWishList",
 				Handler: user.RemoveWishListHandler(serverCtx),
 			},
