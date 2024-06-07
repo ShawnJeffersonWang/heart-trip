@@ -36,6 +36,7 @@ func (l *GuessListLogic) GuessList(req types.GuessListReq) (*types.GuessListResp
 
 	if len(list) > 0 {
 		for _, guess := range list {
+			//l.svcCtx.UserHomestayModel.CheckIfExists(l.ctx,)
 			var typeHomestay types.Guess
 			_ = copier.Copy(&typeHomestay, guess)
 
