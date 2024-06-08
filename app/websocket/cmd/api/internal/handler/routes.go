@@ -21,7 +21,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				// get inbox messages
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/getInbox",
 				Handler: websock.GetInboxHandler(serverCtx),
 			},

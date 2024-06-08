@@ -88,7 +88,7 @@ type (
 
 type (
     DeleteHomestayReq {
-        HomestayId int64 `json:"homestayId"`
+        HomestayId int64 `path:"homestayId"`
     }
     DeleteHomestayResp {
         Success bool `json:"success"`
@@ -97,7 +97,7 @@ type (
 
 type (
     AdminDeleteHomestayReq {
-        HomestayId int64 `json:"homestayId"`
+        HomestayId int64 `path:"homestayId"`
     }
     AdminDeleteHomestayResp {
         Success bool `json:"success"`
@@ -126,8 +126,8 @@ type (
 
 type (
     HomestayListReq {
-        Page int64 `json:"page"`
-        PageSize int64 `json:"pageSize"`
+        Page int64 `form:"page"`
+        PageSize int64 `form:"pageSize"`
     }
     HomestayListResp {
         List []Homestay `json:"list"`
@@ -136,8 +136,8 @@ type (
 
 type (
     MyHomestayListReq {
-        Page int64 `json:"page"`
-        PageSize int64 `json:"pageSize"`
+        Page int64 `form:"page"`
+        PageSize int64 `form:"pageSize"`
     }
     MyHomestayListResp {
         List []Homestay `json:"list"`
@@ -146,7 +146,7 @@ type (
 
 type (
     SearchByLocationReq {
-        Location string `json:"location"`
+        Location string `form:"location"`
     }
     SearchByLocationResp {
         List []Homestay `json:"list"`
@@ -164,7 +164,7 @@ type (
 // 如果是改Homestay, 那么整个项目大部分地方都要改，耦合相当高，如果是改HomestayDetailResp，那么只用改homestayDetail这一个接口，和调用他的地方
 type (
     HomestayDetailReq {
-        HomestayId int64 `json:"homestayId"`
+        HomestayId int64 `path:"homestayId"`
     }
     HomestayDetailResp {
         Id int64 `json:"id"`

@@ -13,7 +13,7 @@ type CreateHomestayOrderResp struct {
 }
 
 type UserHomestayOrderDetailReq struct {
-	Sn string `json:"sn"`
+	Sn string `path:"sn"`
 }
 
 type UserHomestayOrderDetailResp struct {
@@ -39,9 +39,9 @@ type UserHomestayOrderDetailResp struct {
 }
 
 type UserHomestayOrderListReq struct {
-	LastId     int64 `json:"lastId"`
-	PageSize   int64 `json:"pageSize"`
-	TradeState int64 `json:"tradeState"` //-99:全部 0:代支付订单 1:有效订单
+	LastId     int64 `form:"lastId"`
+	PageSize   int64 `form:"pageSize"`
+	TradeState int64 `form:"tradeState"` //-99:全部 0:代支付订单 1:有效订单
 }
 
 type UserHomestayOrderListResp struct {

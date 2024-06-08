@@ -48,7 +48,7 @@ type AddHomestayResp struct {
 }
 
 type AdminDeleteHomestayReq struct {
-	HomestayId int64 `json:"homestayId"`
+	HomestayId int64 `path:"homestayId"`
 }
 
 type AdminDeleteHomestayResp struct {
@@ -66,9 +66,9 @@ type BusinessListResp struct {
 }
 
 type CommentListReq struct {
-	HomestayId int64 `json:"homestayId"`
-	Page       int64 `json:"page"`
-	PageSize   int64 `json:"pageSize"`
+	HomestayId int64 `path:"homestayId"`
+	Page       int64 `form:"page"`
+	PageSize   int64 `form:"pageSize"`
 }
 
 type CommentListResp struct {
@@ -84,7 +84,7 @@ type CommentListResp struct {
 }
 
 type DeleteHomestayReq struct {
-	HomestayId int64 `json:"homestayId"`
+	HomestayId int64 `path:"homestayId"`
 }
 
 type DeleteHomestayResp struct {
@@ -203,7 +203,7 @@ type HomestayComment struct {
 }
 
 type HomestayDetailReq struct {
-	HomestayId int64 `json:"homestayId"`
+	HomestayId int64 `path:"homestayId"`
 }
 
 type HomestayDetailResp struct {
@@ -230,8 +230,8 @@ type HomestayDetailResp struct {
 }
 
 type HomestayListReq struct {
-	Page     int64 `json:"page"`
-	PageSize int64 `json:"pageSize"`
+	Page     int64 `form:"page"`
+	PageSize int64 `form:"pageSize"`
 }
 
 type HomestayListResp struct {
@@ -247,8 +247,8 @@ type LikeCommentResp struct {
 }
 
 type MyHomestayListReq struct {
-	Page     int64 `json:"page"`
-	PageSize int64 `json:"pageSize"`
+	Page     int64 `form:"page"`
+	PageSize int64 `form:"pageSize"`
 }
 
 type MyHomestayListResp struct {
@@ -256,7 +256,7 @@ type MyHomestayListResp struct {
 }
 
 type SearchByLocationReq struct {
-	Location string `json:"location"`
+	Location string `form:"location"`
 }
 
 type SearchByLocationResp struct {

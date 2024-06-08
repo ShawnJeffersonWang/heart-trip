@@ -77,7 +77,7 @@ type RegisterResp struct {
 }
 
 type RemoveHistoryReq struct {
-	HistoryId int64 `json:"historyId"`
+	HistoryId int64 `path:"historyId"`
 }
 
 type RemoveHistoryResp struct {
@@ -85,7 +85,7 @@ type RemoveHistoryResp struct {
 }
 
 type RemoveWishListReq struct {
-	Id int64 `json:"id"`
+	Id int64 `path:"id"`
 }
 
 type RemoveWishListResp struct {

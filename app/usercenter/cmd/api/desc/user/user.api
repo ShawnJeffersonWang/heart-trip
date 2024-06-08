@@ -128,7 +128,7 @@ type (
 
 type (
     RemoveWishListReq {
-        Id int64 `json:"id"`
+        Id int64 `path:"id"`
     }
     RemoveWishListResp {
         Success bool `json:"success"`
@@ -153,7 +153,7 @@ type (
 
 type (
     RemoveHistoryReq {
-        HistoryId int64 `json:"historyId"`
+        HistoryId int64 `path:"historyId"`
     }
     RemoveHistoryResp {
         Success bool `json:"success"`

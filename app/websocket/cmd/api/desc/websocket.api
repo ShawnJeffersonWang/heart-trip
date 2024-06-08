@@ -25,6 +25,6 @@ service websocket {
 
 	@doc "get inbox messages"
 	@handler getInbox
-	post /getInbox (GetInboxReq) returns (GetInboxResp)
+	get /getInbox (GetInboxReq) returns (GetInboxResp)
 }
 

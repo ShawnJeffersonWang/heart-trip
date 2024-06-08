@@ -34,9 +34,9 @@ type (
 		TradeCode       string  `json:"tradeCode"`       //交易码
 	}
 	UserHomestayOrderListReq {
-		LastId     int64 `json:"lastId"`
-		PageSize   int64 `json:"pageSize"`
-		TradeState int64 `json:"tradeState"` //-99:全部 0:代支付订单 1:有效订单
+		LastId     int64 `form:"lastId"`
+		PageSize   int64 `form:"pageSize"`
+		TradeState int64 `form:"tradeState"` //-99:全部 0:代支付订单 1:有效订单
 	}
 	UserHomestayOrderListResp {
 		List []UserHomestayOrderListView `json:"list"`
@@ -45,7 +45,7 @@ type (
 
 type (
 	UserHomestayOrderDetailReq {
-		Sn string `json:"sn"`
+		Sn string `path:"sn"`
 	}
 	UserHomestayOrderDetailResp {
 		//订单基本信息

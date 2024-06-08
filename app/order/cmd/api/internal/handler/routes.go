@@ -21,13 +21,13 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				// 用户订单明细
-				Method:  http.MethodPost,
-				Path:    "/homestayOrder/userHomestayOrderDetail",
+				Method:  http.MethodGet,
+				Path:    "/homestayOrder/userHomestayOrderDetail/:sn",
 				Handler: homestayOrder.UserHomestayOrderDetailHandler(serverCtx),
 			},
 			{
 				// 用户订单列表
-				Method:  http.MethodPost,
+				Method:  http.MethodGet,
 				Path:    "/homestayOrder/userHomestayOrderList",
 				Handler: homestayOrder.UserHomestayOrderListHandler(serverCtx),
 			},

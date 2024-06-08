@@ -28,9 +28,9 @@ type HomestayComment {
 
 type (
     CommentListReq {
-        HomestayId int64 `json:"homestayId"`
-        Page int64 `json:"page"`
-        pageSize int64 `json:"pageSize"`
+        HomestayId int64 `path:"homestayId"`
+        Page int64 `form:"page"`
+        pageSize int64 `form:"pageSize"`
     }
     CommentListResp {
         HomestayId int64 `json:"homestayId"`
