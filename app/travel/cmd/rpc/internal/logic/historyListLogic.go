@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"github.com/Masterminds/squirrel"
 	"github.com/zeromicro/go-zero/core/mr"
 	"golodge/app/travel/model"
 	"sort"
@@ -35,17 +34,23 @@ func sortByLastBrowsingTime(histories []*pb.History) {
 }
 
 func (l *HistoryListLogic) HistoryList(in *pb.HistoryListReq) (*pb.HistoryListResp, error) {
-	// todo: add your logic here and delete this line
-	whereBuilder := l.svcCtx.UserHistoryModel.SelectBuilder().Where(squirrel.Eq{
-		"user_id": in.UserId,
-	})
+	userHistories, err := l.svcCtx.UserHistoryModel.FindUserHistories(l.ctx, in.UserId, in.Page, in.PageSize)
+	if err != nil {
+		return nil, err
+	}
+	//whereBuilder := l.svcCtx.UserHistoryModel.SelectBuilder().Where(squirrel.Eq{
+	//	"user_id": in.UserId,
+	//})
 	// 按历史记录时间倒叙排列, bug: 这里不能按照更新时间，因为UserHistory这个表压根没有update_time这个字段
-	userHistories, _ := l.svcCtx.UserHistoryModel.FindAll(l.ctx, whereBuilder, "")
+	//userHistories, _ := l.svcCtx.UserHistoryModel.FindAll(l.ctx, whereBuilder, "")
 	var resp []*pb.History
 	//fmt.Println("list: ", userHistories)
 	//for _, h := range userHistories {
 	//	fmt.Println("history: ", h)
 	//}
+
+	// 原因找到了，之所以会出现乱序的现象是因为UserHistoryModel.FIndUserHistories是按照id倒叙查找的，是有序的
+	// 但MapReduce不能保证映射过后的顺序，是乱序的，所以目前还是需要排序，不是squirrel的锅
 	if len(userHistories) > 0 {
 		mr.MapReduceVoid(func(source chan<- any) {
 			for _, userHistory := range userHistories {

@@ -3,9 +3,10 @@ ListenOn: 0.0.0.0:2004
 Mode: dev
 
 #jwtAuth
+# AccessExpire: 31536000 是一年的秒数
 JwtAuth:
   AccessSecret: ae0536f9-6450-4606-8e13-5a19ed505da0
-  AccessExpire: 31536000
+  AccessExpire: 604800
 
 #Monitoring
 Prometheus:

@@ -6,6 +6,7 @@ import (
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"golodge/app/travel/cmd/rpc/internal/svc"
 	"golodge/app/travel/cmd/rpc/pb"
 	"golodge/app/travel/model"
@@ -37,9 +38,26 @@ func (l *HomestayDetailLogic) HomestayDetail(in *pb.HomestayDetailReq) (*pb.Home
 	// 缓存不一致, 查缓存发现是以前的历史记录id, 而删不掉真实的, 还是会添加历史记录
 	historyTemp, err := l.svcCtx.HistoryModel.FindOneByHomestayIdAndUserId(l.ctx, in.HomestayId, in.UserId)
 	// 类似LRU, 找到了先删除, 没找到才新建一个历史记录和建立关联
+	ctx, cancel := context.WithTimeout(l.ctx, 5*time.Second)
+	defer cancel()
 	if historyTemp != nil {
-		_ = l.svcCtx.HistoryModel.Delete(l.ctx, historyTemp.Id)
-		_ = l.svcCtx.UserHistoryModel.Delete(l.ctx, in.UserId, historyTemp.Id)
+		userHistory, err := l.svcCtx.UserHistoryModel.FindOneByUserIdAndHistoryId(l.ctx, in.UserId, historyTemp.Id)
+		err = l.svcCtx.UserHistoryModel.Transact(ctx, func(ctx context.Context, session sqlx.Session) error {
+			if historyTemp != nil {
+				err = l.svcCtx.HistoryModel.DeleteSoft(ctx, session, historyTemp)
+				if err != nil {
+					return err
+				}
+			}
+			err = l.svcCtx.UserHistoryModel.Delete(ctx, session, userHistory.Id)
+			if err != nil {
+				return err
+			}
+			return nil
+		})
+		if err != nil {
+			return nil, err
+		}
 	}
 	// bug: 这里用的是homestay.UserId, 导致一直是0, 应该用in.UserId
 	history := model.History{

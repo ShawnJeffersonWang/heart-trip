@@ -170,8 +170,8 @@ func (m *defaultHistoryModel) FindOne(ctx context.Context, historyId int64) (*Hi
 func (m *defaultHistoryModel) FindOneByHomestayIdAndUserId(ctx context.Context, homestayId, userId int64) (*History, error) {
 	//looklookTravelHistoryIdKey := fmt.Sprintf("%s%v%v", cacheLooklookTravelHistoryIdPrefix, homestayId, userId)
 	var resp History
-	query := fmt.Sprintf("select %s from %s where `homestay_id` = ? and `user_id` = ? limit 1", historyRows, m.table)
-	err := m.QueryRowNoCacheCtx(ctx, &resp, query, homestayId, userId)
+	query := fmt.Sprintf("select %s from %s where `homestay_id` = ? and `user_id` = ? and `del_state` = ? limit 1", historyRows, m.table)
+	err := m.QueryRowNoCacheCtx(ctx, &resp, query, homestayId, userId, globalkey.DelStateNo)
 	//err := m.QueryRowCtx(ctx, &resp, looklookTravelHistoryIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
 	//	query := fmt.Sprintf("select %s from %s where `homestay_id` = ? and `user_id` = ? limit 1", historyRows, m.table)
 	//	return conn.QueryRowCtx(ctx, v, query, homestayId, userId)
@@ -242,7 +242,7 @@ func (m *defaultHistoryModel) Insert(ctx context.Context, data *History) (sql.Re
 	return ret, err
 }
 
-func (m *defaultHistoryModel) SelectBuilder()squirrel.SelectBuilder{
+func (m *defaultHistoryModel) SelectBuilder() squirrel.SelectBuilder {
 	return squirrel.Select().From(m.table)
 }
 

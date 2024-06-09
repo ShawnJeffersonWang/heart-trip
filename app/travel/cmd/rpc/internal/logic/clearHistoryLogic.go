@@ -26,19 +26,18 @@ func NewClearHistoryLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Clea
 }
 
 func (l *ClearHistoryLogic) ClearHistory(in *pb.ClearHistoryReq) (*pb.ClearHistoryResp, error) {
-	// todo: add your logic here and delete this line
-	whereBuilder := l.svcCtx.UserHistoryModel.SelectBuilder().Where(squirrel.Eq{
-		"user_id": in.UserId,
-	})
-	userHistories, err := l.svcCtx.UserHistoryModel.FindAll(l.ctx, whereBuilder, "")
+	//whereBuilder := l.svcCtx.UserHistoryModel.SelectBuilder().Where(squirrel.Eq{
+	//	"user_id": in.UserId,
+	//})
+	userHistories, err := l.svcCtx.UserHistoryModel.FindByUserId(l.ctx, in.UserId)
 
-	whereBuilder = l.svcCtx.HistoryModel.SelectBuilder().Where(squirrel.Eq{
+	whereBuilder := l.svcCtx.HistoryModel.SelectBuilder().Where(squirrel.Eq{
 		"user_id": in.UserId,
 	})
 	histories, err := l.svcCtx.HistoryModel.FindAll(l.ctx, whereBuilder, "")
-	err = l.svcCtx.UserHistoryModel.Trans(l.ctx, func(ctx context.Context, session sqlx.Session) error {
+	err = l.svcCtx.UserHistoryModel.Transact(l.ctx, func(ctx context.Context, session sqlx.Session) error {
 		for _, userHistory := range userHistories {
-			err := l.svcCtx.UserHistoryModel.DeleteSoft(ctx, session, userHistory)
+			err := l.svcCtx.UserHistoryModel.Delete(ctx, session, userHistory.Id)
 			if err != nil {
 				return err
 			}

@@ -8,6 +8,7 @@ import (
 	"golodge/app/travel/cmd/rpc/internal/svc"
 	"golodge/app/travel/cmd/rpc/pb"
 	"golodge/common/xerr"
+	"time"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -63,17 +64,24 @@ func (l *DeleteHomestayLogic) DeleteHomestay(in *pb.DeleteHomestayReq) (*pb.Dele
 				return err
 			}
 		}
+		ctx, cancel := context.WithTimeout(l.ctx, 5*time.Second)
+		defer cancel()
 		for _, history := range histories {
 			err := l.svcCtx.HistoryModel.DeleteSoft(ctx, session, history)
 			if err != nil {
 				return err
 			}
-
-			userHistory, err := l.svcCtx.UserHistoryModel.FindOne(ctx, in.UserId, history.Id)
-			if err != nil {
-				return err
-			}
-			err = l.svcCtx.UserHistoryModel.DeleteSoft(ctx, session, userHistory)
+			err = l.svcCtx.UserHistoryModel.Transact(ctx, func(ctx context.Context, session sqlx.Session) error {
+				userHistory, err := l.svcCtx.UserHistoryModel.FindOneByUserIdAndHistoryId(ctx, in.UserId, history.Id)
+				if err != nil {
+					return err
+				}
+				err = l.svcCtx.UserHistoryModel.Delete(ctx, session, userHistory.Id)
+				if err != nil {
+					return err
+				}
+				return nil
+			})
 			if err != nil {
 				return err
 			}

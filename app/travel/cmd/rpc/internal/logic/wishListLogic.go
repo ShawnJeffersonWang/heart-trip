@@ -60,7 +60,7 @@ func (l *WishListLogic) WishList(in *pb.WishListReq) (*pb.WishListResp, error) {
 	//	List: resp,
 	//}, nil
 	// 获取用户收藏列表
-	userHomestays, err := l.svcCtx.UserHomestayModel.GetFavorites(in.UserId)
+	userHomestays, err := l.svcCtx.UserHomestayModel.GetFavorites(in.UserId, in.Page, in.PageSize)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get user favorites: %w", err)
 	}

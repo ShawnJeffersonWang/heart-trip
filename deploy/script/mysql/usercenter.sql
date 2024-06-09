@@ -9,9 +9,6 @@ create table message
     create_time  datetime default CURRENT_TIMESTAMP not null
 );
 
-create index idx_to_user_id_create_time on message (to_user_id, create_time);
-create index idx_from_to_create_time on message (from_user_id, to_user_id, create_time);
-
 create table user
 (
     id          bigint auto_increment

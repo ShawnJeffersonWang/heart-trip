@@ -31,7 +31,7 @@ func (l *RemoveWishListLogic) RemoveWishList(req *types.RemoveWishListReq) (*typ
 
 	_, err := l.svcCtx.TravelRpc.RemoveWishList(l.ctx, &travel.RemoveWishListReq{
 		UserId:     userId,
-		HomestayId: req.Id,
+		HomestayId: req.HomestayId,
 	})
 	if err != nil {
 		return nil, err

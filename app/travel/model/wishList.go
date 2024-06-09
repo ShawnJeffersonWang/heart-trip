@@ -28,7 +28,7 @@ type UserHomestayModel interface {
 	CheckIfExists(ctx context.Context, userId, homestayId int64) (bool, error)
 	Favorite(userId, homestayId int64) error
 	Unfavorite(userId, homestayId int64) error
-	GetFavorites(userId int64) ([]*UserHomestay, error)
+	GetFavorites(userId int64, page int64, pageSize int64) ([]*UserHomestay, error)
 	UpdateDelState(ctx context.Context, userId, homestayId int64, delState int) error
 }
 
@@ -100,10 +100,15 @@ func (m *defaultUserHomestayModel) Unfavorite(userId, homestayId int64) error {
 	return err
 }
 
-func (m *defaultUserHomestayModel) GetFavorites(userId int64) ([]*UserHomestay, error) {
-	query := `SELECT id, user_id, homestay_id, del_state, version, delete_time FROM ` + m.table + ` WHERE user_id = ? AND del_state = 0`
+// GetFavorites method with pagination
+func (m *defaultUserHomestayModel) GetFavorites(userId int64, page int64, pageSize int64) ([]*UserHomestay, error) {
+	offset := (page - 1) * pageSize
+	query := `SELECT id, user_id, homestay_id, del_state, version, delete_time 
+	          FROM ` + m.table + ` 
+	          WHERE user_id = ? AND del_state = 0 
+	          LIMIT ? OFFSET ?`
 	var homestays []*UserHomestay
-	err := m.conn.QueryRows(&homestays, query, userId)
+	err := m.conn.QueryRows(&homestays, query, userId, pageSize, offset)
 	if err != nil {
 		return nil, err
 	}

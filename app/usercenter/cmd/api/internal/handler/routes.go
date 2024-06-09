@@ -70,7 +70,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				// remove wish list
 				Method:  http.MethodDelete,
-				Path:    "/user/removeWishList/:id",
+				Path:    "/user/removeWishList/:homestayId",
 				Handler: user.RemoveWishListHandler(serverCtx),
 			},
 			{

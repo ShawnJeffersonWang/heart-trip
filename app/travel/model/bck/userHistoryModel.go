@@ -1,4 +1,4 @@
-package model
+package bck
 
 import (
 	"github.com/zeromicro/go-zero/core/stores/cache"

@@ -27,10 +27,11 @@ func NewHistoryListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Histo
 }
 
 func (l *HistoryListLogic) HistoryList(req *types.HistoryListReq) (*types.HistoryListResp, error) {
-	// todo: add your logic here and delete this line
 	userId := ctxdata.GetUidFromCtx(l.ctx)
 	historyListResp, err := l.svcCtx.TravelRpc.HistoryList(l.ctx, &travel.HistoryListReq{
-		UserId: userId,
+		UserId:   userId,
+		Page:     req.Page,
+		PageSize: req.PageSize,
 	})
 	if err != nil {
 		return nil, err
