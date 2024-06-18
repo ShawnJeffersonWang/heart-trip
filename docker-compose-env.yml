@@ -231,7 +231,7 @@ services:
 
 networks:
   golodge_net:
-#    external: true
+    external: true
     driver: bridge
     ipam:
       config:
