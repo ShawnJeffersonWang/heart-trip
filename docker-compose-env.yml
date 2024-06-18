@@ -231,9 +231,9 @@ services:
 
 networks:
   golodge_net:
-    external: true
-#    driver: bridge
-#    ipam:
-#      config:
-#        - subnet: 172.16.0.0/16
+#    external: true
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.0.0/16
 
