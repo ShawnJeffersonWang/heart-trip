@@ -111,8 +111,8 @@ type (
 
 type (
     WishListReq {
-        Page int64 `form:"page"`
-        PageSize int64 `form:"pageSize"`
+        Page int64 `json:"page"`
+        PageSize int64 `json:"pageSize"`
     }
     WishListResp {
         List []Homestay `json:"list"`
@@ -130,7 +130,7 @@ type (
 
 type (
     RemoveWishListReq {
-        HomestayId int64 `path:"homestayId"`
+        HomestayId int64 `json:"homestayId"`
     }
     RemoveWishListResp {
         Success bool `json:"success"`
@@ -139,8 +139,8 @@ type (
 
 type (
     HistoryListReq {
-        Page int64 `form:"page"`
-        PageSize int64 `form:"pageSize"`
+        Page int64 `json:"page"`
+        PageSize int64 `json:"pageSize"`
     }
     HistoryListResp {
         HistoryList []History `json:"historyList"`
@@ -157,7 +157,7 @@ type (
 
 type (
     RemoveHistoryReq {
-        HistoryId int64 `path:"historyId"`
+        HistoryId int64 `json:"historyId"`
     }
     RemoveHistoryResp {
         Success bool `json:"success"`

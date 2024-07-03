@@ -145,7 +145,7 @@ services:
       TZ: Asia/Shanghai
     restart: always
     ports:
-      - 12181:2181
+      - 2181:2181
     networks:
       - golodge_net
 

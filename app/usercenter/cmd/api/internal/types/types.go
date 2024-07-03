@@ -34,8 +34,8 @@ type History struct {
 }
 
 type HistoryListReq struct {
-	Page     int64 `form:"page"`
-	PageSize int64 `form:"pageSize"`
+	Page     int64 `json:"page"`
+	PageSize int64 `json:"pageSize"`
 }
 
 type HistoryListResp struct {
@@ -79,7 +79,7 @@ type RegisterResp struct {
 }
 
 type RemoveHistoryReq struct {
-	HistoryId int64 `path:"historyId"`
+	HistoryId int64 `json:"historyId"`
 }
 
 type RemoveHistoryResp struct {
@@ -87,7 +87,7 @@ type RemoveHistoryResp struct {
 }
 
 type RemoveWishListReq struct {
-	HomestayId int64 `path:"homestayId"`
+	HomestayId int64 `json:"homestayId"`
 }
 
 type RemoveWishListResp struct {
@@ -142,8 +142,8 @@ type WXMiniAuthResp struct {
 }
 
 type WishListReq struct {
-	Page     int64 `form:"page"`
-	PageSize int64 `form:"pageSize"`
+	Page     int64 `json:"page"`
+	PageSize int64 `json:"pageSize"`
 }
 
 type WishListResp struct {

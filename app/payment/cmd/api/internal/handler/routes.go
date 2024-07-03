@@ -14,6 +14,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// third payment：wechat pay callback
 				Method:  http.MethodPost,
 				Path:    "/thirdPayment/thirdPaymentWxPayCallback",
 				Handler: thirdPayment.ThirdPaymentWxPayCallbackHandler(serverCtx),
@@ -25,16 +26,19 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// fake pay callback
 				Method:  http.MethodPost,
 				Path:    "/thirdPayment/fakePayCallback",
 				Handler: thirdPayment.FakePayCallbackHandler(serverCtx),
 			},
 			{
+				// fake payment
 				Method:  http.MethodPost,
 				Path:    "/thirdPayment/fakePayment",
 				Handler: thirdPayment.FakePaymentHandler(serverCtx),
 			},
 			{
+				// third payment：wechat pay
 				Method:  http.MethodPost,
 				Path:    "/thirdPayment/thirdPaymentWxPay",
 				Handler: thirdPayment.ThirdPaymentwxPayHandler(serverCtx),

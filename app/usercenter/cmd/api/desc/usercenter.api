@@ -37,7 +37,7 @@ service usercenter {
 service usercenter {
 	@doc "get user info"
 	@handler detail
-	get /user/detail (UserInfoReq) returns (UserInfoResp)
+	post /user/detail (UserInfoReq) returns (UserInfoResp)
 
 	@doc "update user info"
 	@handler updateUserInfo
@@ -45,7 +45,7 @@ service usercenter {
 
 	@doc "show user list"
 	@handler userList
-	get /user/userList (UserListReq) returns (UserListResp)
+	post /user/userList (UserListReq) returns (UserListResp)
 
 	@doc "wechat mini auth"
 	@handler wxMiniAuth
@@ -53,7 +53,7 @@ service usercenter {
 
 	@doc "wishList"
 	@handler wishList
-	get /user/wishList (WishListReq) returns (WishListResp)
+	post /user/wishList (WishListReq) returns (WishListResp)
 
 	@doc "add wish list"
 	@handler addWishList
@@ -61,19 +61,19 @@ service usercenter {
 
 	@doc "remove wish list"
 	@handler removeWishList
-	delete /user/removeWishList (RemoveWishListReq) returns (RemoveWishListResp)
+	post /user/removeWishList (RemoveWishListReq) returns (RemoveWishListResp)
 
 	@doc "browing history list"
 	@handler historyList
-	get /user/browinghistory (HistoryListReq) returns (HistoryListResp)
+	post /user/browinghistory (HistoryListReq) returns (HistoryListResp)
 
 	@doc "remove history"
 	@handler removeHistory
-	delete /user/removeHistory (RemoveHistoryReq) returns (RemoveHistoryResp)
+	post /user/removeHistory (RemoveHistoryReq) returns (RemoveHistoryResp)
 
 	@doc "clear history"
 	@handler clearHistory
-	delete /user/clearHistory (ClearHistoryReq) returns (ClearHistoryResp)
+	post /user/clearHistory (ClearHistoryReq) returns (ClearHistoryResp)
 
 	@doc "upload"
 	@handler fileUpload

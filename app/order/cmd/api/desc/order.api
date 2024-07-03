@@ -26,10 +26,10 @@ service order {
 
 	@doc "用户订单列表"
 	@handler userHomestayOrderList
-	get /homestayOrder/userHomestayOrderList (UserHomestayOrderListReq) returns (UserHomestayOrderListResp)
+	post /homestayOrder/userHomestayOrderList (UserHomestayOrderListReq) returns (UserHomestayOrderListResp)
 
 	@doc "用户订单明细"
 	@handler userHomestayOrderDetail
-	get /homestayOrder/userHomestayOrderDetail (UserHomestayOrderDetailReq) returns (UserHomestayOrderDetailResp)
+	post /homestayOrder/userHomestayOrderDetail (UserHomestayOrderDetailReq) returns (UserHomestayOrderDetailResp)
 }
 
