@@ -46,8 +46,12 @@ type (
 	SearchByLocationResp    = pb.SearchByLocationResp
 	SearchHistoryReq        = pb.SearchHistoryReq
 	SearchHistoryResp       = pb.SearchHistoryResp
+	SeckillVoucher          = pb.SeckillVoucher
+	SeckillVoucherRequest   = pb.SeckillVoucherRequest
+	SeckillVoucherResponse  = pb.SeckillVoucherResponse
 	UpdateHomestayReq       = pb.UpdateHomestayReq
 	UpdateHomestayResp      = pb.UpdateHomestayResp
+	VoucherOrder            = pb.VoucherOrder
 	WishListReq             = pb.WishListReq
 	WishListResp            = pb.WishListResp
 
@@ -71,6 +75,7 @@ type (
 		SearchHistory(ctx context.Context, in *SearchHistoryReq, opts ...grpc.CallOption) (*SearchHistoryResp, error)
 		SearchByLocation(ctx context.Context, in *SearchByLocationReq, opts ...grpc.CallOption) (*SearchByLocationResp, error)
 		QueryShopByType(ctx context.Context, in *QueryShopByTypeRequest, opts ...grpc.CallOption) (*QueryShopByTypeResponse, error)
+		SeckillVoucher(ctx context.Context, in *SeckillVoucherRequest, opts ...grpc.CallOption) (*SeckillVoucherResponse, error)
 	}
 
 	defaultTravel struct {
@@ -173,4 +178,9 @@ func (m *defaultTravel) SearchByLocation(ctx context.Context, in *SearchByLocati
 func (m *defaultTravel) QueryShopByType(ctx context.Context, in *QueryShopByTypeRequest, opts ...grpc.CallOption) (*QueryShopByTypeResponse, error) {
 	client := pb.NewTravelClient(m.cli.Conn())
 	return client.QueryShopByType(ctx, in, opts...)
+}
+
+func (m *defaultTravel) SeckillVoucher(ctx context.Context, in *SeckillVoucherRequest, opts ...grpc.CallOption) (*SeckillVoucherResponse, error) {
+	client := pb.NewTravelClient(m.cli.Conn())
+	return client.SeckillVoucher(ctx, in, opts...)
 }

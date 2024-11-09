@@ -81,6 +81,10 @@ service travel {
 	@doc "my homestay room list"
 	@handler myHomestayList
 	get /homestay/myHomestayList (MyHomestayListReq) returns (MyHomestayListResp)
+
+	@doc "seckill voucher order"
+	@handler seckillVoucher
+	post /homestay/seckillVoucher (SeckillVoucherRequest) returns (SeckillVoucherResponse)
 }
 
 //====================================> travel-homestayBusiness v1 <====================================

@@ -178,6 +178,29 @@ type (
     }
 )
 
+type (
+    SeckillVoucherRequest {
+        VoucherId int64 `json:"voucherId"`
+    }
+
+    SeckillVoucherResponse {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        OrderId int64 `json:"orderId"`
+    }
+)
+
+type SeckillVoucher {
+    ID int64 `json:"id"`
+    Stock int64 `json:"stock"`
+}
+
+type VoucherOrder {
+    ID int64 `json:"id"`
+    UserId int64 `json:"userId"`
+    VoucherId int64 `json:"voucherId"`
+}
+
 // 如果是改Homestay, 那么整个项目大部分地方都要改，耦合相当高，如果是改HomestayDetailResp，那么只用改homestayDetail这一个接口，和调用他的地方
 type (
     HomestayDetailReq {

@@ -29,3 +29,6 @@ KqPusherConf:
   Brokers:
     - kafka:9092
   Topic: comment-success-topic
+
+#LuaScripts:
+#  Seckill: "./deploy/script/seckill.lua"

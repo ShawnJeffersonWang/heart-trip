@@ -249,6 +249,29 @@ message QueryShopByTypeResponse {
   repeated Homestay data = 3;
 }
 
+
+message SeckillVoucherRequest {
+  int64 VoucherId = 1;
+}
+
+message SeckillVoucherResponse {
+  int64 Code = 1;
+  string Message = 2;
+  int64 OrderId = 3;
+}
+
+
+message SeckillVoucher {
+  int64 ID = 1;
+  int64 Stock = 2;
+}
+
+message VoucherOrder {
+  int64 ID = 1;
+  int64 UserId = 2;
+  int64 VoucherId = 3;
+}
+
 //service
 service travel {
   //homestayDetail
@@ -270,4 +293,5 @@ service travel {
   rpc searchHistory(SearchHistoryReq) returns (SearchHistoryResp);
   rpc searchByLocation(SearchByLocationReq) returns (SearchByLocationResp);
   rpc queryShopByType(QueryShopByTypeRequest) returns (QueryShopByTypeResponse);
+  rpc seckillVoucher(SeckillVoucherRequest) returns (SeckillVoucherResponse);
 }

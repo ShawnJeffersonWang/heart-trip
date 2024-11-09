@@ -1,7 +1,11 @@
 package svc
 
 import (
+	"context"
+	"fmt"
 	"github.com/go-redis/redis/v8"
+	"github.com/go-redsync/redsync/v4"
+	"github.com/go-redsync/redsync/v4/redis/goredis/v8"
 	"github.com/zeromicro/go-queue/kq"
 	"golodge/app/travel/cmd/rpc/internal/config"
 	"golodge/app/travel/model"
@@ -9,6 +13,8 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+	"os"
+	"path/filepath"
 
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
@@ -17,6 +23,9 @@ type ServiceContext struct {
 	Config      config.Config
 	DB          *gorm.DB
 	RedisClient *redis.Client
+	RedSync     *redsync.Redsync
+	//LuaScripts  map[string]string // 存储脚本的SHA1
+
 	usercenter.Usercenter
 
 	KqPusherClient *kq.Pusher
@@ -44,12 +53,23 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		Password: c.Cache[0].Pass,
 	})
 
-	sqlConn := sqlx.NewMysql(c.DB.DataSource)
+	// 初始化 RedSync
+	pools := goredis.NewPool(redisClient)
+	r := redsync.New(pools)
 
-	return &ServiceContext{
-		Config:         c,
-		DB:             db,
-		RedisClient:    redisClient,
+	// 加载 Lua 脚本
+	//luaScripts, err := loadLuaScripts(c.LuaScripts, redisClient)
+	//if err != nil {
+	//	log.Fatalf("加载 Lua 脚本失败: %v", err)
+	//}
+
+	sqlConn := sqlx.NewMysql(c.DB.DataSource)
+	serviceContext := &ServiceContext{
+		Config:      c,
+		DB:          db,
+		RedisClient: redisClient,
+		RedSync:     r,
+		//LuaScripts:     luaScripts,
 		KqPusherClient: kq.NewPusher(c.KqPusherConf.Brokers, c.KqPusherConf.Topic),
 		// 我了个骚刚bug: 没有初始化HomestayModel导致，travel模块的RPC调不动model
 		HomestayModel:         model.NewHomestayModel(sqlConn, c.Cache),
@@ -60,4 +80,31 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		UserHistoryModel:      model.NewUserHistoryModel(sqlConn, c.Cache),
 		HomestayCommentModel:  model.NewHomestayCommentModel(sqlConn, c.Cache),
 	}
+	go NewVoucherOrderHandler(c, serviceContext, redisClient).Start()
+	return serviceContext
+}
+
+// loadLuaScripts 读取并加载 Lua 脚本，返回脚本的 SHA1 哈希
+func loadLuaScripts(luaScriptPaths map[string]string, redisClient *redis.Client) (map[string]string, error) {
+	luaScripts := make(map[string]string)
+	for name, path := range luaScriptPaths {
+		absolutePath, err := filepath.Abs(path)
+		if err != nil {
+			return nil, fmt.Errorf("获取脚本路径失败: %v", err)
+		}
+
+		scriptContent, err := os.ReadFile(absolutePath)
+		if err != nil {
+			return nil, fmt.Errorf("读取脚本文件失败: %v", err)
+		}
+
+		// 加载脚本到 Redis 并获取 SHA1
+		sha, err := redisClient.ScriptLoad(context.Background(), string(scriptContent)).Result()
+		if err != nil {
+			return nil, fmt.Errorf("加载脚本到 Redis 失败: %v", err)
+		}
+
+		luaScripts[name] = sha
+	}
+	return luaScripts, nil
 }

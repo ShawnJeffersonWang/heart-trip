@@ -15,6 +15,7 @@ require (
 require (
 	github.com/Masterminds/squirrel v1.5.2
 	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
+	github.com/go-redsync/redsync/v4 v4.13.0
 	github.com/golang-module/carbon/v2 v2.0.1
 	github.com/google/uuid v1.5.0
 	github.com/gorilla/websocket v1.5.1
@@ -46,6 +47,8 @@ require (
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/google/gofuzz v1.2.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.0 // indirect
+	github.com/hashicorp/errwrap v1.1.0 // indirect
+	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
@@ -115,7 +118,7 @@ require (
 require (
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/go-redis/redis/v8 v8.11.5
-	github.com/gomodule/redigo v1.8.6 // indirect
+	github.com/gomodule/redigo v1.8.9 // indirect
 	github.com/hibiken/asynq v0.20.0
 	github.com/shopspring/decimal v1.3.1
 	github.com/silenceper/wechat/v2 v2.0.9

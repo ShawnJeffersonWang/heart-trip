@@ -13,4 +13,5 @@ type Config struct {
 	Cache cache.CacheConf
 	// bug: 首字母要大写，不然是private
 	KqPusherConf KqConf
+	LuaScripts   map[string]string
 }

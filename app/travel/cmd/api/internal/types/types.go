@@ -278,6 +278,21 @@ type SearchByLocationResp struct {
 	List []Homestay `json:"list"`
 }
 
+type SeckillVoucher struct {
+	ID    int64 `json:"id"`
+	Stock int64 `json:"stock"`
+}
+
+type SeckillVoucherRequest struct {
+	VoucherId int64 `json:"voucherId"`
+}
+
+type SeckillVoucherResponse struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	OrderId int64  `json:"orderId"`
+}
+
 type UpdateHomestayReq struct {
 	HomestayId  int64   `json:"homestayId"`
 	Title       string  `json:"title"`
@@ -297,4 +312,10 @@ type UpdateHomestayReq struct {
 
 type UpdateHomestayResp struct {
 	Success bool `json:"success"`
+}
+
+type VoucherOrder struct {
+	ID        int64 `json:"id"`
+	UserId    int64 `json:"userId"`
+	VoucherId int64 `json:"voucherId"`
 }

@@ -41,6 +41,7 @@ type TravelClient interface {
 	SearchHistory(ctx context.Context, in *SearchHistoryReq, opts ...grpc.CallOption) (*SearchHistoryResp, error)
 	SearchByLocation(ctx context.Context, in *SearchByLocationReq, opts ...grpc.CallOption) (*SearchByLocationResp, error)
 	QueryShopByType(ctx context.Context, in *QueryShopByTypeRequest, opts ...grpc.CallOption) (*QueryShopByTypeResponse, error)
+	SeckillVoucher(ctx context.Context, in *SeckillVoucherRequest, opts ...grpc.CallOption) (*SeckillVoucherResponse, error)
 }
 
 type travelClient struct {
@@ -213,6 +214,15 @@ func (c *travelClient) QueryShopByType(ctx context.Context, in *QueryShopByTypeR
 	return out, nil
 }
 
+func (c *travelClient) SeckillVoucher(ctx context.Context, in *SeckillVoucherRequest, opts ...grpc.CallOption) (*SeckillVoucherResponse, error) {
+	out := new(SeckillVoucherResponse)
+	err := c.cc.Invoke(ctx, "/pb.travel/seckillVoucher", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TravelServer is the server API for Travel service.
 // All implementations must embed UnimplementedTravelServer
 // for forward compatibility
@@ -236,6 +246,7 @@ type TravelServer interface {
 	SearchHistory(context.Context, *SearchHistoryReq) (*SearchHistoryResp, error)
 	SearchByLocation(context.Context, *SearchByLocationReq) (*SearchByLocationResp, error)
 	QueryShopByType(context.Context, *QueryShopByTypeRequest) (*QueryShopByTypeResponse, error)
+	SeckillVoucher(context.Context, *SeckillVoucherRequest) (*SeckillVoucherResponse, error)
 	mustEmbedUnimplementedTravelServer()
 }
 
@@ -296,6 +307,9 @@ func (UnimplementedTravelServer) SearchByLocation(context.Context, *SearchByLoca
 }
 func (UnimplementedTravelServer) QueryShopByType(context.Context, *QueryShopByTypeRequest) (*QueryShopByTypeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryShopByType not implemented")
+}
+func (UnimplementedTravelServer) SeckillVoucher(context.Context, *SeckillVoucherRequest) (*SeckillVoucherResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SeckillVoucher not implemented")
 }
 func (UnimplementedTravelServer) mustEmbedUnimplementedTravelServer() {}
 
@@ -634,6 +648,24 @@ func _Travel_QueryShopByType_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Travel_SeckillVoucher_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SeckillVoucherRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).SeckillVoucher(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.travel/seckillVoucher",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).SeckillVoucher(ctx, req.(*SeckillVoucherRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Travel_ServiceDesc is the grpc.ServiceDesc for Travel service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -712,6 +744,10 @@ var Travel_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "queryShopByType",
 			Handler:    _Travel_QueryShopByType_Handler,
+		},
+		{
+			MethodName: "seckillVoucher",
+			Handler:    _Travel_SeckillVoucher_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

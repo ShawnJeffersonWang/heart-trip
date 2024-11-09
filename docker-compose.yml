@@ -37,6 +37,8 @@ services:
       OSS_ACCESS_KEY_SECRET: "${OSS_ACCESS_KEY_SECRET}"
     working_dir: /go/looklook
     volumes:
+      # 这里的 "." 相当于把整个项目挂载到 docker 中了, 前面是当前项目，后面是 docker 容器内
+      # 使用 docker 部署时需要额外注意，配置文件的路径不能当作在宿主机文件系统上的路径一样
       - .:/go/looklook
     privileged: true
     restart: always

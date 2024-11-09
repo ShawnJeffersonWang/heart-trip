@@ -86,7 +86,6 @@ func (l *QueryShopByTypeLogic) QueryShopByType(req *pb.QueryShopByTypeRequest) (
 		WithDist:  true,
 	}
 	geoResults, err := l.svcCtx.RedisClient.GeoSearchLocation(ctx, key, geoArgs).Result()
-	fmt.Println("===============", geoResults)
 	if err != nil {
 		logx.Errorw("Redis GEOSEARCH 失败", logx.LogField{Key: "error", Value: err})
 		return &pb.QueryShopByTypeResponse{

@@ -40,16 +40,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: homestay.HomestayListHandler(serverCtx),
 			},
 			{
-				// search by location
-				Method:  http.MethodGet,
-				Path:    "/homestay/searchByLocation",
-				Handler: homestay.SearchByLocationHandler(serverCtx),
-			},
-			{
 				// query shop by type
 				Method:  http.MethodPost,
 				Path:    "/homestay/queryShopByType",
 				Handler: homestay.QueryShopByTypeHandler(serverCtx),
+			},
+			{
+				// search by location
+				Method:  http.MethodGet,
+				Path:    "/homestay/searchByLocation",
+				Handler: homestay.SearchByLocationHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/travel/v1"),
@@ -92,6 +92,12 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/homestay/myHomestayList",
 				Handler: homestay.MyHomestayListHandler(serverCtx),
+			},
+			{
+				// seckill voucher order
+				Method:  http.MethodPost,
+				Path:    "/homestay/seckillVoucher",
+				Handler: homestay.SeckillVoucherHandler(serverCtx),
 			},
 			{
 				// update homestay

@@ -112,3 +112,8 @@ func (s *TravelServer) QueryShopByType(ctx context.Context, in *pb.QueryShopByTy
 	l := logic.NewQueryShopByTypeLogic(ctx, s.svcCtx)
 	return l.QueryShopByType(in)
 }
+
+func (s *TravelServer) SeckillVoucher(ctx context.Context, in *pb.SeckillVoucherRequest) (*pb.SeckillVoucherResponse, error) {
+	l := logic.NewSeckillVoucherLogic(ctx, s.svcCtx)
+	return l.SeckillVoucher(in)
+}
