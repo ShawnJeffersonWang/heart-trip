@@ -40,8 +40,8 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	}
 	// 初始化 Redis 客户端
 	redisClient := redis.NewClient(&redis.Options{
-		Addr:     c.Redis.Host,
-		Password: c.Redis.Pass,
+		Addr:     c.Cache[0].Host,
+		Password: c.Cache[0].Pass,
 	})
 
 	sqlConn := sqlx.NewMysql(c.DB.DataSource)

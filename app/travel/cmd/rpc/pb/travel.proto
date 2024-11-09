@@ -16,7 +16,7 @@ message Homestay {
   double longitude = 7;
   double latitude = 8;
   double distance = 9;
-  int64 typeId = 10;
+  int32 typeId = 10;
   string location = 11;
   string facilities = 12;
   string cover = 13;
@@ -237,14 +237,14 @@ message SearchByLocationResp {
 }
 
 message QueryShopByTypeRequest {
-  int64 typeId = 1;
-  int64 current = 2;
+  int32 typeId = 1;
+  int32 current = 2;
   double x = 3;
   double y = 4;
 }
 
 message QueryShopByTypeResponse {
-  int64 code = 1;
+  int32 code = 1;
   string msg = 2;
   repeated Homestay data = 3;
 }
@@ -269,4 +269,5 @@ service travel {
   rpc clearHistory(ClearHistoryReq) returns (ClearHistoryResp);
   rpc searchHistory(SearchHistoryReq) returns (SearchHistoryResp);
   rpc searchByLocation(SearchByLocationReq) returns (SearchByLocationResp);
+  rpc queryShopByType(QueryShopByTypeRequest) returns (QueryShopByTypeResponse);
 }

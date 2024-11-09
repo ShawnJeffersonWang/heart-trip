@@ -257,6 +257,19 @@ type MyHomestayListResp struct {
 	List []Homestay `json:"list"`
 }
 
+type QueryShopByTypeRequest struct {
+	TypeId  int32   `form:"typeId"`      // 店铺类型ID
+	Current int32   `form:"current"`     // 当前页数
+	X       float64 `form:"x,omitempty"` // 经度（可选）
+	Y       float64 `form:"y,omitempty"` // 纬度（可选）
+}
+
+type QueryShopByTypeResponse struct {
+	Code int        `json:"code"`
+	Msg  string     `json:"msg"`
+	Data []Homestay `json:"data"`
+}
+
 type SearchByLocationReq struct {
 	Location string `form:"location"`
 }

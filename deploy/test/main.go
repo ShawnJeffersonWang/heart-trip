@@ -4,8 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"golodge/app/travel/model"
 	"golodge/common/globalkey"
 	"golodge/common/tool"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"log"
 	"math/rand"
 	"strconv"
@@ -55,24 +59,24 @@ func (c *CacheClient) SetWithLogicalExpire(key string, value interface{}, durati
 
 // ShopServiceImpl 模拟商铺服务
 type ShopServiceImpl struct {
-	shops map[int64]*Shop
+	shops map[int64]*model.Homestay
 }
 
 func NewShopService() *ShopServiceImpl {
 	// 初始化一些模拟数据
-	shops := make(map[int64]*Shop)
+	shops := make(map[int64]*model.Homestay)
 	for i := 1; i <= 10; i++ {
-		shops[int64(i)] = &Shop{
-			ID:     int64(i),
-			TypeID: int64(rand.Intn(5) + 1),
-			X:      rand.Float64()*360 - 180, // 经度范围：-180 到 +180
-			Y:      rand.Float64()*180 - 90,  // 纬度范围：-90 到 +90
+		shops[int64(i)] = &model.Homestay{
+			Id:        int64(i),
+			TypeId:    int32(rand.Intn(5) + 1),
+			Longitude: rand.Float64()*360 - 180, // 经度范围：-180 到 +180
+			Latitude:  rand.Float64()*180 - 90,  // 纬度范围：-90 到 +90
 		}
 	}
 	return &ShopServiceImpl{shops: shops}
 }
 
-func (s *ShopServiceImpl) GetByID(id int64) (*Shop, error) {
+func (s *ShopServiceImpl) GetByID(id int64) (*model.Homestay, error) {
 	shop, exists := s.shops[id]
 	if !exists {
 		return nil, fmt.Errorf("shop with id %d not found", id)
@@ -80,35 +84,45 @@ func (s *ShopServiceImpl) GetByID(id int64) (*Shop, error) {
 	return shop, nil
 }
 
-func (s *ShopServiceImpl) List() ([]*Shop, error) {
-	list := make([]*Shop, 0, len(s.shops))
-	for _, shop := range s.shops {
-		list = append(list, shop)
+func list() ([]*model.Homestay, error) {
+	// 初始化数据库
+	db, err := gorm.Open(mysql.Open("root:PXDN93VRKUm8TeE7@tcp(127.0.0.1:33069)/looklook_travel?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai"),
+		&gorm.Config{
+			Logger: logger.Default.LogMode(logger.Info), // 根据需要调整日志级别
+		},
+	)
+	if err != nil {
+		panic(err)
 	}
-	return list, nil
+	var homestays []*model.Homestay
+	find := db.Table("homestay").Find(&homestays)
+	if find.Error != nil {
+		log.Fatal(find.Error)
+	}
+	return homestays, nil
 }
 
 // MainTest 包含所有测试方法
 func MainTest() {
 	// 初始化 Redis 客户端
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
-		Password: "shawn1234",
+		Addr:     "localhost:36379",
+		Password: "G62m50oigInC30sf",
 	})
 
 	// 初始化依赖
-	cacheClient := NewCacheClient(rdb)
-	shopService := NewShopService()
-	redisIdWorker := tool.NewRedisIdWorker(redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
-		Password: "shawn1234",
-	}))
+	//cacheClient := NewCacheClient(rdb)
+	//shopService := NewShopService()
+	//redisIdWorker := tool.NewRedisIdWorker(redis.NewClient(&redis.Options{
+	//	Addr:     "localhost:6379",
+	//	Password: "shawn1234",
+	//}))
 
 	// 执行各个测试
-	testIdWorker(redisIdWorker)
-	testSaveShop(cacheClient, shopService)
-	loadShopData(rdb, shopService)
-	testHyperLogLog(rdb)
+	//testIdWorker(redisIdWorker)
+	//testSaveShop(cacheClient, shopService)
+	loadShopData(rdb)
+	//testHyperLogLog(rdb)
 }
 
 // TestIdWorker 测试 ID 生成器
@@ -144,7 +158,7 @@ func testSaveShop(cacheClient *CacheClient, shopService *ShopServiceImpl) {
 		log.Printf("获取店铺失败: %v", err)
 	}
 
-	key := CacheShopKey + strconv.FormatInt(shop.ID, 10)
+	key := CacheShopKey + strconv.FormatInt(shop.Id, 10)
 	err = cacheClient.SetWithLogicalExpire(key, shop, LogicalExpireTime)
 	if err != nil {
 		log.Printf("设置缓存失败: %v", err)
@@ -154,16 +168,16 @@ func testSaveShop(cacheClient *CacheClient, shopService *ShopServiceImpl) {
 }
 
 // LoadShopData 加载店铺数据到 Redis GEO
-func loadShopData(rdb *redis.Client, shopService *ShopServiceImpl) {
-	shops, err := shopService.List()
+func loadShopData(rdb *redis.Client) {
+	shops, err := list()
 	if err != nil {
 		log.Printf("获取店铺列表失败: %v", err)
 	}
 
 	// 按 TypeID 分组
-	typeGroup := make(map[int64][]*Shop)
+	typeGroup := make(map[int32][]*model.Homestay)
 	for _, shop := range shops {
-		typeGroup[shop.TypeID] = append(typeGroup[shop.TypeID], shop)
+		typeGroup[shop.TypeId] = append(typeGroup[shop.TypeId], shop)
 	}
 
 	// 分批写入 Redis GEOADD
@@ -173,9 +187,9 @@ func loadShopData(rdb *redis.Client, shopService *ShopServiceImpl) {
 		var geoArgs []*redis.GeoLocation
 		for _, shop := range shops {
 			geoArgs = append(geoArgs, &redis.GeoLocation{
-				Name:      strconv.FormatInt(shop.ID, 10),
-				Longitude: shop.X,
-				Latitude:  shop.Y,
+				Name:      strconv.FormatInt(shop.Id, 10),
+				Longitude: shop.Longitude,
+				Latitude:  shop.Latitude,
 			})
 		}
 		// 批处理，防止每一个店铺发一个请求

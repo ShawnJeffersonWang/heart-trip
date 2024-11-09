@@ -29,6 +29,10 @@ service travel {
 	@handler homestayList
 	get /homestay/homestayList (HomestayListReq) returns (HomestayListResp)
 
+	@doc "query shop by type"
+	@handler queryShopByType
+	post /homestay/queryShopByType (QueryShopByTypeRequest) returns (QueryShopByTypeResponse)
+
 	@doc "search by location"
 	@handler searchByLocation
 	get /homestay/searchByLocation (SearchByLocationReq) returns (SearchByLocationResp)

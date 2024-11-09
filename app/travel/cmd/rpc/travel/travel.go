@@ -70,6 +70,7 @@ type (
 		ClearHistory(ctx context.Context, in *ClearHistoryReq, opts ...grpc.CallOption) (*ClearHistoryResp, error)
 		SearchHistory(ctx context.Context, in *SearchHistoryReq, opts ...grpc.CallOption) (*SearchHistoryResp, error)
 		SearchByLocation(ctx context.Context, in *SearchByLocationReq, opts ...grpc.CallOption) (*SearchByLocationResp, error)
+		QueryShopByType(ctx context.Context, in *QueryShopByTypeRequest, opts ...grpc.CallOption) (*QueryShopByTypeResponse, error)
 	}
 
 	defaultTravel struct {
@@ -167,4 +168,9 @@ func (m *defaultTravel) SearchHistory(ctx context.Context, in *SearchHistoryReq,
 func (m *defaultTravel) SearchByLocation(ctx context.Context, in *SearchByLocationReq, opts ...grpc.CallOption) (*SearchByLocationResp, error) {
 	client := pb.NewTravelClient(m.cli.Conn())
 	return client.SearchByLocation(ctx, in, opts...)
+}
+
+func (m *defaultTravel) QueryShopByType(ctx context.Context, in *QueryShopByTypeRequest, opts ...grpc.CallOption) (*QueryShopByTypeResponse, error) {
+	client := pb.NewTravelClient(m.cli.Conn())
+	return client.QueryShopByType(ctx, in, opts...)
 }

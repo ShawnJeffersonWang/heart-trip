@@ -82,10 +82,11 @@ func (l *QueryShopByTypeLogic) QueryShopByType(req *pb.QueryShopByTypeRequest) (
 			Sort:       "ASC",
 			Count:      int(end),
 		},
-		WithDist: true,
+		WithCoord: true,
+		WithDist:  true,
 	}
-
 	geoResults, err := l.svcCtx.RedisClient.GeoSearchLocation(ctx, key, geoArgs).Result()
+	fmt.Println("===============", geoResults)
 	if err != nil {
 		logx.Errorw("Redis GEOSEARCH 失败", logx.LogField{Key: "error", Value: err})
 		return &pb.QueryShopByTypeResponse{
@@ -157,7 +158,8 @@ func (l *QueryShopByTypeLogic) QueryShopByType(req *pb.QueryShopByTypeRequest) (
 	}
 	orderBy := fmt.Sprintf("FIELD(id, %s)", strings.Join(idListStr, ","))
 
-	result := l.svcCtx.DB.Where("id IN ?", ids).
+	result := l.svcCtx.DB.Table("homestay").
+		Where("id IN ?", ids).
 		Order(orderBy).
 		Find(&shops)
 
@@ -177,7 +179,6 @@ func (l *QueryShopByTypeLogic) QueryShopByType(req *pb.QueryShopByTypeRequest) (
 			shops[i].Distance = dist
 		}
 	}
-
 	return &pb.QueryShopByTypeResponse{
 		Code: 200,
 		Msg:  "success",

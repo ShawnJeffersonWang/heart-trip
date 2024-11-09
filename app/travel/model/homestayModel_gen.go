@@ -88,7 +88,7 @@ type (
 		TitleTags          string    `db:"title_tags"`
 		CommentCount       int64     `db:"comment_count"`
 		Location           string    `db:"location"` // 位置
-		TypeId             int64     `db:"type_id"`
+		TypeId             int32     `db:"type_id"`
 		Longitude          float64   `db:"longitude"`
 		Latitude           float64   `db:"latitude"`
 		Facilities         string    `db:"facilities"`

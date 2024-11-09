@@ -40,6 +40,7 @@ type TravelClient interface {
 	ClearHistory(ctx context.Context, in *ClearHistoryReq, opts ...grpc.CallOption) (*ClearHistoryResp, error)
 	SearchHistory(ctx context.Context, in *SearchHistoryReq, opts ...grpc.CallOption) (*SearchHistoryResp, error)
 	SearchByLocation(ctx context.Context, in *SearchByLocationReq, opts ...grpc.CallOption) (*SearchByLocationResp, error)
+	QueryShopByType(ctx context.Context, in *QueryShopByTypeRequest, opts ...grpc.CallOption) (*QueryShopByTypeResponse, error)
 }
 
 type travelClient struct {
@@ -203,6 +204,15 @@ func (c *travelClient) SearchByLocation(ctx context.Context, in *SearchByLocatio
 	return out, nil
 }
 
+func (c *travelClient) QueryShopByType(ctx context.Context, in *QueryShopByTypeRequest, opts ...grpc.CallOption) (*QueryShopByTypeResponse, error) {
+	out := new(QueryShopByTypeResponse)
+	err := c.cc.Invoke(ctx, "/pb.travel/queryShopByType", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TravelServer is the server API for Travel service.
 // All implementations must embed UnimplementedTravelServer
 // for forward compatibility
@@ -225,6 +235,7 @@ type TravelServer interface {
 	ClearHistory(context.Context, *ClearHistoryReq) (*ClearHistoryResp, error)
 	SearchHistory(context.Context, *SearchHistoryReq) (*SearchHistoryResp, error)
 	SearchByLocation(context.Context, *SearchByLocationReq) (*SearchByLocationResp, error)
+	QueryShopByType(context.Context, *QueryShopByTypeRequest) (*QueryShopByTypeResponse, error)
 	mustEmbedUnimplementedTravelServer()
 }
 
@@ -282,6 +293,9 @@ func (UnimplementedTravelServer) SearchHistory(context.Context, *SearchHistoryRe
 }
 func (UnimplementedTravelServer) SearchByLocation(context.Context, *SearchByLocationReq) (*SearchByLocationResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchByLocation not implemented")
+}
+func (UnimplementedTravelServer) QueryShopByType(context.Context, *QueryShopByTypeRequest) (*QueryShopByTypeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryShopByType not implemented")
 }
 func (UnimplementedTravelServer) mustEmbedUnimplementedTravelServer() {}
 
@@ -602,6 +616,24 @@ func _Travel_SearchByLocation_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Travel_QueryShopByType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryShopByTypeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).QueryShopByType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.travel/queryShopByType",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).QueryShopByType(ctx, req.(*QueryShopByTypeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Travel_ServiceDesc is the grpc.ServiceDesc for Travel service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -676,6 +708,10 @@ var Travel_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "searchByLocation",
 			Handler:    _Travel_SearchByLocation_Handler,
+		},
+		{
+			MethodName: "queryShopByType",
+			Handler:    _Travel_QueryShopByType_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

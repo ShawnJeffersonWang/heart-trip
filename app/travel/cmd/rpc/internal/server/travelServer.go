@@ -107,3 +107,8 @@ func (s *TravelServer) SearchByLocation(ctx context.Context, in *pb.SearchByLoca
 	l := logic.NewSearchByLocationLogic(ctx, s.svcCtx)
 	return l.SearchByLocation(in)
 }
+
+func (s *TravelServer) QueryShopByType(ctx context.Context, in *pb.QueryShopByTypeRequest) (*pb.QueryShopByTypeResponse, error) {
+	l := logic.NewQueryShopByTypeLogic(ctx, s.svcCtx)
+	return l.QueryShopByType(in)
+}
