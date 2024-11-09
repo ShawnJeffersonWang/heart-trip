@@ -36,6 +36,8 @@ type (
 	HomestayDetailResp      = pb.HomestayDetailResp
 	LikeCommentReq          = pb.LikeCommentReq
 	LikeCommentResp         = pb.LikeCommentResp
+	QueryShopByTypeRequest  = pb.QueryShopByTypeRequest
+	QueryShopByTypeResponse = pb.QueryShopByTypeResponse
 	RemoveHistoryReq        = pb.RemoveHistoryReq
 	RemoveHistoryResp       = pb.RemoveHistoryResp
 	RemoveWishListReq       = pb.RemoveWishListReq

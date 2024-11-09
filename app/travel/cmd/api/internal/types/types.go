@@ -29,18 +29,18 @@ type AddGuessResp struct {
 }
 
 type AddHomestayReq struct {
-	Title       string `json:"title"`
-	TitleTags   string `json:"titleTags"`
-	BannerUrls  string `json:"bannerUrls"`
-	Latitude    string `json:"latitude"`
-	Longitude   string `json:"longitude"`
-	Location    string `json:"location"`
-	Facilities  string `json:"facilities"`
-	Area        string `json:"area"`
-	RoomConfig  string `json:"roomConfig"`
-	CleanVideo  string `json:"cleanVideo"`
-	PriceBefore int64  `json:"priceBefore"` //民宿价格
-	PriceAfter  int64  `json:"priceAfter"`
+	Title       string  `json:"title"`
+	TitleTags   string  `json:"titleTags"`
+	BannerUrls  string  `json:"bannerUrls"`
+	Longitude   float64 `json:"longitude"`
+	Latitude    float64 `json:"latitude"`
+	Location    string  `json:"location"`
+	Facilities  string  `json:"facilities"`
+	Area        string  `json:"area"`
+	RoomConfig  string  `json:"roomConfig"`
+	CleanVideo  string  `json:"cleanVideo"`
+	PriceBefore int64   `json:"priceBefore"` //民宿价格
+	PriceAfter  int64   `json:"priceAfter"`
 }
 
 type AddHomestayResp struct {
@@ -48,7 +48,7 @@ type AddHomestayResp struct {
 }
 
 type AdminDeleteHomestayReq struct {
-	HomestayId int64 `json:"homestayId"`
+	HomestayId int64 `path:"homestayId"`
 }
 
 type AdminDeleteHomestayResp struct {
@@ -84,7 +84,7 @@ type CommentListResp struct {
 }
 
 type DeleteHomestayReq struct {
-	HomestayId int64 `json:"homestayId"`
+	HomestayId int64 `path:"homestayId"`
 }
 
 type DeleteHomestayResp struct {
@@ -124,8 +124,10 @@ type Homestay struct {
 	CommentCount       int64   `json:"commentCount"`
 	TitleTags          string  `json:"titleTags"`
 	BannerUrls         string  `json:"bannerUrls"`
-	Latitude           string  `json:"latitude"`
-	Longitude          string  `json:"longitude"`
+	TypeId             int64   `json:"typeId"`
+	Longitude          float64 `json:"longitude"`
+	Latitude           float64 `json:"latitude"`
+	Distance           float64 `json:"distance"`
 	Location           string  `json:"location"`
 	Facilities         string  `json:"facilities"`
 	Cover              string  `json:"cover"`
@@ -203,7 +205,7 @@ type HomestayComment struct {
 }
 
 type HomestayDetailReq struct {
-	HomestayId int64 `json:"homestayId"`
+	HomestayId int64 `path:"homestayId"`
 }
 
 type HomestayDetailResp struct {
@@ -213,8 +215,8 @@ type HomestayDetailResp struct {
 	CommentCount       int64   `json:"commentCount"`
 	TitleTags          string  `json:"titleTags"`
 	BannerUrls         string  `json:"bannerUrls"`
-	Latitude           string  `json:"latitude"`
-	Longitude          string  `json:"longitude"`
+	Longitude          float64 `json:"longitude"`
+	Latitude           float64 `json:"latitude"`
 	Location           string  `json:"location"`
 	Facilities         string  `json:"facilities"`
 	Area               string  `json:"area"`
@@ -230,8 +232,8 @@ type HomestayDetailResp struct {
 }
 
 type HomestayListReq struct {
-	Page     int64 `json:"page"`
-	PageSize int64 `json:"pageSize"`
+	Page     int64 `form:"page"`
+	PageSize int64 `form:"pageSize"`
 }
 
 type HomestayListResp struct {
@@ -247,8 +249,8 @@ type LikeCommentResp struct {
 }
 
 type MyHomestayListReq struct {
-	Page     int64 `json:"page"`
-	PageSize int64 `json:"pageSize"`
+	Page     int64 `form:"page"`
+	PageSize int64 `form:"pageSize"`
 }
 
 type MyHomestayListResp struct {
@@ -256,7 +258,7 @@ type MyHomestayListResp struct {
 }
 
 type SearchByLocationReq struct {
-	Location string `json:"location"`
+	Location string `form:"location"`
 }
 
 type SearchByLocationResp struct {
@@ -264,20 +266,20 @@ type SearchByLocationResp struct {
 }
 
 type UpdateHomestayReq struct {
-	HomestayId  int64  `json:"homestayId"`
-	Title       string `json:"title"`
-	TitleTags   string `json:"titleTags"`
-	BannerUrls  string `json:"bannerUrls"`
-	Latitude    string `json:"latitude"`
-	Longitude   string `json:"longitude"`
-	Location    string `json:"location"`
-	Facilities  string `json:"facilities"`
-	Area        string `json:"area"`
-	RoomConfig  string `json:"roomConfig"`
-	CleanVideo  string `json:"cleanVideo"`
-	PriceBefore int64  `json:"priceBefore"` //民宿价格
-	PriceAfter  int64  `json:"priceAfter"`
-	RowState    int64  `json:"rowState"`
+	HomestayId  int64   `json:"homestayId"`
+	Title       string  `json:"title"`
+	TitleTags   string  `json:"titleTags"`
+	BannerUrls  string  `json:"bannerUrls"`
+	Longitude   float64 `json:"longitude"`
+	Latitude    float64 `json:"latitude"`
+	Location    string  `json:"location"`
+	Facilities  string  `json:"facilities"`
+	Area        string  `json:"area"`
+	RoomConfig  string  `json:"roomConfig"`
+	CleanVideo  string  `json:"cleanVideo"`
+	PriceBefore int64   `json:"priceBefore"` //民宿价格
+	PriceAfter  int64   `json:"priceAfter"`
+	RowState    int64   `json:"rowState"`
 }
 
 type UpdateHomestayResp struct {

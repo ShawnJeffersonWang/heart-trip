@@ -13,21 +13,23 @@ message Homestay {
   int64 commentCount = 4;
   string titleTags = 5;
   string  bannerUrls = 6;
-  string latitude = 7;
-  string longitude = 8;
-  string location = 9;
-  string facilities = 10;
-  string cover = 11;
-  string area = 12;
-  string roomConfig = 13;
-  string cleanVideo = 14;
-  int64   homestayBusinessId = 15;   //店铺id
-  int64   hostId = 16;               //房东id
-  string hostAvatar = 17;
-  string hostNickname = 18;
-  int64   rowState = 19;             //0:下架 1:上架
-  int64   priceBefore = 20;       //民宿价格(分)
-  int64   priceAfter = 21;
+  double longitude = 7;
+  double latitude = 8;
+  double distance = 9;
+  int64 typeId = 10;
+  string location = 11;
+  string facilities = 12;
+  string cover = 13;
+  string area = 14;
+  string roomConfig = 15;
+  string cleanVideo = 16;
+  int64   homestayBusinessId = 17;   //店铺id
+  int64   hostId = 18;               //房东id
+  string hostAvatar = 19;
+  string hostNickname = 20;
+  int64   rowState = 21;             //0:下架 1:上架
+  int64   priceBefore = 22;       //民宿价格(分)
+  int64   priceAfter = 23;
 }
 
 message HomestayComment {
@@ -60,8 +62,8 @@ message HomestayDetailResp {
   int64 commentCount = 4;
   string titleTags = 5;
   string bannerUrls = 6;
-  string latitude = 7;
-  string longitude = 8;
+  double longitude = 7;
+  double latitude = 8;
   string location = 9;
   string facilities = 10;
   string area = 11;
@@ -80,8 +82,8 @@ message AddHomestayReq {
   string title = 1;
   string titleTags = 2;
   string bannerUrls = 3;
-  string latitude = 4;
-  string longitude = 5;
+  double longitude = 4;
+  double latitude = 5;
   string location = 6;
   string facilities = 7;
   string area = 8;
@@ -101,8 +103,8 @@ message UpdateHomestayReq {
   string title = 2;
   string titleTags = 3;
   string bannerUrls = 4;
-  string latitude = 5;
-  string longitude = 6;
+  double longitude = 5;
+  double latitude = 6;
   string location = 7;
   string facilities = 8;
   string area = 9;
@@ -232,6 +234,19 @@ message SearchByLocationReq {
 }
 message SearchByLocationResp {
   repeated Homestay list = 1;
+}
+
+message QueryShopByTypeRequest {
+  int64 typeId = 1;
+  int64 current = 2;
+  double x = 3;
+  double y = 4;
+}
+
+message QueryShopByTypeResponse {
+  int64 code = 1;
+  string msg = 2;
+  repeated Homestay data = 3;
 }
 
 //service

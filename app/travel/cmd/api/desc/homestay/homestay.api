@@ -15,8 +15,10 @@ type Homestay {
     CommentCount int64 `json:"commentCount"`
     TitleTags string `json:"titleTags"`
     BannerUrls string `json:"bannerUrls"`
-    Latitude string `json:"latitude"`
-    Longitude string `json:"longitude"`
+    TypeId int64 `json:"typeId"`
+    Longitude float64 `json:"longitude"`
+    Latitude float64 `json:"latitude"`
+    Distance float64 `json:"distance"`
     Location string `json:"location"`
     Facilities string `json:"facilities"`
     Cover string `json:"cover"`
@@ -49,8 +51,8 @@ type (
         Title string `json:"title"`
         TitleTags string `json:"titleTags"`
         BannerUrls string `json:"bannerUrls"`
-        Latitude string `json:"latitude"`
-        Longitude string `json:"longitude"`
+        Longitude float64 `json:"longitude"`
+        Latitude float64 `json:"latitude"`
         Location string `json:"location"`
         Facilities string `json:"facilities"`
         Area string `json:"area"`
@@ -70,8 +72,8 @@ type (
         Title string `json:"title"`
         TitleTags string `json:"titleTags"`
         BannerUrls string `json:"bannerUrls"`
-        Latitude string `json:"latitude"`
-        Longitude string `json:"longitude"`
+        Longitude float64 `json:"longitude"`
+        Latitude float64 `json:"latitude"`
         Location string `json:"location"`
         Facilities string `json:"facilities"`
         Area string `json:"area"`
@@ -88,7 +90,7 @@ type (
 
 type (
     DeleteHomestayReq {
-        HomestayId int64 `json:"homestayId"`
+        HomestayId int64 `path:"homestayId"`
     }
     DeleteHomestayResp {
         Success bool `json:"success"`
@@ -97,7 +99,7 @@ type (
 
 type (
     AdminDeleteHomestayReq {
-        HomestayId int64 `json:"homestayId"`
+        HomestayId int64 `path:"homestayId"`
     }
     AdminDeleteHomestayResp {
         Success bool `json:"success"`
@@ -126,8 +128,8 @@ type (
 
 type (
     HomestayListReq {
-        Page int64 `json:"page"`
-        PageSize int64 `json:"pageSize"`
+        Page int64 `form:"page"`
+        PageSize int64 `form:"pageSize"`
     }
     HomestayListResp {
         List []Homestay `json:"list"`
@@ -136,8 +138,8 @@ type (
 
 type (
     MyHomestayListReq {
-        Page int64 `json:"page"`
-        PageSize int64 `json:"pageSize"`
+        Page int64 `form:"page"`
+        PageSize int64 `form:"pageSize"`
     }
     MyHomestayListResp {
         List []Homestay `json:"list"`
@@ -146,7 +148,7 @@ type (
 
 type (
     SearchByLocationReq {
-        Location string `json:"location"`
+        Location string `form:"location"`
     }
     SearchByLocationResp {
         List []Homestay `json:"list"`
@@ -161,10 +163,25 @@ type (
     }
 )
 
+type (
+    QueryShopByTypeRequest {
+        typeId int32 `form:"typeId"`             // 店铺类型ID
+        current int32 `form:"current"`           // 当前页数
+        x float64 `form:"x,omitempty"`           // 经度（可选）
+        y float64 `form:"y,omitempty"`           // 纬度（可选）
+    }
+
+    QueryShopByTypeResponse {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Data []Homestay `json:"data"`
+    }
+)
+
 // 如果是改Homestay, 那么整个项目大部分地方都要改，耦合相当高，如果是改HomestayDetailResp，那么只用改homestayDetail这一个接口，和调用他的地方
 type (
     HomestayDetailReq {
-        HomestayId int64 `json:"homestayId"`
+        HomestayId int64 `path:"homestayId"`
     }
     HomestayDetailResp {
         Id int64 `json:"id"`
@@ -173,8 +190,8 @@ type (
         CommentCount int64 `json:"commentCount"`
         TitleTags string `json:"titleTags"`
         BannerUrls string `json:"bannerUrls"`
-        Latitude string `json:"latitude"`
-        Longitude string `json:"longitude"`
+        Longitude float64 `json:"longitude"`
+        Latitude float64 `json:"latitude"`
         Location string `json:"location"`
         Facilities string `json:"facilities"`
         Area string `json:"area"`

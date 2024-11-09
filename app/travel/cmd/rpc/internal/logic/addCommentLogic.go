@@ -27,7 +27,6 @@ func NewAddCommentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddCom
 }
 
 func (l *AddCommentLogic) AddComment(in *pb.AddCommentReq) (*pb.AddCommentResp, error) {
-	// todo: add your logic here and delete this line
 	homestayComment := model.HomestayComment{
 		HomestayId:     in.HomestayComment.HomestayId,
 		CommentTime:    in.HomestayComment.CommentTime,

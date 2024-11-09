@@ -88,8 +88,9 @@ type (
 		TitleTags          string    `db:"title_tags"`
 		CommentCount       int64     `db:"comment_count"`
 		Location           string    `db:"location"` // 位置
-		Latitude           string    `db:"latitude"`
-		Longitude          string    `db:"longitude"`
+		TypeId             int64     `db:"type_id"`
+		Longitude          float64   `db:"longitude"`
+		Latitude           float64   `db:"latitude"`
 		Facilities         string    `db:"facilities"`
 		Cover              string    `db:"cover"` // 轮播图，第一张封面
 		Area               string    `db:"area"`
@@ -117,9 +118,9 @@ func (m *defaultHomestayModel) Insert(ctx context.Context, session sqlx.Session,
 	data.DelState = globalkey.DelStateNo
 	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayIdPrefix, data.Id)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, homestayRowsExpectAutoSet)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)", m.table, homestayRowsExpectAutoSet)
 		if session != nil {
-			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.RatingStars, data.BannerUrls, data.TitleTags, data.CommentCount, data.Location, data.Latitude, data.Longitude, data.Facilities, data.Cover, data.Area, data.RoomConfig, data.CleanVideo, data.HomestayBusinessId, data.HostId, data.HostAvatar, data.HostNickname, data.RowState, data.PriceBefore, data.PriceAfter)
+			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.RatingStars, data.BannerUrls, data.TitleTags, data.CommentCount, data.Location, data.TypeId, data.Latitude, data.Longitude, data.Facilities, data.Cover, data.Area, data.RoomConfig, data.CleanVideo, data.HomestayBusinessId, data.HostId, data.HostAvatar, data.HostNickname, data.RowState, data.PriceBefore, data.PriceAfter)
 		}
 		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.RatingStars, data.BannerUrls, data.TitleTags, data.CommentCount, data.Location, data.Latitude, data.Longitude, data.Facilities, data.Cover, data.Area, data.RoomConfig, data.CleanVideo, data.HomestayBusinessId, data.HostId, data.HostAvatar, data.HostNickname, data.RowState, data.PriceBefore, data.PriceAfter)
 	}, looklookTravelHomestayIdKey)
@@ -147,9 +148,9 @@ func (m *defaultHomestayModel) Update(ctx context.Context, session sqlx.Session,
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, homestayRowsWithPlaceHolder)
 		if session != nil {
-			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.RatingStars, data.BannerUrls, data.TitleTags, data.CommentCount, data.Location, data.Latitude, data.Longitude, data.Facilities, data.Cover, data.Area, data.RoomConfig, data.CleanVideo, data.HomestayBusinessId, data.HostId, data.HostAvatar, data.HostNickname, data.RowState, data.PriceBefore, data.PriceAfter, data.Id)
+			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.RatingStars, data.BannerUrls, data.TitleTags, data.CommentCount, data.Location, data.TypeId, data.Latitude, data.Longitude, data.Facilities, data.Cover, data.Area, data.RoomConfig, data.CleanVideo, data.HomestayBusinessId, data.HostId, data.HostAvatar, data.HostNickname, data.RowState, data.PriceBefore, data.PriceAfter, data.Id)
 		}
-		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.RatingStars, data.BannerUrls, data.TitleTags, data.CommentCount, data.Location, data.Latitude, data.Longitude, data.Facilities, data.Cover, data.Area, data.RoomConfig, data.CleanVideo, data.HomestayBusinessId, data.HostId, data.HostAvatar, data.HostNickname, data.RowState, data.PriceBefore, data.PriceAfter, data.Id)
+		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.RatingStars, data.BannerUrls, data.TitleTags, data.CommentCount, data.Location, data.TypeId, data.Latitude, data.Longitude, data.Facilities, data.Cover, data.Area, data.RoomConfig, data.CleanVideo, data.HomestayBusinessId, data.HostId, data.HostAvatar, data.HostNickname, data.RowState, data.PriceBefore, data.PriceAfter, data.Id)
 	}, looklookTravelHomestayIdKey)
 }
 
@@ -166,11 +167,11 @@ func (m *defaultHomestayModel) UpdateWithVersion(ctx context.Context, session sq
 	sqlResult, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, homestayRowsWithPlaceHolder)
 		if session != nil {
-			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.RatingStars, data.BannerUrls, data.TitleTags, data.CommentCount, data.Location, data.Latitude, data.Longitude, data.Facilities, data.Cover, data.Area, data.RoomConfig, data.CleanVideo, data.HomestayBusinessId, data.HostId, data.HostAvatar, data.HostNickname, data.RowState, data.PriceBefore, data.PriceAfter, data.Id, oldVersion)
+			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.RatingStars, data.BannerUrls, data.TitleTags, data.CommentCount, data.Location, data.TypeId, data.Latitude, data.Longitude, data.Facilities, data.Cover, data.Area, data.RoomConfig, data.CleanVideo, data.HomestayBusinessId, data.HostId, data.HostAvatar, data.HostNickname, data.RowState, data.PriceBefore, data.PriceAfter, data.Id, oldVersion)
 		}
 		// bug最后得带data.id和oldVersion，不然会报参数无法满足
 		// ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.SubTitle, data.Banner, data.Info, data.PeopleNum, data.HomestayBusinessId, data.UserId, data.RowState, data.RowType, data.FoodInfo, data.FoodPrice, data.HomestayPrice, data.MarketHomestayPrice, data.Id, oldVersion
-		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.RatingStars, data.BannerUrls, data.TitleTags, data.CommentCount, data.Location, data.Latitude, data.Longitude, data.Facilities, data.Cover, data.Area, data.RoomConfig, data.CleanVideo, data.HomestayBusinessId, data.HostId, data.HostAvatar, data.HostNickname, data.RowState, data.PriceBefore, data.PriceAfter, data.Id, oldVersion)
+		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.RatingStars, data.BannerUrls, data.TitleTags, data.CommentCount, data.Location, data.TypeId, data.Latitude, data.Longitude, data.Facilities, data.Cover, data.Area, data.RoomConfig, data.CleanVideo, data.HomestayBusinessId, data.HostId, data.HostAvatar, data.HostNickname, data.RowState, data.PriceBefore, data.PriceAfter, data.Id, oldVersion)
 	}, looklookTravelHomestayIdKey)
 	if err != nil {
 		return err
