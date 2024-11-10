@@ -153,3 +153,8 @@ func (s *TravelServer) QueryBlogOfFollow(ctx context.Context, in *pb.QueryBlogOf
 	l := logic.NewQueryBlogOfFollowLogic(ctx, s.svcCtx)
 	return l.QueryBlogOfFollow(in)
 }
+
+func (s *TravelServer) UpdateShop(ctx context.Context, in *pb.UpdateShopRequest) (*pb.UpdateShopResponse, error) {
+	l := logic.NewUpdateShopLogic(ctx, s.svcCtx)
+	return l.UpdateShop(in)
+}

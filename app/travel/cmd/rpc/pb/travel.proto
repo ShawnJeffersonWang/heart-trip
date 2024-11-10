@@ -308,6 +308,8 @@ service travel {
   rpc SaveBlog(SaveBlogRequest) returns (SaveBlogResponse);
   // 查询关注的博客
   rpc QueryBlogOfFollow(QueryBlogOfFollowRequest) returns (QueryBlogOfFollowResponse);
+
+  rpc UpdateShop(UpdateShopRequest) returns (UpdateShopResponse);
 }
 
 // Blog消息，表示一篇博客
@@ -431,3 +433,12 @@ message QueryBlogOfFollowResponse {
 //  repeated Follow data = 2;     // 关注者列表
 //  string message = 3;           // 相关消息
 //}
+
+message UpdateShopRequest {
+  Homestay homestay = 1;
+}
+
+message UpdateShopResponse {
+  int32 code = 1;
+  string message = 2;
+}

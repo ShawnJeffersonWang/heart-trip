@@ -31,7 +31,6 @@ func NewUpdateHomestayLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Up
 }
 
 func (l *UpdateHomestayLogic) UpdateHomestay(in *pb.UpdateHomestayReq) (*pb.UpdateHomestayResp, error) {
-	// todo: add your logic here and delete this line
 	//_, err := l.svcCtx.HomestayModel.FindOne(l.ctx, in.Homestay.Id)
 	//if err == nil {
 	//	return nil, errors.Wrapf(ErrHomestayAlreadyAdded,

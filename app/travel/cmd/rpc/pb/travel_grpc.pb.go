@@ -54,6 +54,7 @@ type TravelClient interface {
 	SaveBlog(ctx context.Context, in *SaveBlogRequest, opts ...grpc.CallOption) (*SaveBlogResponse, error)
 	// 查询关注的博客
 	QueryBlogOfFollow(ctx context.Context, in *QueryBlogOfFollowRequest, opts ...grpc.CallOption) (*QueryBlogOfFollowResponse, error)
+	UpdateShop(ctx context.Context, in *UpdateShopRequest, opts ...grpc.CallOption) (*UpdateShopResponse, error)
 }
 
 type travelClient struct {
@@ -289,6 +290,15 @@ func (c *travelClient) QueryBlogOfFollow(ctx context.Context, in *QueryBlogOfFol
 	return out, nil
 }
 
+func (c *travelClient) UpdateShop(ctx context.Context, in *UpdateShopRequest, opts ...grpc.CallOption) (*UpdateShopResponse, error) {
+	out := new(UpdateShopResponse)
+	err := c.cc.Invoke(ctx, "/pb.travel/UpdateShop", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TravelServer is the server API for Travel service.
 // All implementations must embed UnimplementedTravelServer
 // for forward compatibility
@@ -325,6 +335,7 @@ type TravelServer interface {
 	SaveBlog(context.Context, *SaveBlogRequest) (*SaveBlogResponse, error)
 	// 查询关注的博客
 	QueryBlogOfFollow(context.Context, *QueryBlogOfFollowRequest) (*QueryBlogOfFollowResponse, error)
+	UpdateShop(context.Context, *UpdateShopRequest) (*UpdateShopResponse, error)
 	mustEmbedUnimplementedTravelServer()
 }
 
@@ -406,6 +417,9 @@ func (UnimplementedTravelServer) SaveBlog(context.Context, *SaveBlogRequest) (*S
 }
 func (UnimplementedTravelServer) QueryBlogOfFollow(context.Context, *QueryBlogOfFollowRequest) (*QueryBlogOfFollowResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryBlogOfFollow not implemented")
+}
+func (UnimplementedTravelServer) UpdateShop(context.Context, *UpdateShopRequest) (*UpdateShopResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateShop not implemented")
 }
 func (UnimplementedTravelServer) mustEmbedUnimplementedTravelServer() {}
 
@@ -870,6 +884,24 @@ func _Travel_QueryBlogOfFollow_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Travel_UpdateShop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateShopRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).UpdateShop(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.travel/UpdateShop",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).UpdateShop(ctx, req.(*UpdateShopRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Travel_ServiceDesc is the grpc.ServiceDesc for Travel service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -976,6 +1008,10 @@ var Travel_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QueryBlogOfFollow",
 			Handler:    _Travel_QueryBlogOfFollow_Handler,
+		},
+		{
+			MethodName: "UpdateShop",
+			Handler:    _Travel_UpdateShop_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

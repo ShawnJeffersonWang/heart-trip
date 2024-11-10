@@ -65,6 +65,8 @@ type (
 	SeckillVoucherResponse    = pb.SeckillVoucherResponse
 	UpdateHomestayReq         = pb.UpdateHomestayReq
 	UpdateHomestayResp        = pb.UpdateHomestayResp
+	UpdateShopRequest         = pb.UpdateShopRequest
+	UpdateShopResponse        = pb.UpdateShopResponse
 	UserDTO                   = pb.UserDTO
 	VoucherOrder              = pb.VoucherOrder
 	WishListReq               = pb.WishListReq
@@ -103,6 +105,7 @@ type (
 		SaveBlog(ctx context.Context, in *SaveBlogRequest, opts ...grpc.CallOption) (*SaveBlogResponse, error)
 		// 查询关注的博客
 		QueryBlogOfFollow(ctx context.Context, in *QueryBlogOfFollowRequest, opts ...grpc.CallOption) (*QueryBlogOfFollowResponse, error)
+		UpdateShop(ctx context.Context, in *UpdateShopRequest, opts ...grpc.CallOption) (*UpdateShopResponse, error)
 	}
 
 	defaultTravel struct {
@@ -246,4 +249,9 @@ func (m *defaultTravel) SaveBlog(ctx context.Context, in *SaveBlogRequest, opts 
 func (m *defaultTravel) QueryBlogOfFollow(ctx context.Context, in *QueryBlogOfFollowRequest, opts ...grpc.CallOption) (*QueryBlogOfFollowResponse, error) {
 	client := pb.NewTravelClient(m.cli.Conn())
 	return client.QueryBlogOfFollow(ctx, in, opts...)
+}
+
+func (m *defaultTravel) UpdateShop(ctx context.Context, in *UpdateShopRequest, opts ...grpc.CallOption) (*UpdateShopResponse, error) {
+	client := pb.NewTravelClient(m.cli.Conn())
+	return client.UpdateShop(ctx, in, opts...)
 }
