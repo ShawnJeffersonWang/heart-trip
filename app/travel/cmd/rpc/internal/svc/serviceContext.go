@@ -7,6 +7,7 @@ import (
 	"github.com/go-redsync/redsync/v4"
 	"github.com/go-redsync/redsync/v4/redis/goredis/v8"
 	"github.com/zeromicro/go-queue/kq"
+	"github.com/zeromicro/go-zero/core/logx"
 	"golodge/app/travel/cmd/rpc/internal/config"
 	"golodge/app/travel/model"
 	"golodge/app/usercenter/cmd/rpc/usercenter"
@@ -24,6 +25,7 @@ type ServiceContext struct {
 	Config        config.Config
 	DB            *gorm.DB
 	RedisClient   *redis.Client
+	CacheClient   *tool.CacheClient
 	RedSync       *redsync.Redsync
 	RedisIdWorker *tool.RedisIdWorker
 	//LuaScripts  map[string]string // 存储脚本的SHA1
@@ -33,6 +35,7 @@ type ServiceContext struct {
 	KqPusherClient *kq.Pusher
 
 	HomestayModel         model.HomestayModel
+	ShopModel             model.ShopModel
 	HomestayActivityModel model.HomestayActivityModel
 	GuessModel            model.GuessModel
 	UserHomestayModel     model.UserHomestayModel
@@ -54,6 +57,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		Addr:     c.Cache[0].Host,
 		Password: c.Cache[0].Pass,
 	})
+	cacheClient := tool.NewCacheClient(redisClient, logx.WithContext(context.Background()))
 
 	// 初始化 RedSync
 	pools := goredis.NewPool(redisClient)
@@ -72,12 +76,14 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		Config:        c,
 		DB:            db,
 		RedisClient:   redisClient,
+		CacheClient:   cacheClient,
 		RedSync:       r,
 		RedisIdWorker: redisIdWorker,
 		//LuaScripts:     luaScripts,
 		KqPusherClient: kq.NewPusher(c.KqPusherConf.Brokers, c.KqPusherConf.Topic),
 		// 我了个骚刚bug: 没有初始化HomestayModel导致，travel模块的RPC调不动model
 		HomestayModel:         model.NewHomestayModel(sqlConn, c.Cache),
+		ShopModel:             model.NewShopModel(db),
 		HomestayActivityModel: model.NewHomestayActivityModel(sqlConn, c.Cache),
 		GuessModel:            model.NewGuessModel(sqlConn, c.Cache),
 		UserHomestayModel:     model.NewUserHomestayModel(sqlConn, c.Cache),

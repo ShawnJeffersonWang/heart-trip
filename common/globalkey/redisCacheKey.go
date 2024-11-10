@@ -11,6 +11,7 @@ const (
 	// CacheUserTokenKey /** 用户登陆的token
 	CacheUserTokenKey = "user_token:%d"
 	CacheShopKey      = "cache:shop:"
+	CacheShopTtl      = 30 * time.Minute
 	CacheNullTtl      = 5 * time.Minute
 	LockShopKey       = "lock:shop:"
 	BlogLikedKey      = "blog:liked:"
