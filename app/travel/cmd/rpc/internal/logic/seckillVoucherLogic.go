@@ -6,6 +6,7 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 	"golodge/app/travel/cmd/rpc/internal/svc"
 	"golodge/app/travel/cmd/rpc/pb"
+	"golodge/common/globalkey"
 	"os"
 	"strconv"
 )
@@ -36,7 +37,7 @@ func (l *SeckillVoucherLogic) SeckillVoucher(req *pb.SeckillVoucherRequest) (*pb
 	//}))
 	orderId, _ := l.svcCtx.RedisIdWorker.NextID("order")
 	// 执行 Lua 脚本
-	script, err := os.ReadFile("./deploy/script/seckill.lua")
+	script, err := os.ReadFile(globalkey.SeckillScriptPath)
 	if err != nil {
 		return nil, fmt.Errorf("读取脚本文件失败: %v", err)
 	}

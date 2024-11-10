@@ -5,8 +5,9 @@ package globalkey
 global constant key
 */
 const (
-	DefaultPageSize = 5
-	MaxPageSize     = 10
+	DefaultPageSize   = 5
+	MaxPageSize       = 10
+	SeckillScriptPath = "./deploy/script/seckill.lua"
 )
 
 // DelStateNo 软删除

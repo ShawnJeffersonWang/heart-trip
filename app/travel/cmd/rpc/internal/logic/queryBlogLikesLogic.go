@@ -31,6 +31,7 @@ func NewQueryBlogLikesLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Qu
 // QueryBlogLikes 查询某篇博客的点赞用户
 func (l *QueryBlogLikesLogic) QueryBlogLikes(in *pb.QueryBlogLikesRequest) (*pb.QueryBlogLikesResponse, error) {
 	key := globalkey.BlogLikedKey + strconv.FormatInt(in.Id, 10)
+	// ZSET 实现排行榜
 	top5, err := l.svcCtx.RedisClient.ZRange(l.ctx, key, 0, 4).Result()
 	if err != nil || len(top5) == 0 {
 		return &pb.QueryBlogLikesResponse{
@@ -57,7 +58,7 @@ func (l *QueryBlogLikesLogic) QueryBlogLikes(in *pb.QueryBlogLikesRequest) (*pb.
 	}
 
 	var users []model.User
-	idStr := strings.Trim(strings.Replace(fmt.Sprint(ids), " ", ",", -1), "[]")
+	idStr := strings.Trim(strings.ReplaceAll(fmt.Sprint(ids), " ", ","), "[]")
 	if err := l.svcCtx.DB.Where("id IN ?", ids).Order(fmt.Sprintf("FIELD(id, %s)", idStr)).Find(&users).Error; err != nil {
 		return nil, Fail("查询失败")
 	}
