@@ -61,3 +61,8 @@ func (s *UsercenterServer) UserList(ctx context.Context, in *pb.UserListReq) (*p
 	l := logic.NewUserListLogic(ctx, s.svcCtx)
 	return l.UserList(in)
 }
+
+func (s *UsercenterServer) QueryFollowsByFollowUserID(ctx context.Context, in *pb.QueryFollowsByFollowUserIDRequest) (*pb.QueryFollowsByFollowUserIDResponse, error) {
+	l := logic.NewQueryFollowsByFollowUserIDLogic(ctx, s.svcCtx)
+	return l.QueryFollowsByFollowUserID(in)
+}

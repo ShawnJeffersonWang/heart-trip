@@ -1,10 +1,13 @@
 package globalkey
 
-/**
+/*
+*
 global constant key
 */
-
-const DefaultPageSize = 5
+const (
+	DefaultPageSize = 5
+	MaxPageSize     = 10
+)
 
 // DelStateNo 软删除
 var DelStateNo int64 = 0  //未删除

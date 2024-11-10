@@ -13,24 +13,27 @@ import (
 )
 
 type (
-	GenerateTokenReq         = pb.GenerateTokenReq
-	GenerateTokenResp        = pb.GenerateTokenResp
-	GetUserAuthByAuthKeyReq  = pb.GetUserAuthByAuthKeyReq
-	GetUserAuthByAuthKeyResp = pb.GetUserAuthByAuthKeyResp
-	GetUserAuthByUserIdReq   = pb.GetUserAuthByUserIdReq
-	GetUserAuthyUserIdResp   = pb.GetUserAuthyUserIdResp
-	GetUserInfoReq           = pb.GetUserInfoReq
-	GetUserInfoResp          = pb.GetUserInfoResp
-	LoginReq                 = pb.LoginReq
-	LoginResp                = pb.LoginResp
-	RegisterReq              = pb.RegisterReq
-	RegisterResp             = pb.RegisterResp
-	UpdateUserInfoReq        = pb.UpdateUserInfoReq
-	UpdateUserInfoResp       = pb.UpdateUserInfoResp
-	User                     = pb.User
-	UserAuth                 = pb.UserAuth
-	UserListReq              = pb.UserListReq
-	UserListResp             = pb.UserListResp
+	Follow                             = pb.Follow
+	GenerateTokenReq                   = pb.GenerateTokenReq
+	GenerateTokenResp                  = pb.GenerateTokenResp
+	GetUserAuthByAuthKeyReq            = pb.GetUserAuthByAuthKeyReq
+	GetUserAuthByAuthKeyResp           = pb.GetUserAuthByAuthKeyResp
+	GetUserAuthByUserIdReq             = pb.GetUserAuthByUserIdReq
+	GetUserAuthyUserIdResp             = pb.GetUserAuthyUserIdResp
+	GetUserInfoReq                     = pb.GetUserInfoReq
+	GetUserInfoResp                    = pb.GetUserInfoResp
+	LoginReq                           = pb.LoginReq
+	LoginResp                          = pb.LoginResp
+	QueryFollowsByFollowUserIDRequest  = pb.QueryFollowsByFollowUserIDRequest
+	QueryFollowsByFollowUserIDResponse = pb.QueryFollowsByFollowUserIDResponse
+	RegisterReq                        = pb.RegisterReq
+	RegisterResp                       = pb.RegisterResp
+	UpdateUserInfoReq                  = pb.UpdateUserInfoReq
+	UpdateUserInfoResp                 = pb.UpdateUserInfoResp
+	User                               = pb.User
+	UserAuth                           = pb.UserAuth
+	UserListReq                        = pb.UserListReq
+	UserListResp                       = pb.UserListResp
 
 	Usercenter interface {
 		Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
@@ -41,6 +44,7 @@ type (
 		GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error)
 		UpdateUserInfo(ctx context.Context, in *UpdateUserInfoReq, opts ...grpc.CallOption) (*UpdateUserInfoResp, error)
 		UserList(ctx context.Context, in *UserListReq, opts ...grpc.CallOption) (*UserListResp, error)
+		QueryFollowsByFollowUserID(ctx context.Context, in *QueryFollowsByFollowUserIDRequest, opts ...grpc.CallOption) (*QueryFollowsByFollowUserIDResponse, error)
 	}
 
 	defaultUsercenter struct {
@@ -92,4 +96,9 @@ func (m *defaultUsercenter) UpdateUserInfo(ctx context.Context, in *UpdateUserIn
 func (m *defaultUsercenter) UserList(ctx context.Context, in *UserListReq, opts ...grpc.CallOption) (*UserListResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
 	return client.UserList(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) QueryFollowsByFollowUserID(ctx context.Context, in *QueryFollowsByFollowUserIDRequest, opts ...grpc.CallOption) (*QueryFollowsByFollowUserIDResponse, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.QueryFollowsByFollowUserID(ctx, in, opts...)
 }

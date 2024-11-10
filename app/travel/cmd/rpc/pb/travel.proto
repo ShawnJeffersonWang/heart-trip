@@ -251,25 +251,26 @@ message QueryShopByTypeResponse {
 
 
 message SeckillVoucherRequest {
-  int64 VoucherId = 1;
+  int64 voucherId = 1;
+  int64 userId = 2;
 }
 
 message SeckillVoucherResponse {
-  int64 Code = 1;
-  string Message = 2;
-  int64 OrderId = 3;
+  int64 code = 1;
+  string message = 2;
+  int64 orderId = 3;
 }
 
 
 message SeckillVoucher {
-  int64 ID = 1;
-  int64 Stock = 2;
+  int64 id = 1;
+  int64 stock = 2;
 }
 
 message VoucherOrder {
-  int64 ID = 1;
-  int64 UserId = 2;
-  int64 VoucherId = 3;
+  int64 id = 1;
+  int64 userId = 2;
+  int64 voucherId = 3;
 }
 
 //service
@@ -294,4 +295,139 @@ service travel {
   rpc searchByLocation(SearchByLocationReq) returns (SearchByLocationResp);
   rpc queryShopByType(QueryShopByTypeRequest) returns (QueryShopByTypeResponse);
   rpc seckillVoucher(SeckillVoucherRequest) returns (SeckillVoucherResponse);
+
+  // 查询热门博客
+  rpc QueryHotBlog(QueryHotBlogRequest) returns (QueryHotBlogResponse);
+  // 根据ID查询博客
+  rpc QueryBlogById(QueryBlogByIdRequest) returns (QueryBlogByIdResponse);
+  // 点赞或取消点赞
+  rpc LikeBlog(LikeBlogRequest) returns (LikeBlogResponse);
+  // 查询某篇博客的点赞用户
+  rpc QueryBlogLikes(QueryBlogLikesRequest) returns (QueryBlogLikesResponse);
+  // 保存博客
+  rpc SaveBlog(SaveBlogRequest) returns (SaveBlogResponse);
+  // 查询关注的博客
+  rpc QueryBlogOfFollow(QueryBlogOfFollowRequest) returns (QueryBlogOfFollowResponse);
 }
+
+// Blog消息，表示一篇博客
+message Blog {
+  int64 id = 1;
+  int64 user_id = 2;
+  string name = 3;
+  string icon = 4;
+  int64 liked = 5;
+  bool is_like = 6;
+  // 添加其他字段，根据实际需求
+}
+
+// UserDTO消息，表示用户数据传输对象
+message UserDTO {
+  int64 id = 1;
+  string nick_name = 2;
+  string icon = 3;
+  // 添加其他字段，根据实际需求
+}
+
+// ScrollResult消息，表示滚动分页的结果
+message ScrollResult {
+  repeated Blog list = 1;
+  int32 offset = 2;
+  int64 min_time = 3;
+}
+
+// QueryHotBlogRequest请求消息
+message QueryHotBlogRequest {
+  int32 current = 1;
+  int64 userId = 2;
+}
+
+// QueryHotBlogResponse响应消息
+message QueryHotBlogResponse {
+  int32 code = 1;
+  repeated Blog data = 2;
+  string message = 3;
+}
+
+// QueryBlogByIdRequest请求消息
+message QueryBlogByIdRequest {
+  int64 id = 1;
+  int64 userId = 2;
+}
+
+// QueryBlogByIdResponse响应消息
+message QueryBlogByIdResponse {
+  int32 code = 1;
+  Blog data = 2;
+  string message = 3;
+}
+
+// LikeBlogRequest请求消息
+message LikeBlogRequest {
+  int64 id = 1;
+  int64 userId = 2;
+}
+
+// LikeBlogResponse响应消息
+message LikeBlogResponse {
+  int32 code = 1;
+  string message = 2;
+}
+
+// QueryBlogLikesRequest请求消息
+message QueryBlogLikesRequest {
+  int64 id = 1;
+}
+
+// QueryBlogLikesResponse响应消息
+message QueryBlogLikesResponse {
+  int32 code = 1;
+  repeated UserDTO data = 2;
+  string message = 3;
+}
+
+// SaveBlogRequest请求消息
+message SaveBlogRequest {
+  int64 user_id = 1;
+  string content = 2;
+  // 根据实际需求添加其他字段，例如标题、标签等
+}
+
+// SaveBlogResponse响应消息
+message SaveBlogResponse {
+  int32 code = 1;
+  int64 data = 2; // 返回博客ID
+  string message = 3;
+}
+
+// QueryBlogOfFollowRequest请求消息
+message QueryBlogOfFollowRequest {
+  int64 max = 1;
+  int32 offset = 2;
+  int64 userId = 3;
+}
+
+// QueryBlogOfFollowResponse响应消息
+message QueryBlogOfFollowResponse {
+  int32 code = 1;
+  ScrollResult data = 2;
+  string message = 3;
+}
+
+//// Follow 消息，表示一个关注关系
+//message Follow {
+//  int64 user_id = 1;
+//  int64 follow_user_id = 2;
+//}
+//
+//// QueryFollowsByFollowUserID 请求消息
+//message QueryFollowsByFollowUserIDRequest {
+//  int64 follow_user_id = 1; // 被关注的用户ID
+//}
+//
+//// QueryFollowsByFollowUserID 响应消息
+//message QueryFollowsByFollowUserIDResponse {
+//  int32 code = 1;               // 状态码，例如 200 表示成功
+//  repeated Follow data = 2;     // 关注者列表
+//  string message = 3;           // 相关消息
+//}

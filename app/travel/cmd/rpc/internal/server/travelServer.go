@@ -117,3 +117,39 @@ func (s *TravelServer) SeckillVoucher(ctx context.Context, in *pb.SeckillVoucher
 	l := logic.NewSeckillVoucherLogic(ctx, s.svcCtx)
 	return l.SeckillVoucher(in)
 }
+
+// 查询热门博客
+func (s *TravelServer) QueryHotBlog(ctx context.Context, in *pb.QueryHotBlogRequest) (*pb.QueryHotBlogResponse, error) {
+	l := logic.NewQueryHotBlogLogic(ctx, s.svcCtx)
+	return l.QueryHotBlog(in)
+}
+
+// 根据ID查询博客
+func (s *TravelServer) QueryBlogById(ctx context.Context, in *pb.QueryBlogByIdRequest) (*pb.QueryBlogByIdResponse, error) {
+	l := logic.NewQueryBlogByIdLogic(ctx, s.svcCtx)
+	return l.QueryBlogById(in)
+}
+
+// 点赞或取消点赞
+func (s *TravelServer) LikeBlog(ctx context.Context, in *pb.LikeBlogRequest) (*pb.LikeBlogResponse, error) {
+	l := logic.NewLikeBlogLogic(ctx, s.svcCtx)
+	return l.LikeBlog(in)
+}
+
+// 查询某篇博客的点赞用户
+func (s *TravelServer) QueryBlogLikes(ctx context.Context, in *pb.QueryBlogLikesRequest) (*pb.QueryBlogLikesResponse, error) {
+	l := logic.NewQueryBlogLikesLogic(ctx, s.svcCtx)
+	return l.QueryBlogLikes(in)
+}
+
+// 保存博客
+func (s *TravelServer) SaveBlog(ctx context.Context, in *pb.SaveBlogRequest) (*pb.SaveBlogResponse, error) {
+	l := logic.NewSaveBlogLogic(ctx, s.svcCtx)
+	return l.SaveBlog(in)
+}
+
+// 查询关注的博客
+func (s *TravelServer) QueryBlogOfFollow(ctx context.Context, in *pb.QueryBlogOfFollowRequest) (*pb.QueryBlogOfFollowResponse, error) {
+	l := logic.NewQueryBlogOfFollowLogic(ctx, s.svcCtx)
+	return l.QueryBlogOfFollow(in)
+}

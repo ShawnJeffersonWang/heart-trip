@@ -3,12 +3,9 @@ package logic
 import (
 	"context"
 	"fmt"
-	"github.com/go-redis/redis/v8"
 	"github.com/zeromicro/go-zero/core/logx"
 	"golodge/app/travel/cmd/rpc/internal/svc"
 	"golodge/app/travel/cmd/rpc/pb"
-	"golodge/common/ctxdata"
-	"golodge/common/tool"
 	"os"
 	"strconv"
 )
@@ -28,15 +25,16 @@ func NewSeckillVoucherLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Se
 }
 
 func (l *SeckillVoucherLogic) SeckillVoucher(req *pb.SeckillVoucherRequest) (*pb.SeckillVoucherResponse, error) {
-	userId := ctxdata.GetUidFromCtx(l.ctx)
+	//userId := ctxdata.GetUidFromCtx(l.ctx)
 	voucherId := req.VoucherId
 
 	//orderId := l.svcCtx.RedisClient.Incr(l.ctx, "order:id").Val() // 使用 Redis ID 生成器
-	redisIdWorker := tool.NewRedisIdWorker(redis.NewClient(&redis.Options{
-		Addr:     l.svcCtx.Config.Cache[0].Host,
-		Password: l.svcCtx.Config.Cache[0].Pass,
-	}))
-	orderId, _ := redisIdWorker.NextID("order")
+	// redis上下文只注入一次，防止每次请求都建立 redis 连接，释放 redis 连接，产生开销
+	//redisIdWorker := tool.NewRedisIdWorker(redis.NewClient(&redis.Options{
+	//	Addr:     l.svcCtx.Config.Cache[0].Host,
+	//	Password: l.svcCtx.Config.Cache[0].Pass,
+	//}))
+	orderId, _ := l.svcCtx.RedisIdWorker.NextID("order")
 	// 执行 Lua 脚本
 	script, err := os.ReadFile("./deploy/script/seckill.lua")
 	if err != nil {
@@ -46,7 +44,7 @@ func (l *SeckillVoucherLogic) SeckillVoucher(req *pb.SeckillVoucherRequest) (*pb
 	result, err := l.svcCtx.RedisClient.Eval(l.ctx,
 		string(script), nil,
 		strconv.FormatInt(voucherId, 10),
-		strconv.FormatInt(userId, 10),
+		req.UserId,
 		strconv.FormatInt(orderId, 10)).Result()
 
 	if err != nil {

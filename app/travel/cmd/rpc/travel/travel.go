@@ -13,47 +13,62 @@ import (
 )
 
 type (
-	AddCommentReq           = pb.AddCommentReq
-	AddCommentResp          = pb.AddCommentResp
-	AddGuessReq             = pb.AddGuessReq
-	AddGuessResp            = pb.AddGuessResp
-	AddHomestayReq          = pb.AddHomestayReq
-	AddHomestayResp         = pb.AddHomestayResp
-	AddWishListReq          = pb.AddWishListReq
-	AddWishListResp         = pb.AddWishListResp
-	AdminDeleteHomestayReq  = pb.AdminDeleteHomestayReq
-	AdminDeleteHomestayResp = pb.AdminDeleteHomestayResp
-	ClearHistoryReq         = pb.ClearHistoryReq
-	ClearHistoryResp        = pb.ClearHistoryResp
-	DeleteHomestayReq       = pb.DeleteHomestayReq
-	DeleteHomestayResp      = pb.DeleteHomestayResp
-	History                 = pb.History
-	HistoryListReq          = pb.HistoryListReq
-	HistoryListResp         = pb.HistoryListResp
-	Homestay                = pb.Homestay
-	HomestayComment         = pb.HomestayComment
-	HomestayDetailReq       = pb.HomestayDetailReq
-	HomestayDetailResp      = pb.HomestayDetailResp
-	LikeCommentReq          = pb.LikeCommentReq
-	LikeCommentResp         = pb.LikeCommentResp
-	QueryShopByTypeRequest  = pb.QueryShopByTypeRequest
-	QueryShopByTypeResponse = pb.QueryShopByTypeResponse
-	RemoveHistoryReq        = pb.RemoveHistoryReq
-	RemoveHistoryResp       = pb.RemoveHistoryResp
-	RemoveWishListReq       = pb.RemoveWishListReq
-	RemoveWishListResp      = pb.RemoveWishListResp
-	SearchByLocationReq     = pb.SearchByLocationReq
-	SearchByLocationResp    = pb.SearchByLocationResp
-	SearchHistoryReq        = pb.SearchHistoryReq
-	SearchHistoryResp       = pb.SearchHistoryResp
-	SeckillVoucher          = pb.SeckillVoucher
-	SeckillVoucherRequest   = pb.SeckillVoucherRequest
-	SeckillVoucherResponse  = pb.SeckillVoucherResponse
-	UpdateHomestayReq       = pb.UpdateHomestayReq
-	UpdateHomestayResp      = pb.UpdateHomestayResp
-	VoucherOrder            = pb.VoucherOrder
-	WishListReq             = pb.WishListReq
-	WishListResp            = pb.WishListResp
+	AddCommentReq             = pb.AddCommentReq
+	AddCommentResp            = pb.AddCommentResp
+	AddGuessReq               = pb.AddGuessReq
+	AddGuessResp              = pb.AddGuessResp
+	AddHomestayReq            = pb.AddHomestayReq
+	AddHomestayResp           = pb.AddHomestayResp
+	AddWishListReq            = pb.AddWishListReq
+	AddWishListResp           = pb.AddWishListResp
+	AdminDeleteHomestayReq    = pb.AdminDeleteHomestayReq
+	AdminDeleteHomestayResp   = pb.AdminDeleteHomestayResp
+	Blog                      = pb.Blog
+	ClearHistoryReq           = pb.ClearHistoryReq
+	ClearHistoryResp          = pb.ClearHistoryResp
+	DeleteHomestayReq         = pb.DeleteHomestayReq
+	DeleteHomestayResp        = pb.DeleteHomestayResp
+	History                   = pb.History
+	HistoryListReq            = pb.HistoryListReq
+	HistoryListResp           = pb.HistoryListResp
+	Homestay                  = pb.Homestay
+	HomestayComment           = pb.HomestayComment
+	HomestayDetailReq         = pb.HomestayDetailReq
+	HomestayDetailResp        = pb.HomestayDetailResp
+	LikeBlogRequest           = pb.LikeBlogRequest
+	LikeBlogResponse          = pb.LikeBlogResponse
+	LikeCommentReq            = pb.LikeCommentReq
+	LikeCommentResp           = pb.LikeCommentResp
+	QueryBlogByIdRequest      = pb.QueryBlogByIdRequest
+	QueryBlogByIdResponse     = pb.QueryBlogByIdResponse
+	QueryBlogLikesRequest     = pb.QueryBlogLikesRequest
+	QueryBlogLikesResponse    = pb.QueryBlogLikesResponse
+	QueryBlogOfFollowRequest  = pb.QueryBlogOfFollowRequest
+	QueryBlogOfFollowResponse = pb.QueryBlogOfFollowResponse
+	QueryHotBlogRequest       = pb.QueryHotBlogRequest
+	QueryHotBlogResponse      = pb.QueryHotBlogResponse
+	QueryShopByTypeRequest    = pb.QueryShopByTypeRequest
+	QueryShopByTypeResponse   = pb.QueryShopByTypeResponse
+	RemoveHistoryReq          = pb.RemoveHistoryReq
+	RemoveHistoryResp         = pb.RemoveHistoryResp
+	RemoveWishListReq         = pb.RemoveWishListReq
+	RemoveWishListResp        = pb.RemoveWishListResp
+	SaveBlogRequest           = pb.SaveBlogRequest
+	SaveBlogResponse          = pb.SaveBlogResponse
+	ScrollResult              = pb.ScrollResult
+	SearchByLocationReq       = pb.SearchByLocationReq
+	SearchByLocationResp      = pb.SearchByLocationResp
+	SearchHistoryReq          = pb.SearchHistoryReq
+	SearchHistoryResp         = pb.SearchHistoryResp
+	SeckillVoucher            = pb.SeckillVoucher
+	SeckillVoucherRequest     = pb.SeckillVoucherRequest
+	SeckillVoucherResponse    = pb.SeckillVoucherResponse
+	UpdateHomestayReq         = pb.UpdateHomestayReq
+	UpdateHomestayResp        = pb.UpdateHomestayResp
+	UserDTO                   = pb.UserDTO
+	VoucherOrder              = pb.VoucherOrder
+	WishListReq               = pb.WishListReq
+	WishListResp              = pb.WishListResp
 
 	Travel interface {
 		// homestayDetail
@@ -76,6 +91,18 @@ type (
 		SearchByLocation(ctx context.Context, in *SearchByLocationReq, opts ...grpc.CallOption) (*SearchByLocationResp, error)
 		QueryShopByType(ctx context.Context, in *QueryShopByTypeRequest, opts ...grpc.CallOption) (*QueryShopByTypeResponse, error)
 		SeckillVoucher(ctx context.Context, in *SeckillVoucherRequest, opts ...grpc.CallOption) (*SeckillVoucherResponse, error)
+		// 查询热门博客
+		QueryHotBlog(ctx context.Context, in *QueryHotBlogRequest, opts ...grpc.CallOption) (*QueryHotBlogResponse, error)
+		// 根据ID查询博客
+		QueryBlogById(ctx context.Context, in *QueryBlogByIdRequest, opts ...grpc.CallOption) (*QueryBlogByIdResponse, error)
+		// 点赞或取消点赞
+		LikeBlog(ctx context.Context, in *LikeBlogRequest, opts ...grpc.CallOption) (*LikeBlogResponse, error)
+		// 查询某篇博客的点赞用户
+		QueryBlogLikes(ctx context.Context, in *QueryBlogLikesRequest, opts ...grpc.CallOption) (*QueryBlogLikesResponse, error)
+		// 保存博客
+		SaveBlog(ctx context.Context, in *SaveBlogRequest, opts ...grpc.CallOption) (*SaveBlogResponse, error)
+		// 查询关注的博客
+		QueryBlogOfFollow(ctx context.Context, in *QueryBlogOfFollowRequest, opts ...grpc.CallOption) (*QueryBlogOfFollowResponse, error)
 	}
 
 	defaultTravel struct {
@@ -183,4 +210,40 @@ func (m *defaultTravel) QueryShopByType(ctx context.Context, in *QueryShopByType
 func (m *defaultTravel) SeckillVoucher(ctx context.Context, in *SeckillVoucherRequest, opts ...grpc.CallOption) (*SeckillVoucherResponse, error) {
 	client := pb.NewTravelClient(m.cli.Conn())
 	return client.SeckillVoucher(ctx, in, opts...)
+}
+
+// 查询热门博客
+func (m *defaultTravel) QueryHotBlog(ctx context.Context, in *QueryHotBlogRequest, opts ...grpc.CallOption) (*QueryHotBlogResponse, error) {
+	client := pb.NewTravelClient(m.cli.Conn())
+	return client.QueryHotBlog(ctx, in, opts...)
+}
+
+// 根据ID查询博客
+func (m *defaultTravel) QueryBlogById(ctx context.Context, in *QueryBlogByIdRequest, opts ...grpc.CallOption) (*QueryBlogByIdResponse, error) {
+	client := pb.NewTravelClient(m.cli.Conn())
+	return client.QueryBlogById(ctx, in, opts...)
+}
+
+// 点赞或取消点赞
+func (m *defaultTravel) LikeBlog(ctx context.Context, in *LikeBlogRequest, opts ...grpc.CallOption) (*LikeBlogResponse, error) {
+	client := pb.NewTravelClient(m.cli.Conn())
+	return client.LikeBlog(ctx, in, opts...)
+}
+
+// 查询某篇博客的点赞用户
+func (m *defaultTravel) QueryBlogLikes(ctx context.Context, in *QueryBlogLikesRequest, opts ...grpc.CallOption) (*QueryBlogLikesResponse, error) {
+	client := pb.NewTravelClient(m.cli.Conn())
+	return client.QueryBlogLikes(ctx, in, opts...)
+}
+
+// 保存博客
+func (m *defaultTravel) SaveBlog(ctx context.Context, in *SaveBlogRequest, opts ...grpc.CallOption) (*SaveBlogResponse, error) {
+	client := pb.NewTravelClient(m.cli.Conn())
+	return client.SaveBlog(ctx, in, opts...)
+}
+
+// 查询关注的博客
+func (m *defaultTravel) QueryBlogOfFollow(ctx context.Context, in *QueryBlogOfFollowRequest, opts ...grpc.CallOption) (*QueryBlogOfFollowResponse, error) {
+	client := pb.NewTravelClient(m.cli.Conn())
+	return client.QueryBlogOfFollow(ctx, in, opts...)
 }

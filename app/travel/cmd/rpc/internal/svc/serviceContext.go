@@ -10,6 +10,7 @@ import (
 	"golodge/app/travel/cmd/rpc/internal/config"
 	"golodge/app/travel/model"
 	"golodge/app/usercenter/cmd/rpc/usercenter"
+	"golodge/common/tool"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -20,10 +21,11 @@ import (
 )
 
 type ServiceContext struct {
-	Config      config.Config
-	DB          *gorm.DB
-	RedisClient *redis.Client
-	RedSync     *redsync.Redsync
+	Config        config.Config
+	DB            *gorm.DB
+	RedisClient   *redis.Client
+	RedSync       *redsync.Redsync
+	RedisIdWorker *tool.RedisIdWorker
 	//LuaScripts  map[string]string // 存储脚本的SHA1
 
 	usercenter.Usercenter
@@ -57,6 +59,8 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	pools := goredis.NewPool(redisClient)
 	r := redsync.New(pools)
 
+	redisIdWorker := tool.NewRedisIdWorker(redisClient)
+
 	// 加载 Lua 脚本
 	//luaScripts, err := loadLuaScripts(c.LuaScripts, redisClient)
 	//if err != nil {
@@ -65,10 +69,11 @@ func NewServiceContext(c config.Config) *ServiceContext {
 
 	sqlConn := sqlx.NewMysql(c.DB.DataSource)
 	serviceContext := &ServiceContext{
-		Config:      c,
-		DB:          db,
-		RedisClient: redisClient,
-		RedSync:     r,
+		Config:        c,
+		DB:            db,
+		RedisClient:   redisClient,
+		RedSync:       r,
+		RedisIdWorker: redisIdWorker,
 		//LuaScripts:     luaScripts,
 		KqPusherClient: kq.NewPusher(c.KqPusherConf.Brokers, c.KqPusherConf.Topic),
 		// 我了个骚刚bug: 没有初始化HomestayModel导致，travel模块的RPC调不动model

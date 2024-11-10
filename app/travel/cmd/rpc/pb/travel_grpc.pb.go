@@ -42,6 +42,18 @@ type TravelClient interface {
 	SearchByLocation(ctx context.Context, in *SearchByLocationReq, opts ...grpc.CallOption) (*SearchByLocationResp, error)
 	QueryShopByType(ctx context.Context, in *QueryShopByTypeRequest, opts ...grpc.CallOption) (*QueryShopByTypeResponse, error)
 	SeckillVoucher(ctx context.Context, in *SeckillVoucherRequest, opts ...grpc.CallOption) (*SeckillVoucherResponse, error)
+	// 查询热门博客
+	QueryHotBlog(ctx context.Context, in *QueryHotBlogRequest, opts ...grpc.CallOption) (*QueryHotBlogResponse, error)
+	// 根据ID查询博客
+	QueryBlogById(ctx context.Context, in *QueryBlogByIdRequest, opts ...grpc.CallOption) (*QueryBlogByIdResponse, error)
+	// 点赞或取消点赞
+	LikeBlog(ctx context.Context, in *LikeBlogRequest, opts ...grpc.CallOption) (*LikeBlogResponse, error)
+	// 查询某篇博客的点赞用户
+	QueryBlogLikes(ctx context.Context, in *QueryBlogLikesRequest, opts ...grpc.CallOption) (*QueryBlogLikesResponse, error)
+	// 保存博客
+	SaveBlog(ctx context.Context, in *SaveBlogRequest, opts ...grpc.CallOption) (*SaveBlogResponse, error)
+	// 查询关注的博客
+	QueryBlogOfFollow(ctx context.Context, in *QueryBlogOfFollowRequest, opts ...grpc.CallOption) (*QueryBlogOfFollowResponse, error)
 }
 
 type travelClient struct {
@@ -223,6 +235,60 @@ func (c *travelClient) SeckillVoucher(ctx context.Context, in *SeckillVoucherReq
 	return out, nil
 }
 
+func (c *travelClient) QueryHotBlog(ctx context.Context, in *QueryHotBlogRequest, opts ...grpc.CallOption) (*QueryHotBlogResponse, error) {
+	out := new(QueryHotBlogResponse)
+	err := c.cc.Invoke(ctx, "/pb.travel/QueryHotBlog", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *travelClient) QueryBlogById(ctx context.Context, in *QueryBlogByIdRequest, opts ...grpc.CallOption) (*QueryBlogByIdResponse, error) {
+	out := new(QueryBlogByIdResponse)
+	err := c.cc.Invoke(ctx, "/pb.travel/QueryBlogById", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *travelClient) LikeBlog(ctx context.Context, in *LikeBlogRequest, opts ...grpc.CallOption) (*LikeBlogResponse, error) {
+	out := new(LikeBlogResponse)
+	err := c.cc.Invoke(ctx, "/pb.travel/LikeBlog", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *travelClient) QueryBlogLikes(ctx context.Context, in *QueryBlogLikesRequest, opts ...grpc.CallOption) (*QueryBlogLikesResponse, error) {
+	out := new(QueryBlogLikesResponse)
+	err := c.cc.Invoke(ctx, "/pb.travel/QueryBlogLikes", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *travelClient) SaveBlog(ctx context.Context, in *SaveBlogRequest, opts ...grpc.CallOption) (*SaveBlogResponse, error) {
+	out := new(SaveBlogResponse)
+	err := c.cc.Invoke(ctx, "/pb.travel/SaveBlog", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *travelClient) QueryBlogOfFollow(ctx context.Context, in *QueryBlogOfFollowRequest, opts ...grpc.CallOption) (*QueryBlogOfFollowResponse, error) {
+	out := new(QueryBlogOfFollowResponse)
+	err := c.cc.Invoke(ctx, "/pb.travel/QueryBlogOfFollow", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TravelServer is the server API for Travel service.
 // All implementations must embed UnimplementedTravelServer
 // for forward compatibility
@@ -247,6 +313,18 @@ type TravelServer interface {
 	SearchByLocation(context.Context, *SearchByLocationReq) (*SearchByLocationResp, error)
 	QueryShopByType(context.Context, *QueryShopByTypeRequest) (*QueryShopByTypeResponse, error)
 	SeckillVoucher(context.Context, *SeckillVoucherRequest) (*SeckillVoucherResponse, error)
+	// 查询热门博客
+	QueryHotBlog(context.Context, *QueryHotBlogRequest) (*QueryHotBlogResponse, error)
+	// 根据ID查询博客
+	QueryBlogById(context.Context, *QueryBlogByIdRequest) (*QueryBlogByIdResponse, error)
+	// 点赞或取消点赞
+	LikeBlog(context.Context, *LikeBlogRequest) (*LikeBlogResponse, error)
+	// 查询某篇博客的点赞用户
+	QueryBlogLikes(context.Context, *QueryBlogLikesRequest) (*QueryBlogLikesResponse, error)
+	// 保存博客
+	SaveBlog(context.Context, *SaveBlogRequest) (*SaveBlogResponse, error)
+	// 查询关注的博客
+	QueryBlogOfFollow(context.Context, *QueryBlogOfFollowRequest) (*QueryBlogOfFollowResponse, error)
 	mustEmbedUnimplementedTravelServer()
 }
 
@@ -310,6 +388,24 @@ func (UnimplementedTravelServer) QueryShopByType(context.Context, *QueryShopByTy
 }
 func (UnimplementedTravelServer) SeckillVoucher(context.Context, *SeckillVoucherRequest) (*SeckillVoucherResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SeckillVoucher not implemented")
+}
+func (UnimplementedTravelServer) QueryHotBlog(context.Context, *QueryHotBlogRequest) (*QueryHotBlogResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryHotBlog not implemented")
+}
+func (UnimplementedTravelServer) QueryBlogById(context.Context, *QueryBlogByIdRequest) (*QueryBlogByIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryBlogById not implemented")
+}
+func (UnimplementedTravelServer) LikeBlog(context.Context, *LikeBlogRequest) (*LikeBlogResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LikeBlog not implemented")
+}
+func (UnimplementedTravelServer) QueryBlogLikes(context.Context, *QueryBlogLikesRequest) (*QueryBlogLikesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryBlogLikes not implemented")
+}
+func (UnimplementedTravelServer) SaveBlog(context.Context, *SaveBlogRequest) (*SaveBlogResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SaveBlog not implemented")
+}
+func (UnimplementedTravelServer) QueryBlogOfFollow(context.Context, *QueryBlogOfFollowRequest) (*QueryBlogOfFollowResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryBlogOfFollow not implemented")
 }
 func (UnimplementedTravelServer) mustEmbedUnimplementedTravelServer() {}
 
@@ -666,6 +762,114 @@ func _Travel_SeckillVoucher_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Travel_QueryHotBlog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryHotBlogRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).QueryHotBlog(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.travel/QueryHotBlog",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).QueryHotBlog(ctx, req.(*QueryHotBlogRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Travel_QueryBlogById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryBlogByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).QueryBlogById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.travel/QueryBlogById",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).QueryBlogById(ctx, req.(*QueryBlogByIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Travel_LikeBlog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LikeBlogRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).LikeBlog(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.travel/LikeBlog",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).LikeBlog(ctx, req.(*LikeBlogRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Travel_QueryBlogLikes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryBlogLikesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).QueryBlogLikes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.travel/QueryBlogLikes",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).QueryBlogLikes(ctx, req.(*QueryBlogLikesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Travel_SaveBlog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SaveBlogRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).SaveBlog(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.travel/SaveBlog",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).SaveBlog(ctx, req.(*SaveBlogRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Travel_QueryBlogOfFollow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryBlogOfFollowRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TravelServer).QueryBlogOfFollow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.travel/QueryBlogOfFollow",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TravelServer).QueryBlogOfFollow(ctx, req.(*QueryBlogOfFollowRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Travel_ServiceDesc is the grpc.ServiceDesc for Travel service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -748,6 +952,30 @@ var Travel_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "seckillVoucher",
 			Handler:    _Travel_SeckillVoucher_Handler,
+		},
+		{
+			MethodName: "QueryHotBlog",
+			Handler:    _Travel_QueryHotBlog_Handler,
+		},
+		{
+			MethodName: "QueryBlogById",
+			Handler:    _Travel_QueryBlogById_Handler,
+		},
+		{
+			MethodName: "LikeBlog",
+			Handler:    _Travel_LikeBlog_Handler,
+		},
+		{
+			MethodName: "QueryBlogLikes",
+			Handler:    _Travel_QueryBlogLikes_Handler,
+		},
+		{
+			MethodName: "SaveBlog",
+			Handler:    _Travel_SaveBlog_Handler,
+		},
+		{
+			MethodName: "QueryBlogOfFollow",
+			Handler:    _Travel_QueryBlogOfFollow_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

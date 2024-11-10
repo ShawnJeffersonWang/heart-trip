@@ -93,6 +93,24 @@ message UserListResp {
   repeated User list = 1;
 }
 
+// Follow 消息，表示一个关注关系
+message Follow {
+  int64 user_id = 2;
+  int64 follow_user_id = 3;
+}
+
+// QueryFollowsByFollowUserID 请求消息
+message QueryFollowsByFollowUserIDRequest {
+  int64 follow_user_id = 1; // 被关注的用户ID
+}
+
+// QueryFollowsByFollowUserID 响应消息
+message QueryFollowsByFollowUserIDResponse {
+  int32 code = 1;               // 状态码，例如 200 表示成功
+  repeated Follow data = 2;     // 关注者列表
+  string message = 3;           // 相关消息
+}
+
 //service
 service usercenter {
   rpc login(LoginReq) returns(LoginResp);
@@ -103,4 +121,6 @@ service usercenter {
   rpc generateToken(GenerateTokenReq) returns(GenerateTokenResp);
   rpc updateUserInfo(UpdateUserInfoReq) returns(UpdateUserInfoResp);
   rpc userList(UserListReq) returns (UserListResp);
+
+  rpc QueryFollowsByFollowUserID(QueryFollowsByFollowUserIDRequest) returns (QueryFollowsByFollowUserIDResponse);
 }
