@@ -45,13 +45,13 @@ HeartTrip is a travel homestay app designed using a microservices architecture. 
 1. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/ShawnJeffersonWang/HeartTrip.git
+    git clone https://github.com/ShawnJeffersonWang/heart-trip.git
     ```
 
 2. **Navigate to the project directory:**
 
     ```sh
-    cd HeartTrip
+    cd heart-trip
     ```
 
 3. **Set up the development environment:**
