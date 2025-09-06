@@ -28,9 +28,9 @@ var (
 	userAuthRowsExpectAutoSet   = strings.Join(stringx.Remove(userAuthFieldNames, "`id`", "`create_time`", "`update_time`"), ",")
 	userAuthRowsWithPlaceHolder = strings.Join(stringx.Remove(userAuthFieldNames, "`id`", "`create_time`", "`update_time`"), "=?,") + "=?"
 
-	cacheLooklookUsercenterUserAuthIdPrefix              = "cache:looklookUsercenter:userAuth:id:"
-	cacheLooklookUsercenterUserAuthAuthTypeAuthKeyPrefix = "cache:looklookUsercenter:userAuth:authType:authKey:"
-	cacheLooklookUsercenterUserAuthUserIdAuthTypePrefix  = "cache:looklookUsercenter:userAuth:userId:authType:"
+	cacheHeartTripUsercenterUserAuthIdPrefix              = "cache:heartTripUsercenter:userAuth:id:"
+	cacheHeartTripUsercenterUserAuthAuthTypeAuthKeyPrefix = "cache:heartTripUsercenter:userAuth:authType:authKey:"
+	cacheHeartTripUsercenterUserAuthUserIdAuthTypePrefix  = "cache:heartTripUsercenter:userAuth:userId:authType:"
 )
 
 type (
@@ -82,22 +82,22 @@ func newUserAuthModel(conn sqlx.SqlConn, c cache.CacheConf) *defaultUserAuthMode
 func (m *defaultUserAuthModel) Insert(ctx context.Context, session sqlx.Session, data *UserAuth) (sql.Result, error) {
 	data.DeleteTime = time.Unix(0, 0)
 	data.DelState = globalkey.DelStateNo
-	looklookUsercenterUserAuthAuthTypeAuthKeyKey := fmt.Sprintf("%s%v:%v", cacheLooklookUsercenterUserAuthAuthTypeAuthKeyPrefix, data.AuthType, data.AuthKey)
-	looklookUsercenterUserAuthIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserAuthIdPrefix, data.Id)
-	looklookUsercenterUserAuthUserIdAuthTypeKey := fmt.Sprintf("%s%v:%v", cacheLooklookUsercenterUserAuthUserIdAuthTypePrefix, data.UserId, data.AuthType)
+	heartTripUsercenterUserAuthAuthTypeAuthKeyKey := fmt.Sprintf("%s%v:%v", cacheHeartTripUsercenterUserAuthAuthTypeAuthKeyPrefix, data.AuthType, data.AuthKey)
+	heartTripUsercenterUserAuthIdKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterUserAuthIdPrefix, data.Id)
+	heartTripUsercenterUserAuthUserIdAuthTypeKey := fmt.Sprintf("%s%v:%v", cacheHeartTripUsercenterUserAuthUserIdAuthTypePrefix, data.UserId, data.AuthType)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?)", m.table, userAuthRowsExpectAutoSet)
 		if session != nil {
 			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.UserId, data.AuthKey, data.AuthType)
 		}
 		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.UserId, data.AuthKey, data.AuthType)
-	}, looklookUsercenterUserAuthAuthTypeAuthKeyKey, looklookUsercenterUserAuthIdKey, looklookUsercenterUserAuthUserIdAuthTypeKey)
+	}, heartTripUsercenterUserAuthAuthTypeAuthKeyKey, heartTripUsercenterUserAuthIdKey, heartTripUsercenterUserAuthUserIdAuthTypeKey)
 }
 
 func (m *defaultUserAuthModel) FindOne(ctx context.Context, id int64) (*UserAuth, error) {
-	looklookUsercenterUserAuthIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserAuthIdPrefix, id)
+	heartTripUsercenterUserAuthIdKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterUserAuthIdPrefix, id)
 	var resp UserAuth
-	err := m.QueryRowCtx(ctx, &resp, looklookUsercenterUserAuthIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
+	err := m.QueryRowCtx(ctx, &resp, heartTripUsercenterUserAuthIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
 		query := fmt.Sprintf("select %s from %s where `id` = ? and del_state = ? limit 1", userAuthRows, m.table)
 		return conn.QueryRowCtx(ctx, v, query, id, globalkey.DelStateNo)
 	})
@@ -112,9 +112,9 @@ func (m *defaultUserAuthModel) FindOne(ctx context.Context, id int64) (*UserAuth
 }
 
 func (m *defaultUserAuthModel) FindOneByAuthTypeAuthKey(ctx context.Context, authType string, authKey string) (*UserAuth, error) {
-	looklookUsercenterUserAuthAuthTypeAuthKeyKey := fmt.Sprintf("%s%v:%v", cacheLooklookUsercenterUserAuthAuthTypeAuthKeyPrefix, authType, authKey)
+	heartTripUsercenterUserAuthAuthTypeAuthKeyKey := fmt.Sprintf("%s%v:%v", cacheHeartTripUsercenterUserAuthAuthTypeAuthKeyPrefix, authType, authKey)
 	var resp UserAuth
-	err := m.QueryRowIndexCtx(ctx, &resp, looklookUsercenterUserAuthAuthTypeAuthKeyKey, m.formatPrimary, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) (i interface{}, e error) {
+	err := m.QueryRowIndexCtx(ctx, &resp, heartTripUsercenterUserAuthAuthTypeAuthKeyKey, m.formatPrimary, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) (i interface{}, e error) {
 		query := fmt.Sprintf("select %s from %s where `auth_type` = ? and `auth_key` = ? and del_state = ? limit 1", userAuthRows, m.table)
 		if err := conn.QueryRowCtx(ctx, &resp, query, authType, authKey, globalkey.DelStateNo); err != nil {
 			return nil, err
@@ -132,9 +132,9 @@ func (m *defaultUserAuthModel) FindOneByAuthTypeAuthKey(ctx context.Context, aut
 }
 
 func (m *defaultUserAuthModel) FindOneByUserIdAuthType(ctx context.Context, userId int64, authType string) (*UserAuth, error) {
-	looklookUsercenterUserAuthUserIdAuthTypeKey := fmt.Sprintf("%s%v:%v", cacheLooklookUsercenterUserAuthUserIdAuthTypePrefix, userId, authType)
+	heartTripUsercenterUserAuthUserIdAuthTypeKey := fmt.Sprintf("%s%v:%v", cacheHeartTripUsercenterUserAuthUserIdAuthTypePrefix, userId, authType)
 	var resp UserAuth
-	err := m.QueryRowIndexCtx(ctx, &resp, looklookUsercenterUserAuthUserIdAuthTypeKey, m.formatPrimary, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) (i interface{}, e error) {
+	err := m.QueryRowIndexCtx(ctx, &resp, heartTripUsercenterUserAuthUserIdAuthTypeKey, m.formatPrimary, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) (i interface{}, e error) {
 		query := fmt.Sprintf("select %s from %s where `user_id` = ? and `auth_type` = ? and del_state = ? limit 1", userAuthRows, m.table)
 		if err := conn.QueryRowCtx(ctx, &resp, query, userId, authType, globalkey.DelStateNo); err != nil {
 			return nil, err
@@ -156,16 +156,16 @@ func (m *defaultUserAuthModel) Update(ctx context.Context, session sqlx.Session,
 	if err != nil {
 		return nil, err
 	}
-	looklookUsercenterUserAuthAuthTypeAuthKeyKey := fmt.Sprintf("%s%v:%v", cacheLooklookUsercenterUserAuthAuthTypeAuthKeyPrefix, data.AuthType, data.AuthKey)
-	looklookUsercenterUserAuthIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserAuthIdPrefix, data.Id)
-	looklookUsercenterUserAuthUserIdAuthTypeKey := fmt.Sprintf("%s%v:%v", cacheLooklookUsercenterUserAuthUserIdAuthTypePrefix, data.UserId, data.AuthType)
+	heartTripUsercenterUserAuthAuthTypeAuthKeyKey := fmt.Sprintf("%s%v:%v", cacheHeartTripUsercenterUserAuthAuthTypeAuthKeyPrefix, data.AuthType, data.AuthKey)
+	heartTripUsercenterUserAuthIdKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterUserAuthIdPrefix, data.Id)
+	heartTripUsercenterUserAuthUserIdAuthTypeKey := fmt.Sprintf("%s%v:%v", cacheHeartTripUsercenterUserAuthUserIdAuthTypePrefix, data.UserId, data.AuthType)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, userAuthRowsWithPlaceHolder)
 		if session != nil {
 			return session.ExecCtx(ctx, query, newData.DeleteTime, newData.DelState, newData.Version, newData.UserId, newData.AuthKey, newData.AuthType, newData.Id)
 		}
 		return conn.ExecCtx(ctx, query, newData.DeleteTime, newData.DelState, newData.Version, newData.UserId, newData.AuthKey, newData.AuthType, newData.Id)
-	}, looklookUsercenterUserAuthAuthTypeAuthKeyKey, looklookUsercenterUserAuthIdKey, looklookUsercenterUserAuthUserIdAuthTypeKey)
+	}, heartTripUsercenterUserAuthAuthTypeAuthKeyKey, heartTripUsercenterUserAuthIdKey, heartTripUsercenterUserAuthUserIdAuthTypeKey)
 }
 
 func (m *defaultUserAuthModel) UpdateWithVersion(ctx context.Context, session sqlx.Session, newData *UserAuth) error {
@@ -180,16 +180,16 @@ func (m *defaultUserAuthModel) UpdateWithVersion(ctx context.Context, session sq
 	if err != nil {
 		return err
 	}
-	looklookUsercenterUserAuthAuthTypeAuthKeyKey := fmt.Sprintf("%s%v:%v", cacheLooklookUsercenterUserAuthAuthTypeAuthKeyPrefix, data.AuthType, data.AuthKey)
-	looklookUsercenterUserAuthIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserAuthIdPrefix, data.Id)
-	looklookUsercenterUserAuthUserIdAuthTypeKey := fmt.Sprintf("%s%v:%v", cacheLooklookUsercenterUserAuthUserIdAuthTypePrefix, data.UserId, data.AuthType)
+	heartTripUsercenterUserAuthAuthTypeAuthKeyKey := fmt.Sprintf("%s%v:%v", cacheHeartTripUsercenterUserAuthAuthTypeAuthKeyPrefix, data.AuthType, data.AuthKey)
+	heartTripUsercenterUserAuthIdKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterUserAuthIdPrefix, data.Id)
+	heartTripUsercenterUserAuthUserIdAuthTypeKey := fmt.Sprintf("%s%v:%v", cacheHeartTripUsercenterUserAuthUserIdAuthTypePrefix, data.UserId, data.AuthType)
 	sqlResult, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, userAuthRowsWithPlaceHolder)
 		if session != nil {
 			return session.ExecCtx(ctx, query, newData.DeleteTime, newData.DelState, newData.Version, newData.UserId, newData.AuthKey, newData.AuthType, newData.Id, oldVersion)
 		}
 		return conn.ExecCtx(ctx, query, newData.DeleteTime, newData.DelState, newData.Version, newData.UserId, newData.AuthKey, newData.AuthType, newData.Id, oldVersion)
-	}, looklookUsercenterUserAuthAuthTypeAuthKeyKey, looklookUsercenterUserAuthIdKey, looklookUsercenterUserAuthUserIdAuthTypeKey)
+	}, heartTripUsercenterUserAuthAuthTypeAuthKeyKey, heartTripUsercenterUserAuthIdKey, heartTripUsercenterUserAuthUserIdAuthTypeKey)
 	if err != nil {
 		return err
 	}
@@ -412,20 +412,20 @@ func (m *defaultUserAuthModel) Delete(ctx context.Context, session sqlx.Session,
 		return err
 	}
 
-	looklookUsercenterUserAuthAuthTypeAuthKeyKey := fmt.Sprintf("%s%v:%v", cacheLooklookUsercenterUserAuthAuthTypeAuthKeyPrefix, data.AuthType, data.AuthKey)
-	looklookUsercenterUserAuthIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserAuthIdPrefix, id)
-	looklookUsercenterUserAuthUserIdAuthTypeKey := fmt.Sprintf("%s%v:%v", cacheLooklookUsercenterUserAuthUserIdAuthTypePrefix, data.UserId, data.AuthType)
+	heartTripUsercenterUserAuthAuthTypeAuthKeyKey := fmt.Sprintf("%s%v:%v", cacheHeartTripUsercenterUserAuthAuthTypeAuthKeyPrefix, data.AuthType, data.AuthKey)
+	heartTripUsercenterUserAuthIdKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterUserAuthIdPrefix, id)
+	heartTripUsercenterUserAuthUserIdAuthTypeKey := fmt.Sprintf("%s%v:%v", cacheHeartTripUsercenterUserAuthUserIdAuthTypePrefix, data.UserId, data.AuthType)
 	_, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
 		if session != nil {
 			return session.ExecCtx(ctx, query, id)
 		}
 		return conn.ExecCtx(ctx, query, id)
-	}, looklookUsercenterUserAuthAuthTypeAuthKeyKey, looklookUsercenterUserAuthIdKey, looklookUsercenterUserAuthUserIdAuthTypeKey)
+	}, heartTripUsercenterUserAuthAuthTypeAuthKeyKey, heartTripUsercenterUserAuthIdKey, heartTripUsercenterUserAuthUserIdAuthTypeKey)
 	return err
 }
 func (m *defaultUserAuthModel) formatPrimary(primary interface{}) string {
-	return fmt.Sprintf("%s%v", cacheLooklookUsercenterUserAuthIdPrefix, primary)
+	return fmt.Sprintf("%s%v", cacheHeartTripUsercenterUserAuthIdPrefix, primary)
 }
 func (m *defaultUserAuthModel) queryPrimary(ctx context.Context, conn sqlx.SqlConn, v, primary interface{}) error {
 	query := fmt.Sprintf("select %s from %s where `id` = ? and del_state = ? limit 1", userAuthRows, m.table)

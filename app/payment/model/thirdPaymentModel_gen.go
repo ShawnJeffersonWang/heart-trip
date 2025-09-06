@@ -27,8 +27,8 @@ var (
 	thirdPaymentRowsExpectAutoSet   = strings.Join(stringx.Remove(thirdPaymentFieldNames, "`id`", "`create_time`", "`update_time`"), ",")
 	thirdPaymentRowsWithPlaceHolder = strings.Join(stringx.Remove(thirdPaymentFieldNames, "`id`", "`create_time`", "`update_time`"), "=?,") + "=?"
 
-	cacheLooklookPaymentThirdPaymentIdPrefix = "cache:looklookPayment:thirdPayment:id:"
-	cacheLooklookPaymentThirdPaymentSnPrefix = "cache:looklookPayment:thirdPayment:sn:"
+	cacheHeartTripPaymentThirdPaymentIdPrefix = "cache:heartTripPayment:thirdPayment:id:"
+	cacheHeartTripPaymentThirdPaymentSnPrefix = "cache:heartTripPayment:thirdPayment:sn:"
 )
 
 type (
@@ -88,21 +88,21 @@ func newThirdPaymentModel(conn sqlx.SqlConn, c cache.CacheConf) *defaultThirdPay
 func (m *defaultThirdPaymentModel) Insert(ctx context.Context, session sqlx.Session, data *ThirdPayment) (sql.Result, error) {
 	data.DeleteTime = time.Unix(0, 0)
 	data.DelState = globalkey.DelStateNo
-	looklookPaymentThirdPaymentIdKey := fmt.Sprintf("%s%v", cacheLooklookPaymentThirdPaymentIdPrefix, data.Id)
-	looklookPaymentThirdPaymentSnKey := fmt.Sprintf("%s%v", cacheLooklookPaymentThirdPaymentSnPrefix, data.Sn)
+	heartTripPaymentThirdPaymentIdKey := fmt.Sprintf("%s%v", cacheHeartTripPaymentThirdPaymentIdPrefix, data.Id)
+	heartTripPaymentThirdPaymentSnKey := fmt.Sprintf("%s%v", cacheHeartTripPaymentThirdPaymentSnPrefix, data.Sn)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, thirdPaymentRowsExpectAutoSet)
 		if session != nil {
 			return session.ExecCtx(ctx, query, data.Sn, data.DeleteTime, data.DelState, data.Version, data.UserId, data.PayMode, data.TradeType, data.TradeState, data.PayTotal, data.TransactionId, data.TradeStateDesc, data.OrderSn, data.ServiceType, data.PayStatus, data.PayTime)
 		}
 		return conn.ExecCtx(ctx, query, data.Sn, data.DeleteTime, data.DelState, data.Version, data.UserId, data.PayMode, data.TradeType, data.TradeState, data.PayTotal, data.TransactionId, data.TradeStateDesc, data.OrderSn, data.ServiceType, data.PayStatus, data.PayTime)
-	}, looklookPaymentThirdPaymentIdKey, looklookPaymentThirdPaymentSnKey)
+	}, heartTripPaymentThirdPaymentIdKey, heartTripPaymentThirdPaymentSnKey)
 }
 
 func (m *defaultThirdPaymentModel) FindOne(ctx context.Context, id int64) (*ThirdPayment, error) {
-	looklookPaymentThirdPaymentIdKey := fmt.Sprintf("%s%v", cacheLooklookPaymentThirdPaymentIdPrefix, id)
+	heartTripPaymentThirdPaymentIdKey := fmt.Sprintf("%s%v", cacheHeartTripPaymentThirdPaymentIdPrefix, id)
 	var resp ThirdPayment
-	err := m.QueryRowCtx(ctx, &resp, looklookPaymentThirdPaymentIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
+	err := m.QueryRowCtx(ctx, &resp, heartTripPaymentThirdPaymentIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
 		query := fmt.Sprintf("select %s from %s where `id` = ? and del_state = ? limit 1", thirdPaymentRows, m.table)
 		return conn.QueryRowCtx(ctx, v, query, id, globalkey.DelStateNo)
 	})
@@ -117,9 +117,9 @@ func (m *defaultThirdPaymentModel) FindOne(ctx context.Context, id int64) (*Thir
 }
 
 func (m *defaultThirdPaymentModel) FindOneBySn(ctx context.Context, sn string) (*ThirdPayment, error) {
-	looklookPaymentThirdPaymentSnKey := fmt.Sprintf("%s%v", cacheLooklookPaymentThirdPaymentSnPrefix, sn)
+	heartTripPaymentThirdPaymentSnKey := fmt.Sprintf("%s%v", cacheHeartTripPaymentThirdPaymentSnPrefix, sn)
 	var resp ThirdPayment
-	err := m.QueryRowIndexCtx(ctx, &resp, looklookPaymentThirdPaymentSnKey, m.formatPrimary, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) (i interface{}, e error) {
+	err := m.QueryRowIndexCtx(ctx, &resp, heartTripPaymentThirdPaymentSnKey, m.formatPrimary, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) (i interface{}, e error) {
 		query := fmt.Sprintf("select %s from %s where `sn` = ? and del_state = ? limit 1", thirdPaymentRows, m.table)
 		if err := conn.QueryRowCtx(ctx, &resp, query, sn, globalkey.DelStateNo); err != nil {
 			return nil, err
@@ -141,15 +141,15 @@ func (m *defaultThirdPaymentModel) Update(ctx context.Context, session sqlx.Sess
 	if err != nil {
 		return nil, err
 	}
-	looklookPaymentThirdPaymentIdKey := fmt.Sprintf("%s%v", cacheLooklookPaymentThirdPaymentIdPrefix, data.Id)
-	looklookPaymentThirdPaymentSnKey := fmt.Sprintf("%s%v", cacheLooklookPaymentThirdPaymentSnPrefix, data.Sn)
+	heartTripPaymentThirdPaymentIdKey := fmt.Sprintf("%s%v", cacheHeartTripPaymentThirdPaymentIdPrefix, data.Id)
+	heartTripPaymentThirdPaymentSnKey := fmt.Sprintf("%s%v", cacheHeartTripPaymentThirdPaymentSnPrefix, data.Sn)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, thirdPaymentRowsWithPlaceHolder)
 		if session != nil {
 			return session.ExecCtx(ctx, query, newData.Sn, newData.DeleteTime, newData.DelState, newData.Version, newData.UserId, newData.PayMode, newData.TradeType, newData.TradeState, newData.PayTotal, newData.TransactionId, newData.TradeStateDesc, newData.OrderSn, newData.ServiceType, newData.PayStatus, newData.PayTime, newData.Id)
 		}
 		return conn.ExecCtx(ctx, query, newData.Sn, newData.DeleteTime, newData.DelState, newData.Version, newData.UserId, newData.PayMode, newData.TradeType, newData.TradeState, newData.PayTotal, newData.TransactionId, newData.TradeStateDesc, newData.OrderSn, newData.ServiceType, newData.PayStatus, newData.PayTime, newData.Id)
-	}, looklookPaymentThirdPaymentIdKey, looklookPaymentThirdPaymentSnKey)
+	}, heartTripPaymentThirdPaymentIdKey, heartTripPaymentThirdPaymentSnKey)
 }
 
 func (m *defaultThirdPaymentModel) UpdateWithVersion(ctx context.Context, session sqlx.Session, newData *ThirdPayment) error {
@@ -164,15 +164,15 @@ func (m *defaultThirdPaymentModel) UpdateWithVersion(ctx context.Context, sessio
 	if err != nil {
 		return err
 	}
-	looklookPaymentThirdPaymentIdKey := fmt.Sprintf("%s%v", cacheLooklookPaymentThirdPaymentIdPrefix, data.Id)
-	looklookPaymentThirdPaymentSnKey := fmt.Sprintf("%s%v", cacheLooklookPaymentThirdPaymentSnPrefix, data.Sn)
+	heartTripPaymentThirdPaymentIdKey := fmt.Sprintf("%s%v", cacheHeartTripPaymentThirdPaymentIdPrefix, data.Id)
+	heartTripPaymentThirdPaymentSnKey := fmt.Sprintf("%s%v", cacheHeartTripPaymentThirdPaymentSnPrefix, data.Sn)
 	sqlResult, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, thirdPaymentRowsWithPlaceHolder)
 		if session != nil {
 			return session.ExecCtx(ctx, query, newData.Sn, newData.DeleteTime, newData.DelState, newData.Version, newData.UserId, newData.PayMode, newData.TradeType, newData.TradeState, newData.PayTotal, newData.TransactionId, newData.TradeStateDesc, newData.OrderSn, newData.ServiceType, newData.PayStatus, newData.PayTime, newData.Id, oldVersion)
 		}
 		return conn.ExecCtx(ctx, query, newData.Sn, newData.DeleteTime, newData.DelState, newData.Version, newData.UserId, newData.PayMode, newData.TradeType, newData.TradeState, newData.PayTotal, newData.TransactionId, newData.TradeStateDesc, newData.OrderSn, newData.ServiceType, newData.PayStatus, newData.PayTime, newData.Id, oldVersion)
-	}, looklookPaymentThirdPaymentIdKey, looklookPaymentThirdPaymentSnKey)
+	}, heartTripPaymentThirdPaymentIdKey, heartTripPaymentThirdPaymentSnKey)
 	if err != nil {
 		return err
 	}
@@ -395,19 +395,19 @@ func (m *defaultThirdPaymentModel) Delete(ctx context.Context, session sqlx.Sess
 		return err
 	}
 
-	looklookPaymentThirdPaymentIdKey := fmt.Sprintf("%s%v", cacheLooklookPaymentThirdPaymentIdPrefix, id)
-	looklookPaymentThirdPaymentSnKey := fmt.Sprintf("%s%v", cacheLooklookPaymentThirdPaymentSnPrefix, data.Sn)
+	heartTripPaymentThirdPaymentIdKey := fmt.Sprintf("%s%v", cacheHeartTripPaymentThirdPaymentIdPrefix, id)
+	heartTripPaymentThirdPaymentSnKey := fmt.Sprintf("%s%v", cacheHeartTripPaymentThirdPaymentSnPrefix, data.Sn)
 	_, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
 		if session != nil {
 			return session.ExecCtx(ctx, query, id)
 		}
 		return conn.ExecCtx(ctx, query, id)
-	}, looklookPaymentThirdPaymentIdKey, looklookPaymentThirdPaymentSnKey)
+	}, heartTripPaymentThirdPaymentIdKey, heartTripPaymentThirdPaymentSnKey)
 	return err
 }
 func (m *defaultThirdPaymentModel) formatPrimary(primary interface{}) string {
-	return fmt.Sprintf("%s%v", cacheLooklookPaymentThirdPaymentIdPrefix, primary)
+	return fmt.Sprintf("%s%v", cacheHeartTripPaymentThirdPaymentIdPrefix, primary)
 }
 func (m *defaultThirdPaymentModel) queryPrimary(ctx context.Context, conn sqlx.SqlConn, v, primary interface{}) error {
 	query := fmt.Sprintf("select %s from %s where `id` = ? and del_state = ? limit 1", thirdPaymentRows, m.table)

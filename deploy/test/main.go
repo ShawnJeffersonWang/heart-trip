@@ -86,7 +86,7 @@ func (s *ShopServiceImpl) GetByID(id int64) (*model.Homestay, error) {
 
 func list() ([]*model.Homestay, error) {
 	// 初始化数据库
-	db, err := gorm.Open(mysql.Open("root:PXDN93VRKUm8TeE7@tcp(127.0.0.1:33069)/looklook_travel?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai"),
+	db, err := gorm.Open(mysql.Open("root:PXDN93VRKUm8TeE7@tcp(127.0.0.1:33069)/heart_trip_travel?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai"),
 		&gorm.Config{
 			Logger: logger.Default.LogMode(logger.Info), // 根据需要调整日志级别
 		},

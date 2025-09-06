@@ -10,13 +10,13 @@ import (
 
 	"github.com/hibiken/asynq"
 
-	"heart-trip/common/uniqueid"
-	"heart-trip/common/xerr"
 	"heart-trip/app/order/cmd/rpc/internal/svc"
 	"heart-trip/app/order/cmd/rpc/pb"
 	"heart-trip/app/order/model"
 	"heart-trip/app/travel/cmd/rpc/travel"
 	"heart-trip/common/tool"
+	"heart-trip/common/uniqueid"
+	"heart-trip/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -68,7 +68,7 @@ func (l *CreateHomestayOrderLogic) CreateHomestayOrder(in *pb.CreateHomestayOrde
 	}
 
 	order := new(model.HomestayOrder)
-	order.Sn = uniqueid.GenSn(uniqueid.SN_PREFIX_HOMESTAY_ORDER)
+	order.Sn = uniqueid.GenSn(uniqueid.SnPrefixHomestayOrder)
 	order.UserId = in.UserId
 	order.HomestayId = in.HomestayId
 	order.Title = resp.Title

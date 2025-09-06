@@ -22,7 +22,7 @@ var (
 	historyRowsExpectAutoSet   = strings.Join(stringx.Remove(historyFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), ",")
 	historyRowsWithPlaceHolder = strings.Join(stringx.Remove(historyFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), "=?,") + "=?"
 
-	cacheLooklookTravelHistoryIdPrefix = "cache:looklookTravel:history:id:"
+	cacheHeartTripTravelHistoryIdPrefix = "cache:heartTripTravel:history:id:"
 )
 
 type (
@@ -67,18 +67,18 @@ func newHistoryModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option)
 }
 
 func (m *defaultHistoryModel) Delete(ctx context.Context, id int64) error {
-	looklookTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHistoryIdPrefix, id)
+	heartTripTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelHistoryIdPrefix, id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
 		return conn.ExecCtx(ctx, query, id)
-	}, looklookTravelHistoryIdKey)
+	}, heartTripTravelHistoryIdKey)
 	return err
 }
 
 func (m *defaultHistoryModel) FindOne(ctx context.Context, id int64) (*History, error) {
-	looklookTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHistoryIdPrefix, id)
+	heartTripTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelHistoryIdPrefix, id)
 	var resp History
-	err := m.QueryRowCtx(ctx, &resp, looklookTravelHistoryIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
+	err := m.QueryRowCtx(ctx, &resp, heartTripTravelHistoryIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
 		query := fmt.Sprintf("select %s from %s where `id` = ? limit 1", historyRows, m.table)
 		return conn.QueryRowCtx(ctx, v, query, id)
 	})
@@ -93,25 +93,25 @@ func (m *defaultHistoryModel) FindOne(ctx context.Context, id int64) (*History, 
 }
 
 func (m *defaultHistoryModel) Insert(ctx context.Context, data *History) (sql.Result, error) {
-	looklookTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHistoryIdPrefix, data.Id)
+	heartTripTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelHistoryIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, historyRowsExpectAutoSet)
 		return conn.ExecCtx(ctx, query, data.LastBrowsingTime, data.Title, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId, data.HomestayId, data.DelState, data.Version, data.DeleteTime)
-	}, looklookTravelHistoryIdKey)
+	}, heartTripTravelHistoryIdKey)
 	return ret, err
 }
 
 func (m *defaultHistoryModel) Update(ctx context.Context, data *History) error {
-	looklookTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHistoryIdPrefix, data.Id)
+	heartTripTravelHistoryIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelHistoryIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, historyRowsWithPlaceHolder)
 		return conn.ExecCtx(ctx, query, data.LastBrowsingTime, data.Title, data.Cover, data.Intro, data.Location, data.PriceBefore, data.PriceAfter, data.RowState, data.HomestayBusinessId, data.RatingStars, data.UserId, data.HomestayId, data.DelState, data.Version, data.DeleteTime, data.Id)
-	}, looklookTravelHistoryIdKey)
+	}, heartTripTravelHistoryIdKey)
 	return err
 }
 
 func (m *defaultHistoryModel) formatPrimary(primary any) string {
-	return fmt.Sprintf("%s%v", cacheLooklookTravelHistoryIdPrefix, primary)
+	return fmt.Sprintf("%s%v", cacheHeartTripTravelHistoryIdPrefix, primary)
 }
 
 func (m *defaultHistoryModel) queryPrimary(ctx context.Context, conn sqlx.SqlConn, v, primary any) error {

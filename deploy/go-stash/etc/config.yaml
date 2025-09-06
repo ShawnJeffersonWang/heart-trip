@@ -5,7 +5,7 @@ Clusters:
         Brokers:
           - "kafka:9092"
         Topics:
-          - looklook-log
+          - heart-trip-log
         Group: pro
         Consumers: 16
     Filters:
@@ -42,4 +42,4 @@ Clusters:
       ElasticSearch:
         Hosts:
           - "http://elasticsearch:9200"
-        Index: "looklook-{{yyyy-MM-dd}}"
+        Index: "heart-trip-{{yyyy-MM-dd}}"

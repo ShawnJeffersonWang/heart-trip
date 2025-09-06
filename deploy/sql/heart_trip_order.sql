@@ -1,11 +1,11 @@
 /*
  Navicat MySQL Data Transfer
 
- Source Server         : looklook
+ Source Server         : heart_trip
  Source Server Type    : MySQL
  Source Server Version : 80028
  Source Host           : 127.0.0.1:33069
- Source Schema         : looklook_order
+ Source Schema         : heart_trip_order
 
  Target Server Type    : MySQL
  Target Server Version : 80028
@@ -16,7 +16,6 @@
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
 -- ----------------------------
 -- Table structure for homestay_order
 -- ----------------------------

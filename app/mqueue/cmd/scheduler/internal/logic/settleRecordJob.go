@@ -8,7 +8,7 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-// scheduler job ------> go-zero-looklook/app/mqueue/cmd/job/internal/logic/settleRecord.go.
+// scheduler job ------> go-zero-heart_trip/app/mqueue/cmd/job/internal/logic/settleRecord.go.
 func (l *MqueueScheduler) settleRecordScheduler() {
 
 	task := asynq.NewTask(jobtype.ScheduleSettleRecord, nil)

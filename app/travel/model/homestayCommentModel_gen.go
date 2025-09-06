@@ -28,7 +28,7 @@ var (
 	homestayCommentRowsExpectAutoSet   = strings.Join(stringx.Remove(homestayCommentFieldNames, "`id`", "`create_time`", "`update_time`"), ",")
 	homestayCommentRowsWithPlaceHolder = strings.Join(stringx.Remove(homestayCommentFieldNames, "`id`", "`create_time`", "`update_time`"), "=?,") + "=?"
 
-	cacheLooklookTravelHomestayCommentIdPrefix = "cache:looklookTravel:homestayComment:id:"
+	cacheHeartTripTravelHomestayCommentIdPrefix = "cache:heartTripTravel:homestayComment:id:"
 )
 
 type (
@@ -90,20 +90,20 @@ func newHomestayCommentModel(conn sqlx.SqlConn, c cache.CacheConf) *defaultHomes
 func (m *defaultHomestayCommentModel) Insert(ctx context.Context, session sqlx.Session, data *HomestayComment) (sql.Result, error) {
 	data.DeleteTime = time.Unix(0, 0)
 	data.DelState = globalkey.DelStateNo
-	looklookTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayCommentIdPrefix, data.Id)
+	heartTripTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelHomestayCommentIdPrefix, data.Id)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, homestayCommentRowsExpectAutoSet)
 		if session != nil {
 			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Avatar, data.Nickname, data.ImageUrls, data.LikeCount, data.CommentTime, data.TidyRating, data.TrafficRating, data.SecurityRating, data.FoodRating, data.CostRating)
 		}
 		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Avatar, data.Nickname, data.ImageUrls, data.LikeCount, data.CommentTime, data.TidyRating, data.TrafficRating, data.SecurityRating, data.FoodRating, data.CostRating)
-	}, looklookTravelHomestayCommentIdKey)
+	}, heartTripTravelHomestayCommentIdKey)
 }
 
 func (m *defaultHomestayCommentModel) FindOne(ctx context.Context, id int64) (*HomestayComment, error) {
-	looklookTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayCommentIdPrefix, id)
+	heartTripTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelHomestayCommentIdPrefix, id)
 	var resp HomestayComment
-	err := m.QueryRowCtx(ctx, &resp, looklookTravelHomestayCommentIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
+	err := m.QueryRowCtx(ctx, &resp, heartTripTravelHomestayCommentIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
 		query := fmt.Sprintf("select %s from %s where `id` = ? and del_state = ? limit 1", homestayCommentRows, m.table)
 		return conn.QueryRowCtx(ctx, v, query, id, globalkey.DelStateNo)
 	})
@@ -118,25 +118,25 @@ func (m *defaultHomestayCommentModel) FindOne(ctx context.Context, id int64) (*H
 }
 
 func (m *defaultHomestayCommentModel) Update(ctx context.Context, session sqlx.Session, data *HomestayComment) (sql.Result, error) {
-	looklookTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayCommentIdPrefix, data.Id)
+	heartTripTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelHomestayCommentIdPrefix, data.Id)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, homestayCommentRowsWithPlaceHolder)
 		if session != nil {
 			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Nickname, data.Avatar, data.ImageUrls, data.LikeCount, data.CommentTime, data.TidyRating, data.TrafficRating, data.SecurityRating, data.FoodRating, data.CostRating, data.Id)
 		}
 		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Nickname, data.Avatar, data.ImageUrls, data.LikeCount, data.CommentTime, data.TidyRating, data.TrafficRating, data.SecurityRating, data.FoodRating, data.CostRating, data.Id)
-	}, looklookTravelHomestayCommentIdKey)
+	}, heartTripTravelHomestayCommentIdKey)
 }
 
 //func (m *defaultHomestayCommentModel) UpdateWithLikeCount(ctx context.Context, session sqlx.Session, data *HomestayComment) (sql.Result, error) {
-//	looklookTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayCommentIdPrefix, data.Id)
+//	heartTripTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelHomestayCommentIdPrefix, data.Id)
 //	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 //		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, homestayCommentRowsWithPlaceHolder)
 //		if session != nil {
 //			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Id)
 //		}
 //		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Id)
-//	}, looklookTravelHomestayCommentIdKey)
+//	}, heartTripTravelHomestayCommentIdKey)
 //}
 
 func (m *defaultHomestayCommentModel) UpdateWithVersion(ctx context.Context, session sqlx.Session, data *HomestayComment) error {
@@ -147,14 +147,14 @@ func (m *defaultHomestayCommentModel) UpdateWithVersion(ctx context.Context, ses
 	var sqlResult sql.Result
 	var err error
 
-	looklookTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayCommentIdPrefix, data.Id)
+	heartTripTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelHomestayCommentIdPrefix, data.Id)
 	sqlResult, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, homestayCommentRowsWithPlaceHolder)
 		if session != nil {
 			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Id, oldVersion)
 		}
 		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Id, oldVersion)
-	}, looklookTravelHomestayCommentIdKey)
+	}, heartTripTravelHomestayCommentIdKey)
 	if err != nil {
 		return err
 	}
@@ -372,18 +372,18 @@ func (m *defaultHomestayCommentModel) SelectBuilder() squirrel.SelectBuilder {
 	return squirrel.Select().From(m.table)
 }
 func (m *defaultHomestayCommentModel) Delete(ctx context.Context, session sqlx.Session, id int64) error {
-	looklookTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelHomestayCommentIdPrefix, id)
+	heartTripTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelHomestayCommentIdPrefix, id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
 		if session != nil {
 			return session.ExecCtx(ctx, query, id)
 		}
 		return conn.ExecCtx(ctx, query, id)
-	}, looklookTravelHomestayCommentIdKey)
+	}, heartTripTravelHomestayCommentIdKey)
 	return err
 }
 func (m *defaultHomestayCommentModel) formatPrimary(primary interface{}) string {
-	return fmt.Sprintf("%s%v", cacheLooklookTravelHomestayCommentIdPrefix, primary)
+	return fmt.Sprintf("%s%v", cacheHeartTripTravelHomestayCommentIdPrefix, primary)
 }
 func (m *defaultHomestayCommentModel) queryPrimary(ctx context.Context, conn sqlx.SqlConn, v, primary interface{}) error {
 	query := fmt.Sprintf("select %s from %s where `id` = ? and del_state = ? limit 1", homestayCommentRows, m.table)

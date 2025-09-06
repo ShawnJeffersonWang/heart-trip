@@ -25,7 +25,7 @@ Redis:
   Pass: G62m50oigInC30sf
   Key: order-rpc
 DB:
-  DataSource: root:PXDN93VRKUm8TeE7@tcp(mysql:3306)/looklook_order?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+  DataSource: root:PXDN93VRKUm8TeE7@tcp(mysql:3306)/heart_trip_order?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
 Cache:
   - Host: redis:6379
     Pass: G62m50oigInC30sf

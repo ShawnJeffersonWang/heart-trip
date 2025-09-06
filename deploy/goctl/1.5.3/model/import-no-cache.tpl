@@ -6,7 +6,7 @@ import (
 
 	{{if .time}}"time"{{end}}
 
-	"looklook/common/globalkey"
+	"heart-trip/common/globalkey"
 	"github.com/Masterminds/squirrel"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/builder"

@@ -3,7 +3,7 @@ package {{.PkgName}}
 import (
 	"net/http"
 
-	"looklook/common/result"
+	"heart-trip/common/result"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 	{{.ImportPackages}}

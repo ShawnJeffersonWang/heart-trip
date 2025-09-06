@@ -22,7 +22,7 @@ var (
 	messageRowsExpectAutoSet   = strings.Join(stringx.Remove(messageFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), ",")
 	messageRowsWithPlaceHolder = strings.Join(stringx.Remove(messageFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), "=?,") + "=?"
 
-	cacheLooklookUsercenterMessageIdPrefix = "cache:looklookUsercenter:message:id:"
+	cacheHeartTripUsercenterMessageIdPrefix = "cache:heartTripUsercenter:message:id:"
 )
 
 type (
@@ -56,18 +56,18 @@ func newMessageModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option)
 }
 
 func (m *defaultMessageModel) Delete(ctx context.Context, id int64) error {
-	looklookUsercenterMessageIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterMessageIdPrefix, id)
+	heartTripUsercenterMessageIdKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterMessageIdPrefix, id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
 		return conn.ExecCtx(ctx, query, id)
-	}, looklookUsercenterMessageIdKey)
+	}, heartTripUsercenterMessageIdKey)
 	return err
 }
 
 func (m *defaultMessageModel) FindOne(ctx context.Context, id int64) (*Message, error) {
-	looklookUsercenterMessageIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterMessageIdPrefix, id)
+	heartTripUsercenterMessageIdKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterMessageIdPrefix, id)
 	var resp Message
-	err := m.QueryRowCtx(ctx, &resp, looklookUsercenterMessageIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
+	err := m.QueryRowCtx(ctx, &resp, heartTripUsercenterMessageIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
 		query := fmt.Sprintf("select %s from %s where `id` = ? limit 1", messageRows, m.table)
 		return conn.QueryRowCtx(ctx, v, query, id)
 	})
@@ -82,25 +82,25 @@ func (m *defaultMessageModel) FindOne(ctx context.Context, id int64) (*Message, 
 }
 
 func (m *defaultMessageModel) Insert(ctx context.Context, data *Message) (sql.Result, error) {
-	looklookUsercenterMessageIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterMessageIdPrefix, data.Id)
+	heartTripUsercenterMessageIdKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterMessageIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?)", m.table, messageRowsExpectAutoSet)
 		return conn.ExecCtx(ctx, query, data.FromUserId, data.ToUserId, data.Content, data.DelState)
-	}, looklookUsercenterMessageIdKey)
+	}, heartTripUsercenterMessageIdKey)
 	return ret, err
 }
 
 func (m *defaultMessageModel) Update(ctx context.Context, data *Message) error {
-	looklookUsercenterMessageIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterMessageIdPrefix, data.Id)
+	heartTripUsercenterMessageIdKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterMessageIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, messageRowsWithPlaceHolder)
 		return conn.ExecCtx(ctx, query, data.FromUserId, data.ToUserId, data.Content, data.DelState, data.Id)
-	}, looklookUsercenterMessageIdKey)
+	}, heartTripUsercenterMessageIdKey)
 	return err
 }
 
 func (m *defaultMessageModel) formatPrimary(primary any) string {
-	return fmt.Sprintf("%s%v", cacheLooklookUsercenterMessageIdPrefix, primary)
+	return fmt.Sprintf("%s%v", cacheHeartTripUsercenterMessageIdPrefix, primary)
 }
 
 func (m *defaultMessageModel) queryPrimary(ctx context.Context, conn sqlx.SqlConn, v, primary any) error {

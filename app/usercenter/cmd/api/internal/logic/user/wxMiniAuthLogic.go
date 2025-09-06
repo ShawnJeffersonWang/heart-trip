@@ -66,7 +66,7 @@ func (l *WxMiniAuthLogic) WxMiniAuth(req types.WXMiniAuthReq) (*types.WXMiniAuth
 
 		//Wechat-Mini Decrypted data
 		mobile := userData.PhoneNumber
-		nickName := fmt.Sprintf("LookLook%s", mobile[7:])
+		nickName := fmt.Sprintf("HeartTrip%s", mobile[7:])
 		registerRsp, err := l.svcCtx.UsercenterRpc.Register(l.ctx, &usercenter.RegisterReq{
 			AuthKey:  authResult.OpenID,
 			AuthType: usercenterModel.UserAuthTypeSmallWX,

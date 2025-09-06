@@ -27,8 +27,8 @@ var (
 	homestayOrderRowsExpectAutoSet   = strings.Join(stringx.Remove(homestayOrderFieldNames, "`id`", "`create_time`", "`update_time`"), ",")
 	homestayOrderRowsWithPlaceHolder = strings.Join(stringx.Remove(homestayOrderFieldNames, "`id`", "`create_time`", "`update_time`"), "=?,") + "=?"
 
-	cacheLooklookOrderHomestayOrderIdPrefix = "cache:looklookOrder:homestayOrder:id:"
-	cacheLooklookOrderHomestayOrderSnPrefix = "cache:looklookOrder:homestayOrder:sn:"
+	cacheHeartTripOrderHomestayOrderIdPrefix = "cache:heartTripOrder:homestayOrder:id:"
+	cacheHeartTripOrderHomestayOrderSnPrefix = "cache:heartTripOrder:homestayOrder:sn:"
 )
 
 type (
@@ -92,21 +92,21 @@ func newHomestayOrderModel(conn sqlx.SqlConn, c cache.CacheConf) *defaultHomesta
 func (m *defaultHomestayOrderModel) Insert(ctx context.Context, session sqlx.Session, data *HomestayOrder) (sql.Result, error) {
 	data.DeleteTime = time.Unix(0, 0)
 	data.DelState = globalkey.DelStateNo
-	looklookOrderHomestayOrderIdKey := fmt.Sprintf("%s%v", cacheLooklookOrderHomestayOrderIdPrefix, data.Id)
-	looklookOrderHomestayOrderSnKey := fmt.Sprintf("%s%v", cacheLooklookOrderHomestayOrderSnPrefix, data.Sn)
+	heartTripOrderHomestayOrderIdKey := fmt.Sprintf("%s%v", cacheHeartTripOrderHomestayOrderIdPrefix, data.Id)
+	heartTripOrderHomestayOrderSnKey := fmt.Sprintf("%s%v", cacheHeartTripOrderHomestayOrderSnPrefix, data.Sn)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, homestayOrderRowsExpectAutoSet)
 		if session != nil {
 			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Sn, data.UserId, data.HomestayId, data.Title, data.Cover, data.Info, data.HomestayPrice, data.HomestayBusinessId, data.HomestayUserId, data.LiveStartDate, data.LiveEndDate, data.TradeState, data.TradeCode, data.Remark, data.OrderTotalPrice, data.HomestayTotalPrice)
 		}
 		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Sn, data.UserId, data.HomestayId, data.Title, data.Cover, data.Info, data.HomestayPrice, data.HomestayBusinessId, data.HomestayUserId, data.LiveStartDate, data.LiveEndDate, data.TradeState, data.TradeCode, data.Remark, data.OrderTotalPrice, data.HomestayTotalPrice)
-	}, looklookOrderHomestayOrderIdKey, looklookOrderHomestayOrderSnKey)
+	}, heartTripOrderHomestayOrderIdKey, heartTripOrderHomestayOrderSnKey)
 }
 
 func (m *defaultHomestayOrderModel) FindOne(ctx context.Context, id int64) (*HomestayOrder, error) {
-	looklookOrderHomestayOrderIdKey := fmt.Sprintf("%s%v", cacheLooklookOrderHomestayOrderIdPrefix, id)
+	heartTripOrderHomestayOrderIdKey := fmt.Sprintf("%s%v", cacheHeartTripOrderHomestayOrderIdPrefix, id)
 	var resp HomestayOrder
-	err := m.QueryRowCtx(ctx, &resp, looklookOrderHomestayOrderIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
+	err := m.QueryRowCtx(ctx, &resp, heartTripOrderHomestayOrderIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
 		query := fmt.Sprintf("select %s from %s where `id` = ? and del_state = ? limit 1", homestayOrderRows, m.table)
 		return conn.QueryRowCtx(ctx, v, query, id, globalkey.DelStateNo)
 	})
@@ -121,9 +121,9 @@ func (m *defaultHomestayOrderModel) FindOne(ctx context.Context, id int64) (*Hom
 }
 
 func (m *defaultHomestayOrderModel) FindOneBySn(ctx context.Context, sn string) (*HomestayOrder, error) {
-	looklookOrderHomestayOrderSnKey := fmt.Sprintf("%s%v", cacheLooklookOrderHomestayOrderSnPrefix, sn)
+	heartTripOrderHomestayOrderSnKey := fmt.Sprintf("%s%v", cacheHeartTripOrderHomestayOrderSnPrefix, sn)
 	var resp HomestayOrder
-	err := m.QueryRowIndexCtx(ctx, &resp, looklookOrderHomestayOrderSnKey, m.formatPrimary, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) (i interface{}, e error) {
+	err := m.QueryRowIndexCtx(ctx, &resp, heartTripOrderHomestayOrderSnKey, m.formatPrimary, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) (i interface{}, e error) {
 		query := fmt.Sprintf("select %s from %s where `sn` = ? and del_state = ? limit 1", homestayOrderRows, m.table)
 		if err := conn.QueryRowCtx(ctx, &resp, query, sn, globalkey.DelStateNo); err != nil {
 			return nil, err
@@ -145,15 +145,15 @@ func (m *defaultHomestayOrderModel) Update(ctx context.Context, session sqlx.Ses
 	if err != nil {
 		return nil, err
 	}
-	looklookOrderHomestayOrderIdKey := fmt.Sprintf("%s%v", cacheLooklookOrderHomestayOrderIdPrefix, data.Id)
-	looklookOrderHomestayOrderSnKey := fmt.Sprintf("%s%v", cacheLooklookOrderHomestayOrderSnPrefix, data.Sn)
+	heartTripOrderHomestayOrderIdKey := fmt.Sprintf("%s%v", cacheHeartTripOrderHomestayOrderIdPrefix, data.Id)
+	heartTripOrderHomestayOrderSnKey := fmt.Sprintf("%s%v", cacheHeartTripOrderHomestayOrderSnPrefix, data.Sn)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, homestayOrderRowsWithPlaceHolder)
 		if session != nil {
 			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Sn, data.UserId, data.HomestayId, data.Title, data.Cover, data.Info, data.HomestayPrice, data.HomestayBusinessId, data.HomestayUserId, data.LiveStartDate, data.LiveEndDate, data.TradeState, data.TradeCode, data.Remark, data.OrderTotalPrice, data.HomestayTotalPrice)
 		}
 		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Sn, data.UserId, data.HomestayId, data.Title, data.Cover, data.Info, data.HomestayPrice, data.HomestayBusinessId, data.HomestayUserId, data.LiveStartDate, data.LiveEndDate, data.TradeState, data.TradeCode, data.Remark, data.OrderTotalPrice, data.HomestayTotalPrice)
-	}, looklookOrderHomestayOrderIdKey, looklookOrderHomestayOrderSnKey)
+	}, heartTripOrderHomestayOrderIdKey, heartTripOrderHomestayOrderSnKey)
 }
 
 func (m *defaultHomestayOrderModel) UpdateWithVersion(ctx context.Context, session sqlx.Session, newData *HomestayOrder) error {
@@ -168,15 +168,15 @@ func (m *defaultHomestayOrderModel) UpdateWithVersion(ctx context.Context, sessi
 	if err != nil {
 		return err
 	}
-	looklookOrderHomestayOrderIdKey := fmt.Sprintf("%s%v", cacheLooklookOrderHomestayOrderIdPrefix, data.Id)
-	looklookOrderHomestayOrderSnKey := fmt.Sprintf("%s%v", cacheLooklookOrderHomestayOrderSnPrefix, data.Sn)
+	heartTripOrderHomestayOrderIdKey := fmt.Sprintf("%s%v", cacheHeartTripOrderHomestayOrderIdPrefix, data.Id)
+	heartTripOrderHomestayOrderSnKey := fmt.Sprintf("%s%v", cacheHeartTripOrderHomestayOrderSnPrefix, data.Sn)
 	sqlResult, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, homestayOrderRowsWithPlaceHolder)
 		if session != nil {
 			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Sn, data.UserId, data.HomestayId, data.Title, data.Cover, data.Info, data.HomestayPrice, data.HomestayBusinessId, data.HomestayUserId, data.LiveStartDate, data.LiveEndDate, data.TradeState, data.TradeCode, data.Remark, data.OrderTotalPrice, data.HomestayTotalPrice)
 		}
 		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Sn, data.UserId, data.HomestayId, data.Title, data.Cover, data.Info, data.HomestayPrice, data.HomestayBusinessId, data.HomestayUserId, data.LiveStartDate, data.LiveEndDate, data.TradeState, data.TradeCode, data.Remark, data.OrderTotalPrice, data.HomestayTotalPrice)
-	}, looklookOrderHomestayOrderIdKey, looklookOrderHomestayOrderSnKey)
+	}, heartTripOrderHomestayOrderIdKey, heartTripOrderHomestayOrderSnKey)
 	if err != nil {
 		return err
 	}
@@ -399,19 +399,19 @@ func (m *defaultHomestayOrderModel) Delete(ctx context.Context, session sqlx.Ses
 		return err
 	}
 
-	looklookOrderHomestayOrderIdKey := fmt.Sprintf("%s%v", cacheLooklookOrderHomestayOrderIdPrefix, id)
-	looklookOrderHomestayOrderSnKey := fmt.Sprintf("%s%v", cacheLooklookOrderHomestayOrderSnPrefix, data.Sn)
+	heartTripOrderHomestayOrderIdKey := fmt.Sprintf("%s%v", cacheHeartTripOrderHomestayOrderIdPrefix, id)
+	heartTripOrderHomestayOrderSnKey := fmt.Sprintf("%s%v", cacheHeartTripOrderHomestayOrderSnPrefix, data.Sn)
 	_, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
 		if session != nil {
 			return session.ExecCtx(ctx, query, id)
 		}
 		return conn.ExecCtx(ctx, query, id)
-	}, looklookOrderHomestayOrderIdKey, looklookOrderHomestayOrderSnKey)
+	}, heartTripOrderHomestayOrderIdKey, heartTripOrderHomestayOrderSnKey)
 	return err
 }
 func (m *defaultHomestayOrderModel) formatPrimary(primary interface{}) string {
-	return fmt.Sprintf("%s%v", cacheLooklookOrderHomestayOrderIdPrefix, primary)
+	return fmt.Sprintf("%s%v", cacheHeartTripOrderHomestayOrderIdPrefix, primary)
 }
 func (m *defaultHomestayOrderModel) queryPrimary(ctx context.Context, conn sqlx.SqlConn, v, primary interface{}) error {
 	query := fmt.Sprintf("select %s from %s where `id` = ? and del_state = ? limit 1", homestayOrderRows, m.table)

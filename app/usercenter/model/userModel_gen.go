@@ -28,8 +28,8 @@ var (
 	userRowsExpectAutoSet   = strings.Join(stringx.Remove(userFieldNames, "`id`", "`create_time`", "`update_time`"), ",")
 	userRowsWithPlaceHolder = strings.Join(stringx.Remove(userFieldNames, "`id`", "`create_time`", "`update_time`"), "=?,") + "=?"
 
-	cacheLooklookUsercenterUserIdPrefix     = "cache:looklookUsercenter:user:id:"
-	cacheLooklookUsercenterUserMobilePrefix = "cache:looklookUsercenter:user:mobile:"
+	cacheHeartTripUsercenterUserIdPrefix     = "cache:heartTripUsercenter:user:id:"
+	cacheHeartTripUsercenterUserMobilePrefix = "cache:heartTripUsercenter:user:mobile:"
 )
 
 type (
@@ -83,21 +83,21 @@ func newUserModel(conn sqlx.SqlConn, c cache.CacheConf) *defaultUserModel {
 func (m *defaultUserModel) Insert(ctx context.Context, session sqlx.Session, data *User) (sql.Result, error) {
 	data.DeleteTime = time.Unix(0, 0)
 	data.DelState = globalkey.DelStateNo
-	looklookUsercenterUserIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserIdPrefix, data.Id)
-	looklookUsercenterUserMobileKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserMobilePrefix, data.Mobile)
+	heartTripUsercenterUserIdKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterUserIdPrefix, data.Id)
+	heartTripUsercenterUserMobileKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterUserMobilePrefix, data.Mobile)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, userRowsExpectAutoSet)
 		if session != nil {
 			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Mobile, data.Password, data.Nickname, data.Sex, data.Avatar, data.Info)
 		}
 		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Mobile, data.Password, data.Nickname, data.Sex, data.Avatar, data.Info)
-	}, looklookUsercenterUserIdKey, looklookUsercenterUserMobileKey)
+	}, heartTripUsercenterUserIdKey, heartTripUsercenterUserMobileKey)
 }
 
 func (m *defaultUserModel) FindOne(ctx context.Context, id int64) (*User, error) {
-	looklookUsercenterUserIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserIdPrefix, id)
+	heartTripUsercenterUserIdKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterUserIdPrefix, id)
 	var resp User
-	err := m.QueryRowCtx(ctx, &resp, looklookUsercenterUserIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
+	err := m.QueryRowCtx(ctx, &resp, heartTripUsercenterUserIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
 		query := fmt.Sprintf("select %s from %s where `id` = ? and del_state = ? limit 1", userRows, m.table)
 		return conn.QueryRowCtx(ctx, v, query, id, globalkey.DelStateNo)
 	})
@@ -112,9 +112,9 @@ func (m *defaultUserModel) FindOne(ctx context.Context, id int64) (*User, error)
 }
 
 func (m *defaultUserModel) FindOneByMobile(ctx context.Context, mobile string) (*User, error) {
-	looklookUsercenterUserMobileKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserMobilePrefix, mobile)
+	heartTripUsercenterUserMobileKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterUserMobilePrefix, mobile)
 	var resp User
-	err := m.QueryRowIndexCtx(ctx, &resp, looklookUsercenterUserMobileKey, m.formatPrimary, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) (i interface{}, e error) {
+	err := m.QueryRowIndexCtx(ctx, &resp, heartTripUsercenterUserMobileKey, m.formatPrimary, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) (i interface{}, e error) {
 		query := fmt.Sprintf("select %s from %s where `mobile` = ? and del_state = ? limit 1", userRows, m.table)
 		if err := conn.QueryRowCtx(ctx, &resp, query, mobile, globalkey.DelStateNo); err != nil {
 			return nil, err
@@ -137,15 +137,15 @@ func (m *defaultUserModel) Update(ctx context.Context, session sqlx.Session, new
 	if err != nil {
 		return nil, err
 	}
-	looklookUsercenterUserIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserIdPrefix, data.Id)
-	looklookUsercenterUserMobileKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserMobilePrefix, data.Mobile)
+	heartTripUsercenterUserIdKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterUserIdPrefix, data.Id)
+	heartTripUsercenterUserMobileKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterUserMobilePrefix, data.Mobile)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, userRowsWithPlaceHolder)
 		if session != nil {
 			return session.ExecCtx(ctx, query, newData.DeleteTime, newData.DelState, newData.Version, newData.Mobile, newData.Password, newData.Nickname, newData.Sex, newData.Avatar, newData.Info, newData.Id)
 		}
 		return conn.ExecCtx(ctx, query, newData.DeleteTime, newData.DelState, newData.Version, newData.Mobile, newData.Password, newData.Nickname, newData.Sex, newData.Avatar, newData.Info, newData.Id)
-	}, looklookUsercenterUserIdKey, looklookUsercenterUserMobileKey)
+	}, heartTripUsercenterUserIdKey, heartTripUsercenterUserMobileKey)
 }
 
 func (m *defaultUserModel) UpdateWithVersion(ctx context.Context, session sqlx.Session, newData *User) error {
@@ -160,15 +160,15 @@ func (m *defaultUserModel) UpdateWithVersion(ctx context.Context, session sqlx.S
 	if err != nil {
 		return err
 	}
-	looklookUsercenterUserIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserIdPrefix, data.Id)
-	looklookUsercenterUserMobileKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserMobilePrefix, data.Mobile)
+	heartTripUsercenterUserIdKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterUserIdPrefix, data.Id)
+	heartTripUsercenterUserMobileKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterUserMobilePrefix, data.Mobile)
 	sqlResult, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, userRowsWithPlaceHolder)
 		if session != nil {
 			return session.ExecCtx(ctx, query, newData.DeleteTime, newData.DelState, newData.Version, newData.Mobile, newData.Password, newData.Nickname, newData.Sex, newData.Avatar, newData.Info, newData.Id, oldVersion)
 		}
 		return conn.ExecCtx(ctx, query, newData.DeleteTime, newData.DelState, newData.Version, newData.Mobile, newData.Password, newData.Nickname, newData.Sex, newData.Avatar, newData.Info, newData.Id, oldVersion)
-	}, looklookUsercenterUserIdKey, looklookUsercenterUserMobileKey)
+	}, heartTripUsercenterUserIdKey, heartTripUsercenterUserMobileKey)
 	if err != nil {
 		return err
 	}
@@ -391,19 +391,19 @@ func (m *defaultUserModel) Delete(ctx context.Context, session sqlx.Session, id 
 		return err
 	}
 
-	looklookUsercenterUserIdKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserIdPrefix, id)
-	looklookUsercenterUserMobileKey := fmt.Sprintf("%s%v", cacheLooklookUsercenterUserMobilePrefix, data.Mobile)
+	heartTripUsercenterUserIdKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterUserIdPrefix, id)
+	heartTripUsercenterUserMobileKey := fmt.Sprintf("%s%v", cacheHeartTripUsercenterUserMobilePrefix, data.Mobile)
 	_, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
 		if session != nil {
 			return session.ExecCtx(ctx, query, id)
 		}
 		return conn.ExecCtx(ctx, query, id)
-	}, looklookUsercenterUserIdKey, looklookUsercenterUserMobileKey)
+	}, heartTripUsercenterUserIdKey, heartTripUsercenterUserMobileKey)
 	return err
 }
 func (m *defaultUserModel) formatPrimary(primary interface{}) string {
-	return fmt.Sprintf("%s%v", cacheLooklookUsercenterUserIdPrefix, primary)
+	return fmt.Sprintf("%s%v", cacheHeartTripUsercenterUserIdPrefix, primary)
 }
 func (m *defaultUserModel) queryPrimary(ctx context.Context, conn sqlx.SqlConn, v, primary interface{}) error {
 	query := fmt.Sprintf("select %s from %s where `id` = ? and del_state = ? limit 1", userRows, m.table)

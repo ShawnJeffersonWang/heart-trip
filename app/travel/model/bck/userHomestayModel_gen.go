@@ -27,7 +27,7 @@ var (
 	userHomestayRowsExpectAutoSet   = strings.Join(stringx.Remove(userHomestayFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), ",")
 	userHomestayRowsWithPlaceHolder = strings.Join(stringx.Remove(userHomestayFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), "=?,") + "=?"
 
-	cacheLooklookTravelUserHomestayIdPrefix = "cache:looklookTravel:userHomestay:id:"
+	cacheHeartTripTravelUserHomestayIdPrefix = "cache:heartTripTravel:userHomestay:id:"
 )
 
 type (
@@ -66,11 +66,11 @@ func newUserHomestayModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Op
 }
 
 func (m *defaultUserHomestayModel) Delete(ctx context.Context, user_id, homestay_id int64) error {
-	looklookTravelUserHomestayIdKey := fmt.Sprintf("%s%v%v", cacheLooklookTravelUserHomestayIdPrefix, user_id, homestay_id)
+	heartTripTravelUserHomestayIdKey := fmt.Sprintf("%s%v%v", cacheHeartTripTravelUserHomestayIdPrefix, user_id, homestay_id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `user_id` = ? and `homestay_id` = ?", m.table)
 		return conn.ExecCtx(ctx, query, user_id, homestay_id)
-	}, looklookTravelUserHomestayIdKey)
+	}, heartTripTravelUserHomestayIdKey)
 	return err
 }
 
@@ -92,7 +92,7 @@ func (m *defaultUserHomestayModel) UpdateWithVersion(ctx context.Context, sessio
 	var sqlResult sql.Result
 	var err error
 
-	looklookTravelUserHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHomestayIdPrefix, data.Id)
+	heartTripTravelUserHomestayIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelUserHomestayIdPrefix, data.Id)
 	sqlResult, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, userHomestayRowsWithPlaceHolder)
 		if session != nil {
@@ -100,7 +100,7 @@ func (m *defaultUserHomestayModel) UpdateWithVersion(ctx context.Context, sessio
 			return session.ExecCtx(ctx, query, data.UserId, data.HomestayId, data.DelState, data.Version, data.DeleteTime, data.Id, oldVersion)
 		}
 		return conn.ExecCtx(ctx, query, data.UserId, data.HomestayId, data.DelState, data.Version, data.DeleteTime, data.Id, oldVersion)
-	}, looklookTravelUserHomestayIdKey)
+	}, heartTripTravelUserHomestayIdKey)
 	if err != nil {
 		return err
 	}
@@ -120,9 +120,9 @@ func (m *defaultUserHomestayModel) SelectBuilder() squirrel.SelectBuilder {
 }
 
 func (m *defaultUserHomestayModel) FindOneByUserIdAndHomestayId(ctx context.Context, user_id, homestay_id int64) (*UserHomestay, error) {
-	//looklookTravelUserHomestayIdKey := fmt.Sprintf("%s%v%v", cacheLooklookTravelUserHomestayIdPrefix, user_id, homestay_id)
+	//heartTripTravelUserHomestayIdKey := fmt.Sprintf("%s%v%v", cacheHeartTripTravelUserHomestayIdPrefix, user_id, homestay_id)
 	var resp UserHomestay
-	//err := m.QueryRowCtx(ctx, &resp, looklookTravelUserHomestayIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
+	//err := m.QueryRowCtx(ctx, &resp, heartTripTravelUserHomestayIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
 	//	query := fmt.Sprintf("select %s from %s where `user_id` = ? and `homestay_id` = ? limit 1", userHomestayRows, m.table)
 	//	return conn.QueryRowCtx(ctx, v, query, user_id, homestay_id)
 	//})
@@ -163,10 +163,10 @@ func (m *defaultUserHomestayModel) FindAll(ctx context.Context, builder squirrel
 	default:
 		return nil, err
 	}
-	//looklookTravelUserHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHomestayIdPrefix, userId)
-	//fmt.Println("looklookTravelUserHomestayIdKey",looklookTravelUserHomestayIdKey)
+	//heartTripTravelUserHomestayIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelUserHomestayIdPrefix, userId)
+	//fmt.Println("heartTripTravelUserHomestayIdKey",heartTripTravelUserHomestayIdKey)
 	//var resp []*UserHomestay
-	//err := m.QueryRowCtx(ctx, &resp, looklookTravelUserHomestayIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
+	//err := m.QueryRowCtx(ctx, &resp, heartTripTravelUserHomestayIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
 	//	query := fmt.Sprintf("select %s from %s where `user_id` = ?", userHomestayRows, m.table)
 	//	fmt.Println("query:",query)
 	//	return conn.QueryRowsCtx(ctx, v, query, userId)
@@ -185,11 +185,11 @@ func (m *defaultUserHomestayModel) Insert(ctx context.Context, data *UserHomesta
 	// bug 都没初始化就直接插入
 	data.DeleteTime = time.Unix(0, 0)
 	data.DelState = globalkey.DelStateNo
-	looklookTravelUserHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHomestayIdPrefix, data.Id)
+	heartTripTravelUserHomestayIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelUserHomestayIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?)", m.table, userHomestayRowsExpectAutoSet)
 		return conn.ExecCtx(ctx, query, data.UserId, data.HomestayId, data.DelState, data.Version, data.DeleteTime)
-	}, looklookTravelUserHomestayIdKey)
+	}, heartTripTravelUserHomestayIdKey)
 	return ret, err
 }
 
@@ -200,16 +200,16 @@ func (m *defaultUserHomestayModel) Trans(ctx context.Context, fn func(ctx contex
 }
 
 func (m *defaultUserHomestayModel) Update(ctx context.Context, data *UserHomestay) error {
-	looklookTravelUserHomestayIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHomestayIdPrefix, data.Id)
+	heartTripTravelUserHomestayIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelUserHomestayIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, userHomestayRowsWithPlaceHolder)
 		return conn.ExecCtx(ctx, query, data.UserId, data.HomestayId, data.DelState, data.Version, data.DeleteTime, data.Id)
-	}, looklookTravelUserHomestayIdKey)
+	}, heartTripTravelUserHomestayIdKey)
 	return err
 }
 
 func (m *defaultUserHomestayModel) formatPrimary(primary any) string {
-	return fmt.Sprintf("%s%v", cacheLooklookTravelUserHomestayIdPrefix, primary)
+	return fmt.Sprintf("%s%v", cacheHeartTripTravelUserHomestayIdPrefix, primary)
 }
 
 func (m *defaultUserHomestayModel) queryPrimary(ctx context.Context, conn sqlx.SqlConn, v, primary any) error {

@@ -23,7 +23,7 @@ var (
 	guessRowsExpectAutoSet   = strings.Join(stringx.Remove(guessFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), ",")
 	guessRowsWithPlaceHolder = strings.Join(stringx.Remove(guessFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), "=?,") + "=?"
 
-	cacheLooklookTravelGuessIdPrefix = "cache:looklookTravel:guess:id:"
+	cacheHeartTripTravelGuessIdPrefix = "cache:heartTripTravel:guess:id:"
 )
 
 type (
@@ -68,18 +68,18 @@ func (m *defaultGuessModel) SelectBuilder() squirrel.SelectBuilder {
 }
 
 func (m *defaultGuessModel) Delete(ctx context.Context, id int64) error {
-	looklookTravelGuessIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelGuessIdPrefix, id)
+	heartTripTravelGuessIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelGuessIdPrefix, id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
 		return conn.ExecCtx(ctx, query, id)
-	}, looklookTravelGuessIdKey)
+	}, heartTripTravelGuessIdKey)
 	return err
 }
 
 func (m *defaultGuessModel) FindOne(ctx context.Context, id int64) (*Guess, error) {
-	looklookTravelGuessIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelGuessIdPrefix, id)
+	heartTripTravelGuessIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelGuessIdPrefix, id)
 	var resp Guess
-	err := m.QueryRowCtx(ctx, &resp, looklookTravelGuessIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
+	err := m.QueryRowCtx(ctx, &resp, heartTripTravelGuessIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
 		query := fmt.Sprintf("select %s from %s where `id` = ? limit 1", guessRows, m.table)
 		return conn.QueryRowCtx(ctx, v, query, id)
 	})
@@ -114,25 +114,25 @@ func (m *defaultGuessModel) FindPageListByIdDESC(ctx context.Context, builder sq
 }
 
 func (m *defaultGuessModel) Insert(ctx context.Context, data *Guess) (sql.Result, error) {
-	looklookTravelGuessIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelGuessIdPrefix, data.Id)
+	heartTripTravelGuessIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelGuessIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?)", m.table, guessRowsExpectAutoSet)
 		return conn.ExecCtx(ctx, query, data.HomestayId, data.PriceAfter, data.PriceBefore, data.Cover, data.Location, data.Title, data.IsCollected, data.UdateTime)
-	}, looklookTravelGuessIdKey)
+	}, heartTripTravelGuessIdKey)
 	return ret, err
 }
 
 func (m *defaultGuessModel) Update(ctx context.Context, data *Guess) error {
-	looklookTravelGuessIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelGuessIdPrefix, data.Id)
+	heartTripTravelGuessIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelGuessIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, guessRowsWithPlaceHolder)
 		return conn.ExecCtx(ctx, query, data.HomestayId, data.PriceAfter, data.PriceBefore, data.Cover, data.Location, data.Title, data.IsCollected, data.UdateTime, data.Id)
-	}, looklookTravelGuessIdKey)
+	}, heartTripTravelGuessIdKey)
 	return err
 }
 
 func (m *defaultGuessModel) formatPrimary(primary any) string {
-	return fmt.Sprintf("%s%v", cacheLooklookTravelGuessIdPrefix, primary)
+	return fmt.Sprintf("%s%v", cacheHeartTripTravelGuessIdPrefix, primary)
 }
 
 func (m *defaultGuessModel) queryPrimary(ctx context.Context, conn sqlx.SqlConn, v, primary any) error {

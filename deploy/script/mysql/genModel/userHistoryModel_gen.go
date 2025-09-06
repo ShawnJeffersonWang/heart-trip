@@ -22,7 +22,7 @@ var (
 	userHistoryRowsExpectAutoSet   = strings.Join(stringx.Remove(userHistoryFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), ",")
 	userHistoryRowsWithPlaceHolder = strings.Join(stringx.Remove(userHistoryFieldNames, "`id`", "`create_at`", "`create_time`", "`created_at`", "`update_at`", "`update_time`", "`updated_at`"), "=?,") + "=?"
 
-	cacheLooklookTravelUserHistoryIdPrefix = "cache:looklookTravel:userHistory:id:"
+	cacheHeartTripTravelUserHistoryIdPrefix = "cache:heartTripTravel:userHistory:id:"
 )
 
 type (
@@ -56,18 +56,18 @@ func newUserHistoryModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Opt
 }
 
 func (m *defaultUserHistoryModel) Delete(ctx context.Context, id int64) error {
-	looklookTravelUserHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHistoryIdPrefix, id)
+	heartTripTravelUserHistoryIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelUserHistoryIdPrefix, id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
 		return conn.ExecCtx(ctx, query, id)
-	}, looklookTravelUserHistoryIdKey)
+	}, heartTripTravelUserHistoryIdKey)
 	return err
 }
 
 func (m *defaultUserHistoryModel) FindOne(ctx context.Context, id int64) (*UserHistory, error) {
-	looklookTravelUserHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHistoryIdPrefix, id)
+	heartTripTravelUserHistoryIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelUserHistoryIdPrefix, id)
 	var resp UserHistory
-	err := m.QueryRowCtx(ctx, &resp, looklookTravelUserHistoryIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
+	err := m.QueryRowCtx(ctx, &resp, heartTripTravelUserHistoryIdKey, func(ctx context.Context, conn sqlx.SqlConn, v any) error {
 		query := fmt.Sprintf("select %s from %s where `id` = ? limit 1", userHistoryRows, m.table)
 		return conn.QueryRowCtx(ctx, v, query, id)
 	})
@@ -82,25 +82,25 @@ func (m *defaultUserHistoryModel) FindOne(ctx context.Context, id int64) (*UserH
 }
 
 func (m *defaultUserHistoryModel) Insert(ctx context.Context, data *UserHistory) (sql.Result, error) {
-	looklookTravelUserHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHistoryIdPrefix, data.Id)
+	heartTripTravelUserHistoryIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelUserHistoryIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?)", m.table, userHistoryRowsExpectAutoSet)
 		return conn.ExecCtx(ctx, query, data.HistoryId, data.UserId, data.DelState, data.Version, data.DeleteTime)
-	}, looklookTravelUserHistoryIdKey)
+	}, heartTripTravelUserHistoryIdKey)
 	return ret, err
 }
 
 func (m *defaultUserHistoryModel) Update(ctx context.Context, data *UserHistory) error {
-	looklookTravelUserHistoryIdKey := fmt.Sprintf("%s%v", cacheLooklookTravelUserHistoryIdPrefix, data.Id)
+	heartTripTravelUserHistoryIdKey := fmt.Sprintf("%s%v", cacheHeartTripTravelUserHistoryIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, userHistoryRowsWithPlaceHolder)
 		return conn.ExecCtx(ctx, query, data.HistoryId, data.UserId, data.DelState, data.Version, data.DeleteTime, data.Id)
-	}, looklookTravelUserHistoryIdKey)
+	}, heartTripTravelUserHistoryIdKey)
 	return err
 }
 
 func (m *defaultUserHistoryModel) formatPrimary(primary any) string {
-	return fmt.Sprintf("%s%v", cacheLooklookTravelUserHistoryIdPrefix, primary)
+	return fmt.Sprintf("%s%v", cacheHeartTripTravelUserHistoryIdPrefix, primary)
 }
 
 func (m *defaultUserHistoryModel) queryPrimary(ctx context.Context, conn sqlx.SqlConn, v, primary any) error {
