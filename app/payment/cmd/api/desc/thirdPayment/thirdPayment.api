@@ -1,59 +1,59 @@
 syntax = "v1"
 
 info(
-	title: "第三方支付服务"
-	desc: "第三方支付服务"
-	author: "Shawn"
-	email: "xw2002121@gmail.com"
-	version: "v1"
+    title: "第三方支付服务"
+    desc: "第三方支付服务"
+    author: "Shawn"
+    email: "xw2002121@gmail.com"
+    version: "v1"
 )
 
 type (
-	ThirdPaymentWxPayReq {
-		OrderSn     string `json:"orderSn"`
-		ServiceType string `json:"serviceType"`
-	}
+    ThirdPaymentWxPayReq {
+        OrderSn string `json:"orderSn"`
+        ServiceType string `json:"serviceType"`
+    }
 
-	ThirdPaymentWxPayResp {
-		Appid     string `json:"appid"`
-		NonceStr  string `json:"nonceStr"`
-		PaySign   string `json:"paySign"`
-		Package  string `json:"package"`
-		Timestamp string `json:"timestamp"`
-		SignType  string `json:"signType"`
-	}
+    ThirdPaymentWxPayResp {
+        Appid string `json:"appid"`
+        NonceStr string `json:"nonceStr"`
+        PaySign string `json:"paySign"`
+        Package string `json:"package"`
+        Timestamp string `json:"timestamp"`
+        SignType string `json:"signType"`
+    }
 )
 
 type (
-	ThirdPaymentWxPayCallbackReq {
-	}
-	ThirdPaymentWxPayCallbackResp {
-		ReturnCode string `json:"return_code"`
-	}
+    ThirdPaymentWxPayCallbackReq {
+    }
+    ThirdPaymentWxPayCallbackResp {
+        ReturnCode string `json:"return_code"`
+    }
 )
 
 type (
-	fakePaymentReq {
-		OrderSn     string `json:"orderSn"`
-		ServiceType string `json:"serviceType"`
-	}
-	fakePaymentResp {
-		Appid     string `json:"appid"`
-		NonceStr  string `json:"nonceStr"`
-		PaySign   string `json:"paySign"`
-		Package  string `json:"package"`
-		Timestamp string `json:"timestamp"`
-		SignType  string `json:"signType"`
-	}
+    fakePaymentReq {
+        OrderSn string `json:"orderSn"`
+        ServiceType string `json:"serviceType"`
+    }
+    fakePaymentResp {
+        Appid string `json:"appid"`
+        NonceStr string `json:"nonceStr"`
+        PaySign string `json:"paySign"`
+        Package string `json:"package"`
+        Timestamp string `json:"timestamp"`
+        SignType string `json:"signType"`
+    }
 )
 
 type (
-	fakePayCallbackReq {
-		ServiceType string `json:"serviceType"`
-		OrderSn string `json:"orderSn"`
-		PayerTotal int64  `json:"payerTotal"`
-	}
-	fakePayCallbackResp {
-		ReturnCode string `json:"returnCode"`
-	}
+    fakePayCallbackReq {
+        ServiceType string `json:"serviceType"`
+        OrderSn string `json:"orderSn"`
+        PayerTotal int64 `json:"payerTotal"`
+    }
+    fakePayCallbackResp {
+        ReturnCode string `json:"returnCode"`
+    }
 )

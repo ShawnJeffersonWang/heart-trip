@@ -3,15 +3,15 @@ package logic
 import (
 	"context"
 	"encoding/json"
-	"github.com/hibiken/asynq"
-	"github.com/pkg/errors"
 	"golodge/app/mqueue/cmd/job/internal/svc"
 	"golodge/app/mqueue/cmd/job/jobtype"
 	"golodge/app/order/cmd/rpc/order"
 	"golodge/app/order/model"
 	"golodge/common/xerr"
-)
 
+	"github.com/hibiken/asynq"
+	"github.com/pkg/errors"
+)
 
 var ErrCloseOrderFal = xerr.NewErrMsg("close order fail")
 
@@ -22,7 +22,7 @@ type CloseHomestayOrderHandler struct {
 
 func NewCloseHomestayOrderHandler(svcCtx *svc.ServiceContext) *CloseHomestayOrderHandler {
 	return &CloseHomestayOrderHandler{
-		svcCtx:svcCtx,
+		svcCtx: svcCtx,
 	}
 }
 

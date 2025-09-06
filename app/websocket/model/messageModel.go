@@ -4,8 +4,9 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"time"
+
+	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
 type Message struct {

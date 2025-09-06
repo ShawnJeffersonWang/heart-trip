@@ -1,5 +1,5 @@
-asynq : 
-	sheduler
-	job:
-		defer queue
-		mesage queue
+asynq :
+sheduler
+job:
+defer queue
+mesage queue

@@ -2,8 +2,9 @@ package user
 
 import (
 	"context"
-	"github.com/jinzhu/copier"
 	"golodge/app/usercenter/cmd/rpc/pb"
+
+	"github.com/jinzhu/copier"
 
 	"golodge/app/usercenter/cmd/api/internal/svc"
 	"golodge/app/usercenter/cmd/api/internal/types"

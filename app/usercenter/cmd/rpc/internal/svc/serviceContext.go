@@ -1,9 +1,10 @@
 package svc
 
 import (
-	"github.com/go-redis/redis/v8"
 	"golodge/app/usercenter/cmd/rpc/internal/config"
 	"golodge/app/usercenter/model"
+
+	"github.com/go-redis/redis/v8"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

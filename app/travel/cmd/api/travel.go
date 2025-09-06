@@ -5,11 +5,12 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/rest"
 	"golodge/app/travel/cmd/api/internal/config"
 	"golodge/app/travel/cmd/api/internal/handler"
 	"golodge/app/travel/cmd/api/internal/svc"
+
+	"github.com/zeromicro/go-zero/core/conf"
+	"github.com/zeromicro/go-zero/rest"
 )
 
 var configFile = flag.String("f", "etc/travel.yaml", "the config file")

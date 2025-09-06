@@ -3,11 +3,12 @@ package main
 import (
 	"flag"
 
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/rest"
 	"golodge/app/order/cmd/api/internal/config"
 	"golodge/app/order/cmd/api/internal/handler"
 	"golodge/app/order/cmd/api/internal/svc"
+
+	"github.com/zeromicro/go-zero/core/conf"
+	"github.com/zeromicro/go-zero/rest"
 )
 
 var configFile = flag.String("f", "etc/order.yaml", "the config file")

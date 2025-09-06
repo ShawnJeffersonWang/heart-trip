@@ -2,14 +2,15 @@ package logic
 
 import (
 	"context"
-	"github.com/pkg/errors"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"golodge/app/usercenter/cmd/rpc/internal/svc"
 	"golodge/app/usercenter/cmd/rpc/usercenter"
 	"golodge/app/usercenter/model"
 	"golodge/common/tool"
 	"golodge/common/xerr"
+
+	"github.com/pkg/errors"
+	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
 var ErrUserAlreadyRegisterError = xerr.NewErrMsg("user has been registered")

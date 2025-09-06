@@ -2,13 +2,14 @@ package logic
 
 import (
 	"context"
-	"github.com/Masterminds/squirrel"
-	"github.com/jinzhu/copier"
-	"github.com/zeromicro/go-zero/core/mr"
 	"golodge/app/usercenter/cmd/rpc/internal/svc"
 	"golodge/app/usercenter/cmd/rpc/pb"
 	"golodge/app/usercenter/model"
 	"sort"
+
+	"github.com/Masterminds/squirrel"
+	"github.com/jinzhu/copier"
+	"github.com/zeromicro/go-zero/core/mr"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

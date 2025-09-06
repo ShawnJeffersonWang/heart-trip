@@ -3,11 +3,12 @@ package main
 import (
 	"context"
 	"flag"
-	"github.com/zeromicro/go-zero/core/logx"
 	"golodge/app/mqueue/cmd/scheduler/internal/config"
 	"golodge/app/mqueue/cmd/scheduler/internal/logic"
 	"golodge/app/mqueue/cmd/scheduler/internal/svc"
 	"os"
+
+	"github.com/zeromicro/go-zero/core/logx"
 
 	"github.com/zeromicro/go-zero/core/conf"
 )
@@ -26,16 +27,14 @@ func main() {
 		panic(err)
 	}
 
-
 	svcContext := svc.NewServiceContext(c)
 	ctx := context.Background()
 	mqueueScheduler := logic.NewCronScheduler(ctx, svcContext)
 	mqueueScheduler.Register()
 
-	if err:=svcContext.Scheduler.Run();err!= nil{
-		logx.Errorf("!!!MqueueSchedulerErr!!!  run err:%+v",err)
+	if err := svcContext.Scheduler.Run(); err != nil {
+		logx.Errorf("!!!MqueueSchedulerErr!!!  run err:%+v", err)
 		os.Exit(1)
 	}
-
 
 }

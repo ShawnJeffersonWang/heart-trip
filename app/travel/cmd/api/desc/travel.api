@@ -1,137 +1,137 @@
 syntax = "v1"
 
-info (
-	title:   "旅游服务"
-	desc:    "旅游服务"
-	author:  "Shawn"
-	email:   "xw2002121@gmail.com"
-	version: "v1"
+info(
+    title: "旅游服务"
+    desc: "旅游服务"
+    author: "Shawn"
+    email: "xw2002121@gmail.com"
+    version: "v1"
 )
 
 import (
-	"homestay/homestay.api"
-	"homestayBusiness/homestayBusiness.api"
-	"homestayComment/homestayComment.api"
+    "homestay/homestay.api"
+    "homestayBusiness/homestayBusiness.api"
+    "homestayComment/homestayComment.api"
 )
 
 //=====================================> travel-homestay v1 <=================================
 //no need login
-@server (
-	prefix: travel/v1
-	group:  homestay
+@server(
+    prefix: travel/v1
+    group: homestay
 )
 service travel {
-	@doc "homestay room detail"
-	@handler homestayDetailWithoutLogin
-	get /homestay/homestayDetailWithoutLogin (HomestayDetailReq) returns (HomestayDetailResp)
+    @doc "homestay room detail"
+    @handler homestayDetailWithoutLogin
+    get /homestay/homestayDetailWithoutLogin (HomestayDetailReq) returns (HomestayDetailResp)
 
-	@doc "homestay room list"
-	@handler homestayList
-	get /homestay/homestayList (HomestayListReq) returns (HomestayListResp)
+    @doc "homestay room list"
+    @handler homestayList
+    get /homestay/homestayList (HomestayListReq) returns (HomestayListResp)
 
-	@doc "query shop by type"
-	@handler queryShopByType
-	post /homestay/queryShopByType (QueryShopByTypeRequest) returns (QueryShopByTypeResponse)
+    @doc "query shop by type"
+    @handler queryShopByType
+    post /homestay/queryShopByType (QueryShopByTypeRequest) returns (QueryShopByTypeResponse)
 
-	@doc "search by location"
-	@handler searchByLocation
-	get /homestay/searchByLocation (SearchByLocationReq) returns (SearchByLocationResp)
+    @doc "search by location"
+    @handler searchByLocation
+    get /homestay/searchByLocation (SearchByLocationReq) returns (SearchByLocationResp)
 
-	@doc "boss all homestay room"
-	@handler businessList
-	post /homestay/businessList (BusinessListReq) returns (BusinessListResp)
+    @doc "boss all homestay room"
+    @handler businessList
+    post /homestay/businessList (BusinessListReq) returns (BusinessListResp)
 
-	@doc "guess homestay room"
-	@handler guessList
-	get /homestay/guessList (GuessListReq) returns (GuessListResp)
+    @doc "guess homestay room"
+    @handler guessList
+    get /homestay/guessList (GuessListReq) returns (GuessListResp)
 }
 
 // bug: 一直根据jwt校验不出userId, 原因是这里没有加jwt中间件
 // need login
-@server (
-	prefix: travel/v1
-	group:  homestay
-	jwt:    JwtAuth
+@server(
+    prefix: travel/v1
+    group: homestay
+    jwt: JwtAuth
 )
 service travel {
-	@doc "homestay room detail"
-	@handler homestayDetail
-	get /homestay/homestayDetail (HomestayDetailReq) returns (HomestayDetailResp)
+    @doc "homestay room detail"
+    @handler homestayDetail
+    get /homestay/homestayDetail (HomestayDetailReq) returns (HomestayDetailResp)
 
-	@doc "add homestay"
-	@handler addHomestay
-	post /homestay/addHomestay (AddHomestayReq) returns (AddHomestayResp)
+    @doc "add homestay"
+    @handler addHomestay
+    post /homestay/addHomestay (AddHomestayReq) returns (AddHomestayResp)
 
-	@doc "delete homestay"
-	@handler deleteHomestay
-	delete /homestay/deleteHomestay (DeleteHomestayReq) returns (DeleteHomestayResp)
+    @doc "delete homestay"
+    @handler deleteHomestay
+    delete /homestay/deleteHomestay (DeleteHomestayReq) returns (DeleteHomestayResp)
 
-	@doc "update homestay"
-	@handler updateHomestay
-	put /homestay/updateHomestay (UpdateHomestayReq) returns (UpdateHomestayResp)
+    @doc "update homestay"
+    @handler updateHomestay
+    put /homestay/updateHomestay (UpdateHomestayReq) returns (UpdateHomestayResp)
 
-	@doc "admin delete homestay"
-	@handler adminDeleteHomestay
-	delete /homestay/adminDeleteHomestay (AdminDeleteHomestayReq) returns (AdminDeleteHomestayResp)
+    @doc "admin delete homestay"
+    @handler adminDeleteHomestay
+    delete /homestay/adminDeleteHomestay (AdminDeleteHomestayReq) returns (AdminDeleteHomestayResp)
 
-	@doc "add guess"
-	@handler addGuess
-	post /homestay/addGuess (AddGuessReq) returns (AddGuessResp)
+    @doc "add guess"
+    @handler addGuess
+    post /homestay/addGuess (AddGuessReq) returns (AddGuessResp)
 
-	@doc "my homestay room list"
-	@handler myHomestayList
-	get /homestay/myHomestayList (MyHomestayListReq) returns (MyHomestayListResp)
+    @doc "my homestay room list"
+    @handler myHomestayList
+    get /homestay/myHomestayList (MyHomestayListReq) returns (MyHomestayListResp)
 
-	@doc "seckill voucher order"
-	@handler seckillVoucher
-	post /homestay/seckillVoucher (SeckillVoucherRequest) returns (SeckillVoucherResponse)
+    @doc "seckill voucher order"
+    @handler seckillVoucher
+    post /homestay/seckillVoucher (SeckillVoucherRequest) returns (SeckillVoucherResponse)
 }
 
 //====================================> travel-homestayBusiness v1 <====================================
 //no need login
-@server (
-	prefix: travel/v1
-	group:  homestayBussiness
+@server(
+    prefix: travel/v1
+    group: homestayBussiness
 )
 service travel {
-	@doc "good boss"
-	@handler goodBoss
-	post /homestayBussiness/goodBoss (GoodBossReq) returns (GoodBossResp)
+    @doc "good boss"
+    @handler goodBoss
+    post /homestayBussiness/goodBoss (GoodBossReq) returns (GoodBossResp)
 
-	@doc "business list"
-	@handler homestayBussinessList
-	post /homestayBussiness/homestayBussinessList (HomestayBussinessListReq) returns (HomestayBussinessListResp)
+    @doc "business list"
+    @handler homestayBussinessList
+    post /homestayBussiness/homestayBussinessList (HomestayBussinessListReq) returns (HomestayBussinessListResp)
 
-	@doc "boss detail"
-	@handler homestayBussinessDetail
-	post /homestayBussiness/homestayBussinessDetail (HomestayBussinessDetailReq) returns (HomestayBussinessDetailResp)
+    @doc "boss detail"
+    @handler homestayBussinessDetail
+    post /homestayBussiness/homestayBussinessDetail (HomestayBussinessDetailReq) returns (HomestayBussinessDetailResp)
 }
 
 //========================> homestay-homestayComment v1 <===================================
 //no need login
-@server (
-	prefix: travel/v1
-	group:  homestayComment
+@server(
+    prefix: travel/v1
+    group: homestayComment
 )
 service travel {
-	@doc "homestay comment list"
-	@handler commentList
-	get /homestayComment/commentList (CommentListReq) returns (CommentListResp)
+    @doc "homestay comment list"
+    @handler commentList
+    get /homestayComment/commentList (CommentListReq) returns (CommentListResp)
 
-	@doc "like comment"
-	@handler likeComment
-	post /homestayComment/likeComment (LikeCommentReq) returns (LikeCommentResp)
+    @doc "like comment"
+    @handler likeComment
+    post /homestayComment/likeComment (LikeCommentReq) returns (LikeCommentResp)
 }
 
 // need login
-@server (
-	prefix: travel/v1
-	group:  homestayComment
-	jwt:    JwtAuth
+@server(
+    prefix: travel/v1
+    group: homestayComment
+    jwt: JwtAuth
 )
 service travel {
-	@doc "add comment"
-	@handler addComment
-	post /homestayComment/addComment (AddCommentReq) returns (AddCommentResp)
+    @doc "add comment"
+    @handler addComment
+    post /homestayComment/addComment (AddCommentReq) returns (AddCommentResp)
 }
 

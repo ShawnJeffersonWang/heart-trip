@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+
 	"github.com/jinzhu/copier"
 
 	"golodge/app/travel/cmd/rpc/internal/svc"

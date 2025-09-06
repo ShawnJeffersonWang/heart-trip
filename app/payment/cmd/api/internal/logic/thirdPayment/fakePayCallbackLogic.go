@@ -3,8 +3,6 @@ package thirdPayment
 import (
 	"context"
 	"fmt"
-	"github.com/pkg/errors"
-	"github.com/zeromicro/go-zero/core/logx"
 	"golodge/app/order/cmd/rpc/order"
 	"golodge/app/payment/cmd/api/internal/svc"
 	"golodge/app/payment/cmd/api/internal/types"
@@ -13,6 +11,9 @@ import (
 	"golodge/app/payment/model"
 	"golodge/common/ctxdata"
 	"golodge/common/xerr"
+
+	"github.com/pkg/errors"
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type FakePayCallbackLogic struct {

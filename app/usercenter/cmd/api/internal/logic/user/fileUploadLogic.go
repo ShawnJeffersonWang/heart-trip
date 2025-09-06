@@ -3,15 +3,16 @@ package user
 import (
 	"context"
 	"fmt"
-	"github.com/aliyun/aliyun-oss-go-sdk/oss"
-	"github.com/google/uuid"
-	"github.com/zeromicro/go-zero/core/logx"
 	"golodge/app/usercenter/cmd/api/internal/svc"
 	"golodge/app/usercenter/cmd/api/internal/types"
 	"golodge/common/ctxdata"
 	"net/http"
 	"os"
 	"path/filepath"
+
+	"github.com/aliyun/aliyun-oss-go-sdk/oss"
+	"github.com/google/uuid"
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 const maxFileSize = 10 << 20 // 10 MB

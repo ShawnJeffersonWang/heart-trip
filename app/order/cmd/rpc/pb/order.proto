@@ -32,8 +32,8 @@ message HomestayOrder {
 
 message CreateHomestayOrderReq {
   int64  homestayId = 1;
-	int64  liveStartTime = 2;
-	int64  liveEndTime = 3;
+  int64  liveStartTime = 2;
+  int64  liveEndTime = 3;
   int64  userId = 4;
   string remark = 5;
 }
@@ -46,7 +46,7 @@ message  HomestayOrderDetailReq{
   string sn = 1;
 }
 message  HomestayOrderDetailResp{
-  HomestayOrder homestayOrder= 1;
+  HomestayOrder homestayOrder = 1;
 }
 
 message  UpdateHomestayOrderTradeStateReq{
@@ -77,15 +77,15 @@ message UserHomestayOrderListResp {
 
 //service
 service order {
-    //民宿下订单
-    rpc createHomestayOrder(CreateHomestayOrderReq)returns(CreateHomestayOrderResp);
+  //民宿下订单
+  rpc createHomestayOrder(CreateHomestayOrderReq)returns(CreateHomestayOrderResp);
 
-    //民宿订单详情
-    rpc homestayOrderDetail(HomestayOrderDetailReq)returns(HomestayOrderDetailResp);
+  //民宿订单详情
+  rpc homestayOrderDetail(HomestayOrderDetailReq)returns(HomestayOrderDetailResp);
 
-    //更新民宿订单状态
-    rpc updateHomestayOrderTradeState(UpdateHomestayOrderTradeStateReq)returns(UpdateHomestayOrderTradeStateResp);
+  //更新民宿订单状态
+  rpc updateHomestayOrderTradeState(UpdateHomestayOrderTradeStateReq)returns(UpdateHomestayOrderTradeStateResp);
 
-    //用户民宿订单
-    rpc userHomestayOrderList(UserHomestayOrderListReq)returns(UserHomestayOrderListResp);
+  //用户民宿订单
+  rpc userHomestayOrderList(UserHomestayOrderListReq)returns(UserHomestayOrderListResp);
 }

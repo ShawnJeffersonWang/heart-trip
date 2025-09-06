@@ -60,7 +60,7 @@ func (l *PaymentUpdateStatusMq) execService(message kqueue.ThirdPaymentUpdatePay
 	return nil
 }
 
-//Get order status based on payment status.
+// Get order status based on payment status.
 func (l *PaymentUpdateStatusMq) getOrderTradeStateByPaymentTradeState(thirdPaymentPayStatus int64) int64 {
 
 	switch thirdPaymentPayStatus {

@@ -4,12 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/golang-module/carbon/v2"
-	"github.com/hibiken/asynq"
-	"github.com/pkg/errors"
-	"github.com/silenceper/wechat/v2/miniprogram/subscribe"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/service"
 	"golodge/app/mqueue/cmd/job/internal/svc"
 	"golodge/app/mqueue/cmd/job/jobtype"
 	"golodge/app/order/model"
@@ -20,6 +14,13 @@ import (
 	"golodge/common/wxminisub"
 	"golodge/common/xerr"
 	"time"
+
+	"github.com/golang-module/carbon/v2"
+	"github.com/hibiken/asynq"
+	"github.com/pkg/errors"
+	"github.com/silenceper/wechat/v2/miniprogram/subscribe"
+	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/service"
 )
 
 var ErrPaySuccessNotifyFail = xerr.NewErrMsg("pay success notify ws fail")

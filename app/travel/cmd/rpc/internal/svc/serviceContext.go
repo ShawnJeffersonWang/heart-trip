@@ -3,20 +3,21 @@ package svc
 import (
 	"context"
 	"fmt"
+	"golodge/app/travel/cmd/rpc/internal/config"
+	"golodge/app/travel/model"
+	"golodge/app/usercenter/cmd/rpc/usercenter"
+	"golodge/common/tool"
+	"os"
+	"path/filepath"
+
 	"github.com/go-redis/redis/v8"
 	"github.com/go-redsync/redsync/v4"
 	"github.com/go-redsync/redsync/v4/redis/goredis/v8"
 	"github.com/zeromicro/go-queue/kq"
 	"github.com/zeromicro/go-zero/core/logx"
-	"golodge/app/travel/cmd/rpc/internal/config"
-	"golodge/app/travel/model"
-	"golodge/app/usercenter/cmd/rpc/usercenter"
-	"golodge/common/tool"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"os"
-	"path/filepath"
 
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )

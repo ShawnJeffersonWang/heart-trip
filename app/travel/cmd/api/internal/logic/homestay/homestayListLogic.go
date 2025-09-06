@@ -2,11 +2,12 @@ package homestay
 
 import (
 	"context"
-	"github.com/Masterminds/squirrel"
 	"golodge/app/travel/cmd/api/internal/svc"
 	"golodge/app/travel/cmd/api/internal/types"
 	"golodge/app/travel/model"
 	"golodge/common/xerr"
+
+	"github.com/Masterminds/squirrel"
 
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"

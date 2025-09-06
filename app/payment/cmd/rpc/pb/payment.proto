@@ -32,7 +32,7 @@ message PaymentDetail{
   string tradeStateDesc = 9; // 支付状态描述
   string orderSn = 10;      // 业务单号
   string serviceType = 11;  // 业务类型
-  int64  createTime = 12;  
+  int64  createTime = 12;
   int64  updateTime = 13;
   int64  payStatus = 14; //平台内交易状态  0:未支付 1:支付成功 2:已退款 -1:支付失败
   int64  payTime = 15; //支付成功时间
@@ -69,16 +69,16 @@ message UpdateTradeStateResp {
 
 //service
 service payment {
-    //创建微信支付预处理订单
-    rpc CreatePayment(CreatePaymentReq) returns(CreatePaymentResp);
+  //创建微信支付预处理订单
+  rpc CreatePayment(CreatePaymentReq) returns(CreatePaymentResp);
 
-    //根据sn查询流水记录
-    rpc GetPaymentBySn(GetPaymentBySnReq) returns(GetPaymentBySnResp);
+  //根据sn查询流水记录
+  rpc GetPaymentBySn(GetPaymentBySnReq) returns(GetPaymentBySnResp);
 
-    //更新交易状态
-    rpc UpdateTradeState(UpdateTradeStateReq) returns(UpdateTradeStateResp);
+  //更新交易状态
+  rpc UpdateTradeState(UpdateTradeStateReq) returns(UpdateTradeStateResp);
 
-    //根据订单sn查询流水记录
-    rpc GetPaymentSuccessRefundByOrderSn(GetPaymentSuccessRefundByOrderSnReq) returns(GetPaymentSuccessRefundByOrderSnResp);
+  //根据订单sn查询流水记录
+  rpc GetPaymentSuccessRefundByOrderSn(GetPaymentSuccessRefundByOrderSnReq) returns(GetPaymentSuccessRefundByOrderSnResp);
 
 }

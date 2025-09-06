@@ -3,10 +3,10 @@ package logic
 import (
 	"context"
 	"fmt"
-	"github.com/hibiken/asynq"
 	"golodge/app/mqueue/cmd/job/internal/svc"
-)
 
+	"github.com/hibiken/asynq"
+)
 
 // SettleRecordHandler   shcedule billing to home business
 type SettleRecordHandler struct {
@@ -15,7 +15,7 @@ type SettleRecordHandler struct {
 
 func NewSettleRecordHandler(svcCtx *svc.ServiceContext) *SettleRecordHandler {
 	return &SettleRecordHandler{
-		svcCtx:svcCtx,
+		svcCtx: svcCtx,
 	}
 }
 
@@ -26,5 +26,3 @@ func (l *SettleRecordHandler) ProcessTask(ctx context.Context, _ *asynq.Task) er
 
 	return nil
 }
-
-

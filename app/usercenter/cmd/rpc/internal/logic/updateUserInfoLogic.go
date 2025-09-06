@@ -2,11 +2,12 @@ package logic
 
 import (
 	"context"
-	"github.com/pkg/errors"
-	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"golodge/app/usercenter/cmd/rpc/usercenter"
 	"golodge/app/usercenter/model"
 	"golodge/common/xerr"
+
+	"github.com/pkg/errors"
+	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
 	"golodge/app/usercenter/cmd/rpc/internal/svc"
 

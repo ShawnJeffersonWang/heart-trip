@@ -3,11 +3,7 @@ package thirdPayment
 import (
 	"context"
 	"fmt"
-	"github.com/pkg/errors"
-	"github.com/wechatpay-apiv3/wechatpay-go/core"
-	"github.com/wechatpay-apiv3/wechatpay-go/services/payments/jsapi"
-	"github.com/wechatpay-apiv3/wechatpay-go/utils"
-	order "golodge/app/order/cmd/rpc/order"
+	"golodge/app/order/cmd/rpc/order"
 	"golodge/app/payment/cmd/api/internal/svc"
 	"golodge/app/payment/cmd/api/internal/types"
 	"golodge/app/payment/cmd/rpc/payment"
@@ -16,6 +12,11 @@ import (
 	"golodge/common/xerr"
 	"strconv"
 	"time"
+
+	"github.com/pkg/errors"
+	"github.com/wechatpay-apiv3/wechatpay-go/core"
+	"github.com/wechatpay-apiv3/wechatpay-go/services/payments/jsapi"
+	"github.com/wechatpay-apiv3/wechatpay-go/utils"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

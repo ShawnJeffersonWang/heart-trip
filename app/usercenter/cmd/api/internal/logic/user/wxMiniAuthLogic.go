@@ -11,7 +11,7 @@ import (
 	"golodge/common/xerr"
 
 	"github.com/pkg/errors"
-	wechat "github.com/silenceper/wechat/v2"
+	"github.com/silenceper/wechat/v2"
 	"github.com/silenceper/wechat/v2/cache"
 	miniConfig "github.com/silenceper/wechat/v2/miniprogram/config"
 	"github.com/zeromicro/go-zero/core/logx"

@@ -3,12 +3,13 @@ package logic
 import (
 	"context"
 	"fmt"
-	"github.com/zeromicro/go-zero/core/logx"
 	"golodge/app/travel/cmd/rpc/internal/svc"
 	"golodge/app/travel/cmd/rpc/pb"
 	"golodge/common/globalkey"
 	"os"
 	"strconv"
+
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type SeckillVoucherLogic struct {

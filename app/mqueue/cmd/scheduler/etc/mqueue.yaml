@@ -11,10 +11,10 @@ Prometheus:
 
 #链路追踪
 Telemetry:
- Name: mqueue-scheduler
- Endpoint: http://jaeger:14268/api/traces
- Sampler: 1.0
- Batcher: jaeger
+  Name: mqueue-scheduler
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
 
 Log:
   ServiceName: mqueue-scheduler

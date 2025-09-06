@@ -2,12 +2,13 @@ package user
 
 import (
 	"context"
-	"github.com/jinzhu/copier"
-	"github.com/zeromicro/go-zero/core/logx"
 	"golodge/app/travel/cmd/rpc/travel"
 	"golodge/app/usercenter/cmd/api/internal/svc"
 	"golodge/app/usercenter/cmd/api/internal/types"
 	"golodge/common/ctxdata"
+
+	"github.com/jinzhu/copier"
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type WishListLogic struct {

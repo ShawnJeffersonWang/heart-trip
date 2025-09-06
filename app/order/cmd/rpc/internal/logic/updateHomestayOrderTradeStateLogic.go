@@ -3,8 +3,9 @@ package logic
 import (
 	"context"
 	"encoding/json"
-	"github.com/hibiken/asynq"
 	"golodge/app/mqueue/cmd/job/jobtype"
+
+	"github.com/hibiken/asynq"
 
 	"golodge/app/order/cmd/rpc/internal/svc"
 	"golodge/app/order/cmd/rpc/pb"

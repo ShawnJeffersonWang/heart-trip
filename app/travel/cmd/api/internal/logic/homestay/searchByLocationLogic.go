@@ -2,8 +2,9 @@ package homestay
 
 import (
 	"context"
-	"github.com/jinzhu/copier"
 	"golodge/app/travel/cmd/rpc/pb"
+
+	"github.com/jinzhu/copier"
 
 	"golodge/app/travel/cmd/api/internal/svc"
 	"golodge/app/travel/cmd/api/internal/types"

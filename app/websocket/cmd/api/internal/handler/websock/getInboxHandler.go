@@ -4,10 +4,11 @@ import (
 	"golodge/common/result"
 	"net/http"
 
-	"github.com/zeromicro/go-zero/rest/httpx"
 	"golodge/app/websocket/cmd/api/internal/logic/websock"
 	"golodge/app/websocket/cmd/api/internal/svc"
 	"golodge/app/websocket/cmd/api/internal/types"
+
+	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
 // get inbox messages

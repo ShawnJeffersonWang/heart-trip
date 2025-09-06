@@ -3,11 +3,12 @@ package logic
 import (
 	"context"
 	"fmt"
+	"golodge/app/travel/cmd/rpc/internal/svc"
+	"golodge/app/travel/cmd/rpc/pb"
+
 	"github.com/jinzhu/copier"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/mr"
-	"golodge/app/travel/cmd/rpc/internal/svc"
-	"golodge/app/travel/cmd/rpc/pb"
 )
 
 type WishListLogic struct {

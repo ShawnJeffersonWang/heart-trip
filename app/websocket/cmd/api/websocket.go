@@ -3,11 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/rest"
 	"golodge/app/websocket/cmd/api/internal/config"
 	"golodge/app/websocket/cmd/api/internal/handler"
 	"golodge/app/websocket/cmd/api/internal/svc"
+
+	"github.com/zeromicro/go-zero/core/conf"
+	"github.com/zeromicro/go-zero/rest"
 )
 
 var configFile = flag.String("f", "etc/websocket.yaml", "the config file")

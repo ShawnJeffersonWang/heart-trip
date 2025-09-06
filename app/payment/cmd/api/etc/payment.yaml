@@ -26,7 +26,7 @@ Log:
 
 #小程序配置
 WxMiniConf:
-  AppId: 	wx6314172bd610d586
+  AppId: wx6314172bd610d586
   Secret: c7f20e6551d6f607362d32101beda5e0
 
 #WxPayConf
@@ -45,7 +45,7 @@ WxPayConf:
     UrUvj+CzAgMBAAECggEARQGAVKGVaskimiEcXHhUms017bkjjSxFhiBWvVcd7p9J
     -----END PRIVATE KEY-----
 
-  NotifyUrl : http://xxx.xxx.com/payment/v1/thirdPayment/thirdPaymentWxPayCallback
+  NotifyUrl: http://xxx.xxx.com/payment/v1/thirdPayment/thirdPaymentWxPayCallback
 
 #rpc service
 PaymentRpcConf:

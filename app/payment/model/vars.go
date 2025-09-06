@@ -11,7 +11,7 @@ var ErrNoRowsUpdate = errors.New("update db no rows change")
 
 // 支付业务类型
 
-var ThirdPaymentServiceTypeHomestayOrder string = "homestayOrder" //民宿支付
+var ThirdPaymentServiceTypeHomestayOrder = "homestayOrder" //民宿支付
 
 // 支付方式
 

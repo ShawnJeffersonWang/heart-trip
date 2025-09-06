@@ -4,11 +4,12 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/rest"
 	"golodge/app/payment/cmd/api/internal/config"
 	"golodge/app/payment/cmd/api/internal/handler"
 	"golodge/app/payment/cmd/api/internal/svc"
+
+	"github.com/zeromicro/go-zero/core/conf"
+	"github.com/zeromicro/go-zero/rest"
 )
 
 var configFile = flag.String("f", "etc/payment.yaml", "the config file")

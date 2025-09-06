@@ -4,12 +4,13 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/gorilla/websocket"
 	"golodge/app/websocket/cmd/api/internal/types"
 	"golodge/app/websocket/model"
 	"log"
 	"strconv"
 	"time"
+
+	"github.com/gorilla/websocket"
 )
 
 const (

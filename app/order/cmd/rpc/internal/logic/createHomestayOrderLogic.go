@@ -4,10 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/hibiken/asynq"
 	"golodge/app/mqueue/cmd/job/jobtype"
 	"strings"
 	"time"
+
+	"github.com/hibiken/asynq"
 
 	"golodge/app/order/cmd/rpc/internal/svc"
 	"golodge/app/order/cmd/rpc/pb"

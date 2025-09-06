@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 	"golodge/app/travel/model"
+
 	"gorm.io/gorm"
 )
 

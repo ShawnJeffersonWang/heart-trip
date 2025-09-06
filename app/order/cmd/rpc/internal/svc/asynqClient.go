@@ -1,8 +1,9 @@
 package svc
 
 import (
-	"github.com/hibiken/asynq"
 	"golodge/app/order/cmd/rpc/internal/config"
+
+	"github.com/hibiken/asynq"
 )
 
 // create asynq ws.

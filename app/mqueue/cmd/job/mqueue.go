@@ -3,10 +3,11 @@ package main
 import (
 	"context"
 	"flag"
-	"github.com/zeromicro/go-zero/core/logx"
 	"golodge/app/mqueue/cmd/job/internal/logic"
 	"golodge/app/mqueue/cmd/job/internal/svc"
 	"os"
+
+	"github.com/zeromicro/go-zero/core/logx"
 
 	"golodge/app/mqueue/cmd/job/internal/config"
 

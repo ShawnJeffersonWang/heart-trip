@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+
 	"github.com/Masterminds/squirrel"
 
 	"golodge/app/order/cmd/rpc/internal/svc"

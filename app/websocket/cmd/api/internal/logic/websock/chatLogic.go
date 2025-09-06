@@ -2,12 +2,13 @@ package websock
 
 import (
 	"context"
-	"github.com/gorilla/websocket"
-	"github.com/zeromicro/go-zero/core/logx"
 	"golodge/app/websocket/cmd/api/internal/svc"
 	"golodge/common/ctxdata"
 	"net/http"
 	"strconv"
+
+	"github.com/gorilla/websocket"
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 var upgrader = websocket.Upgrader{

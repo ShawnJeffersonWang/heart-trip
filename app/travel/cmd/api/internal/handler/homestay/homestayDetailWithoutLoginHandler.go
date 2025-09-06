@@ -1,12 +1,13 @@
 package homestay
 
 import (
-	"github.com/zeromicro/go-zero/rest/httpx"
 	"golodge/app/travel/cmd/api/internal/logic/homestay"
 	"golodge/app/travel/cmd/api/internal/svc"
 	"golodge/app/travel/cmd/api/internal/types"
 	"golodge/common/result"
 	"net/http"
+
+	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
 //var domain = flag.String("domain", "http://localhost:8888", "the domain to request")

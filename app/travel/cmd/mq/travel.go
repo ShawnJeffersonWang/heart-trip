@@ -2,10 +2,11 @@ package main
 
 import (
 	"flag"
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/core/service"
 	"golodge/app/travel/cmd/mq/internal/config"
 	"golodge/app/travel/cmd/mq/internal/listen"
+
+	"github.com/zeromicro/go-zero/core/conf"
+	"github.com/zeromicro/go-zero/core/service"
 )
 
 var configFile = flag.String("f", "etc/travel.yaml", "the config file")

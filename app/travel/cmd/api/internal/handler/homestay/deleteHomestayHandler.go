@@ -4,10 +4,11 @@ import (
 	"golodge/common/result"
 	"net/http"
 
-	"github.com/zeromicro/go-zero/rest/httpx"
 	"golodge/app/travel/cmd/api/internal/logic/homestay"
 	"golodge/app/travel/cmd/api/internal/svc"
 	"golodge/app/travel/cmd/api/internal/types"
+
+	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
 func DeleteHomestayHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {

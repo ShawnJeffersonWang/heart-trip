@@ -3,10 +3,11 @@ package model
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
-	"time"
 )
 
 type UserHistory struct {
