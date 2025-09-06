@@ -10,7 +10,6 @@ import (
 
 // scheduler job ------> go-zero-heart_trip/app/mqueue/cmd/job/internal/logic/settleRecord.go.
 func (l *MqueueScheduler) settleRecordScheduler() {
-
 	task := asynq.NewTask(jobtype.ScheduleSettleRecord, nil)
 	// every one minute exec
 	entryID, err := l.svcCtx.Scheduler.Register("*/1 * * * *", task)
