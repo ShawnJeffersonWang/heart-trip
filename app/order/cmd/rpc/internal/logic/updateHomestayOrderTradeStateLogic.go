@@ -29,7 +29,7 @@ func NewUpdateHomestayOrderTradeStateLogic(ctx context.Context, svcCtx *svc.Serv
 	}
 }
 
-// Update homestay order status
+// UpdateHomestayOrderTradeState Update homestay order status
 func (l *UpdateHomestayOrderTradeStateLogic) UpdateHomestayOrderTradeState(in *pb.UpdateHomestayOrderTradeStateReq) (*pb.UpdateHomestayOrderTradeStateResp, error) {
 
 	// 1、Check current order

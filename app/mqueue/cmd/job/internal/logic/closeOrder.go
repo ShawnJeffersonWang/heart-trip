@@ -26,7 +26,7 @@ func NewCloseHomestayOrderHandler(svcCtx *svc.ServiceContext) *CloseHomestayOrde
 	}
 }
 
-// defer  close no pay homestayOrder  : if return err != nil , asynq will retry
+// ProcessTask defer  close no pay homestayOrder  : if return err != nil , asynq will retry
 func (l *CloseHomestayOrderHandler) ProcessTask(ctx context.Context, t *asynq.Task) error {
 
 	var p jobtype.DeferCloseHomestayOrderPayload

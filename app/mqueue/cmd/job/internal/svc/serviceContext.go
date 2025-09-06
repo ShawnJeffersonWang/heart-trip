@@ -10,23 +10,20 @@ import (
 )
 
 type ServiceContext struct {
-	Config config.Config
+	Config      config.Config
 	AsynqServer *asynq.Server
 	MiniProgram *miniprogram.MiniProgram
 
-	OrderRpc order.Order
+	OrderRpc      order.Order
 	UsercenterRpc usercenter.Usercenter
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
-		Config: c,
-		AsynqServer:newAsynqServer(c),
-		MiniProgram:newMiniprogramClient(c),
-		OrderRpc:order.NewOrder(zrpc.MustNewClient(c.OrderRpcConf)),
-		UsercenterRpc:usercenter.NewUsercenter(zrpc.MustNewClient(c.UsercenterRpcConf)),
+		Config:        c,
+		AsynqServer:   newAsynqServer(c),
+		MiniProgram:   newMiniprogramClient(c),
+		OrderRpc:      order.NewOrder(zrpc.MustNewClient(c.OrderRpcConf)),
+		UsercenterRpc: usercenter.NewUsercenter(zrpc.MustNewClient(c.UsercenterRpcConf)),
 	}
 }
-
-
-

@@ -2,13 +2,15 @@ package logic
 
 import (
 	"context"
-	"github.com/pkg/errors"
 	"golodge/common/ctxdata"
 	"time"
 
-	"github.com/golang-jwt/jwt/v4"
+	"github.com/pkg/errors"
+
 	"golodge/app/usercenter/cmd/rpc/internal/svc"
 	"golodge/app/usercenter/cmd/rpc/pb"
+
+	"github.com/golang-jwt/jwt/v5"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

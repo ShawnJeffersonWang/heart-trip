@@ -1,5 +1,3 @@
-version: '3'
-
 # 之所以改了一些配置使用postman发请求nginx会502 Bad Gateway, 是因为go要重新下一些包
 
 ######## 项目依赖的环境，启动项目之前要先启动此环境 #######
@@ -24,7 +22,7 @@ services:
 #      - ES_SERVER_URLS=http://elasticsearch:9200
 #      - LOG_LEVEL=debug
 #    networks:
-#      - golodge_net
+#      - heart_trip_net
 
   #prometheus监控 — Prometheus for monitoring
   prometheus:
@@ -42,9 +40,9 @@ services:
     restart: always
     user: root
     ports:
-      - 9090:9090
+      - "9090:9090"
     networks:
-      - golodge_net
+      - heart_trip_net
 
   #查看prometheus监控数据 - Grafana to view Prometheus monitoring data
   grafana:
@@ -61,7 +59,7 @@ services:
     ports:
         - "3001:3000"
     networks:
-        - golodge_net
+        - heart_trip_net
 #
 #  #搜集kafka业务日志、存储prometheus监控数据 - Kafka for collecting business logs and storing Prometheus monitoring data
 #  elasticsearch:
@@ -79,7 +77,7 @@ services:
 #    - 9200:9200
 #    - 9300:9300
 #    networks:
-#      - golodge_net
+#      - heart_trip_net
 #
 #  #查看elasticsearch数据 - Kibana to view Elasticsearch data
 #  kibana:
@@ -90,7 +88,7 @@ services:
 #      - TZ=Asia/Shanghai
 #    restart: always
 #    networks:
-#      - golodge_net
+#      - heart_trip_net
 #    ports:
 #      - "5601:5601"
 #    depends_on:
@@ -109,7 +107,7 @@ services:
 #    volumes:
 #      - ./deploy/go-stash/etc:/app/etc
 #    networks:
-#      - golodge_net
+#      - heart_trip_net
 #    depends_on:
 #      - elasticsearch
 #      - kafka
@@ -131,55 +129,92 @@ services:
 #      # - /var/snap/docker/common/var-lib-docker/containers:/var/lib/docker/containers
 #      - /var/lib/docker/containers:/var/lib/docker/containers
 #    networks:
-#      - golodge_net
+#      - heart_trip_net
 #    depends_on:
 #      - kafka
 
 
   #zookeeper是kafka的依赖 - Zookeeper is the dependencies of Kafka
-  zookeeper:
-    image: zookeeper:latest
-    container_name: zookeeper
-    environment:
-      # 时区上海 - Time zone Shanghai (Change if needed)
-      TZ: Asia/Shanghai
-    restart: always
-    ports:
-      - 2181:2181
-    networks:
-      - golodge_net
+#  zookeeper:
+#    image: zookeeper:latest
+#    container_name: zookeeper
+#    environment:
+#      # 时区上海 - Time zone Shanghai (Change if needed)
+#      TZ: Asia/Shanghai
+#    restart: always
+#    ports:
+#      - "2181:2181"
+#    networks:
+#      - heart_trip_net
 
   #消息队列 - Message queue
+#  kafka:
+#    image: wurstmeister/kafka:latest
+#    container_name: kafka
+#    ports:
+#      - "9092:9092"
+#    environment:
+#      - KAFKA_ADVERTISED_HOST_NAME=kafka
+#      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+#      - KAFKA_AUTO_CREATE_TOPICS_ENABLE=false
+#      - TZ=Asia/Shanghai
+#    restart: always
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#    networks:
+#      - heart_trip_net
+#    depends_on:
+#      - zookeeper
+
+  # 消息队列 - 使用 Bitnami Kafka 并启用 KRaft 模式
   kafka:
-    image: wurstmeister/kafka:latest
+    # 使用 Bitnami 提供的官方 Kafka 镜像
+    image: bitnami/kafka:latest
     container_name: kafka
     ports:
-      - 9092:9092
+      # 9092 是客户端连接的端口
+      - "9092:9092"
     environment:
-      - KAFKA_ADVERTISED_HOST_NAME=kafka
-      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-      - KAFKA_AUTO_CREATE_TOPICS_ENABLE=false
+      # --- KRaft 模式配置 ---
+      # 1. 设置节点 ID
+      - KAFKA_CFG_NODE_ID=0
+      # 2. 设置节点角色为控制器(controller)和代理(broker)
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      # 3. 设置控制器选举投票者（单节点指向自己）
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
+      # --- 监听器配置 ---
+      # 4. 配置监听器，PLAINTEXT 用于客户端数据，CONTROLLER 用于内部集群管理
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      # 5. 配置广播给客户端的监听地址
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      # 6. 指定控制器使用的监听器名称
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      # 7. 指定 Broker 之间通信使用的监听器名称
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+      # --- 其他配置 ---
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=false
       - TZ=Asia/Shanghai
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+    # 不再需要挂载 docker.sock，安全性大大提高
+    # volumes:
+    #   - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - golodge_net
-    depends_on:
-      - zookeeper
+      - heart_trip_net
+    # 由于没有 Zookeeper，depends_on 也可以移除了
+    # depends_on:
+    #   - zookeeper
 
-  #asynqmon asynq延迟队列、定时队列的webui - Asynqmon asynq delay queue, timing queue's webUI
+  #asynqmon asynq延迟队列、定时队列的webUI - Asynqmon asynq delay queue, timing queue's webUI
   asynqmon:
     image: hibiken/asynqmon:latest
     container_name: asynqmon
     ports:
-      - 8980:8080
+      - "8980:8080"
     command:
       - '--redis-addr=redis:6379'
       - '--redis-password=G62m50oigInC30sf'
     restart: always
     networks:
-      - golodge_net
+      - heart_trip_net
     depends_on:
       - redis
 
@@ -192,7 +227,7 @@ services:
       # root 密码 - root password
       MYSQL_ROOT_PASSWORD: PXDN93VRKUm8TeE7
     ports:
-      - 33069:3306
+      - "33069:3306"
     volumes:
       # 数据挂载 - Data mounting
       - ./data/mysql/data:/var/lib/mysql
@@ -208,14 +243,14 @@ services:
     privileged: true
     restart: always
     networks:
-      - golodge_net
+      - heart_trip_net
 
   #redis容器 - Redis container
   redis:
     image: redis:latest
     container_name: redis
     ports:
-      - 36379:6379
+      - "36379:6379"
     environment:
       # 时区上海 - Time zone Shanghai (Change if needed)
       TZ: Asia/Shanghai
@@ -226,11 +261,11 @@ services:
     privileged: true
     restart: always
     networks:
-      - golodge_net
+      - heart_trip_net
 
 
 networks:
-  golodge_net:
+  heart_trip_net:
     external: true
     driver: bridge
     ipam:

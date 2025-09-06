@@ -14,9 +14,7 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-/**
-	Listening to the payment flow status change notification message queue
-*/
+// PaymentUpdateStatusMq listening to the payment flow status change notification message queue
 type PaymentUpdateStatusMq struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext

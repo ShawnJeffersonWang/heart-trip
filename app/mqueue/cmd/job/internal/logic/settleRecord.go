@@ -19,7 +19,7 @@ func NewSettleRecordHandler(svcCtx *svc.ServiceContext) *SettleRecordHandler {
 	}
 }
 
-//  every one minute exec : if return err != nil , asynq will retry
+// ProcessTask every one minute exec : if return err != nil , asynq will retry
 func (l *SettleRecordHandler) ProcessTask(ctx context.Context, _ *asynq.Task) error {
 
 	fmt.Printf("shcedule job demo -----> every one minute exec \n")
