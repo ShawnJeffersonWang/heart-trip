@@ -6,7 +6,7 @@ package payment
 import (
 	"context"
 
-	"golodge/app/payment/cmd/rpc/pb"
+	"heart-trip/app/payment/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"

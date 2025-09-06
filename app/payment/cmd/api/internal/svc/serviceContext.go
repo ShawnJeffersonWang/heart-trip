@@ -1,10 +1,10 @@
 package svc
 
 import (
-	"golodge/app/order/cmd/rpc/order"
-	"golodge/app/payment/cmd/api/internal/config"
-	"golodge/app/payment/cmd/rpc/payment"
-	"golodge/app/usercenter/cmd/rpc/usercenter"
+	"heart-trip/app/order/cmd/rpc/order"
+	"heart-trip/app/payment/cmd/api/internal/config"
+	"heart-trip/app/payment/cmd/rpc/payment"
+	"heart-trip/app/usercenter/cmd/rpc/usercenter"
 
 	"github.com/wechatpay-apiv3/wechatpay-go/core"
 	"github.com/zeromicro/go-zero/zrpc"

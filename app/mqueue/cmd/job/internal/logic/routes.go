@@ -2,8 +2,8 @@ package logic
 
 import (
 	"context"
-	"golodge/app/mqueue/cmd/job/internal/svc"
-	"golodge/app/mqueue/cmd/job/jobtype"
+	"heart-trip/app/mqueue/cmd/job/internal/svc"
+	"heart-trip/app/mqueue/cmd/job/jobtype"
 
 	"github.com/hibiken/asynq"
 )

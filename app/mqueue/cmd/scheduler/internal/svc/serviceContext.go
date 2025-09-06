@@ -1,7 +1,7 @@
 package svc
 
 import (
-	"golodge/app/mqueue/cmd/scheduler/internal/config"
+	"heart-trip/app/mqueue/cmd/scheduler/internal/config"
 
 	"github.com/hibiken/asynq"
 )

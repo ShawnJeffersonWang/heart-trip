@@ -2,11 +2,11 @@ package logic
 
 import (
 	"context"
-	"golodge/app/usercenter/cmd/rpc/internal/svc"
-	"golodge/app/usercenter/cmd/rpc/usercenter"
-	"golodge/app/usercenter/model"
-	"golodge/common/tool"
-	"golodge/common/xerr"
+	"heart-trip/app/usercenter/cmd/rpc/internal/svc"
+	"heart-trip/app/usercenter/cmd/rpc/usercenter"
+	"heart-trip/app/usercenter/model"
+	"heart-trip/common/tool"
+	"heart-trip/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"

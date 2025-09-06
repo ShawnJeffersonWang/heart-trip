@@ -8,9 +8,9 @@ import (
 	"fmt"
 	"github.com/Masterminds/squirrel"
 	"github.com/pkg/errors"
-	"golodge/app/travel/model"
-	"golodge/common/globalkey"
-	"golodge/deploy/script/mysql/genModel"
+	"heart-trip/app/travel/model"
+	"heart-trip/common/globalkey"
+	"heart-trip/deploy/script/mysql/genModel"
 	"strings"
 	"time"
 

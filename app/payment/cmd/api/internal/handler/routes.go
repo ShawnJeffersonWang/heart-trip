@@ -4,8 +4,8 @@ package handler
 import (
 	"net/http"
 
-	thirdPayment "golodge/app/payment/cmd/api/internal/handler/thirdPayment"
-	"golodge/app/payment/cmd/api/internal/svc"
+	thirdPayment "heart-trip/app/payment/cmd/api/internal/handler/thirdPayment"
+	"heart-trip/app/payment/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )

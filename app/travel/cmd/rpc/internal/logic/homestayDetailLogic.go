@@ -3,10 +3,10 @@ package logic
 import (
 	"context"
 	"fmt"
-	"golodge/app/travel/cmd/rpc/internal/svc"
-	"golodge/app/travel/cmd/rpc/pb"
-	"golodge/app/travel/model"
-	"golodge/common/xerr"
+	"heart-trip/app/travel/cmd/rpc/internal/svc"
+	"heart-trip/app/travel/cmd/rpc/pb"
+	"heart-trip/app/travel/model"
+	"heart-trip/common/xerr"
 	"time"
 
 	"github.com/jinzhu/copier"

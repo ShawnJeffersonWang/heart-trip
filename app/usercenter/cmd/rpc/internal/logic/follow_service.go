@@ -2,7 +2,7 @@ package logic
 
 import (
 	"context"
-	"golodge/app/travel/model"
+	"heart-trip/app/travel/model"
 
 	"gorm.io/gorm"
 )

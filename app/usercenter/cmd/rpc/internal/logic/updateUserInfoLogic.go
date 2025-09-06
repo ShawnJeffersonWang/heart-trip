@@ -2,14 +2,14 @@ package logic
 
 import (
 	"context"
-	"golodge/app/usercenter/cmd/rpc/usercenter"
-	"golodge/app/usercenter/model"
-	"golodge/common/xerr"
+	"heart-trip/app/usercenter/cmd/rpc/usercenter"
+	"heart-trip/app/usercenter/model"
+	"heart-trip/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
-	"golodge/app/usercenter/cmd/rpc/internal/svc"
+	"heart-trip/app/usercenter/cmd/rpc/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

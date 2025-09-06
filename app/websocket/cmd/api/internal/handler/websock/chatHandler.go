@@ -1,8 +1,8 @@
 package websock
 
 import (
-	"golodge/app/websocket/cmd/api/internal/logic/websock"
-	"golodge/app/websocket/cmd/api/internal/svc"
+	"heart-trip/app/websocket/cmd/api/internal/logic/websock"
+	"heart-trip/app/websocket/cmd/api/internal/svc"
 	"net/http"
 )
 

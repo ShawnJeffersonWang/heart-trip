@@ -2,9 +2,9 @@ package listen
 
 import (
 	"context"
-	"golodge/app/travel/cmd/mq/internal/config"
-	"golodge/app/travel/cmd/mq/internal/mqs"
-	"golodge/app/travel/cmd/mq/internal/svc"
+	"heart-trip/app/travel/cmd/mq/internal/config"
+	"heart-trip/app/travel/cmd/mq/internal/mqs"
+	"heart-trip/app/travel/cmd/mq/internal/svc"
 
 	"github.com/zeromicro/go-queue/kq"
 	"github.com/zeromicro/go-zero/core/service"

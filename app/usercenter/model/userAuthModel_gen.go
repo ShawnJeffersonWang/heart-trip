@@ -6,12 +6,12 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"golodge/deploy/script/mysql/genModel"
+	"heart-trip/deploy/script/mysql/genModel"
 	"strings"
 
 	"time"
 
-	"golodge/common/globalkey"
+	"heart-trip/common/globalkey"
 
 	"github.com/Masterminds/squirrel"
 	"github.com/pkg/errors"

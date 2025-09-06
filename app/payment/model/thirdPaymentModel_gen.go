@@ -10,7 +10,7 @@ import (
 
 	"time"
 
-	"golodge/common/globalkey"
+	"heart-trip/common/globalkey"
 
 	"github.com/Masterminds/squirrel"
 	"github.com/pkg/errors"

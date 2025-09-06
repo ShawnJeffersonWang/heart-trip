@@ -3,16 +3,16 @@ package logic
 import (
 	"context"
 	"fmt"
-	"golodge/app/travel/model"
-	"golodge/common/xerr"
+	"heart-trip/app/travel/model"
+	"heart-trip/common/xerr"
 
 	"github.com/Masterminds/squirrel"
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/mr"
 
-	"golodge/app/travel/cmd/rpc/internal/svc"
-	"golodge/app/travel/cmd/rpc/pb"
+	"heart-trip/app/travel/cmd/rpc/internal/svc"
+	"heart-trip/app/travel/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

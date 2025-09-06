@@ -3,10 +3,10 @@ package homestayComment
 import (
 	"net/http"
 
-	"golodge/app/travel/cmd/api/internal/logic/homestayComment"
-	"golodge/app/travel/cmd/api/internal/svc"
-	"golodge/app/travel/cmd/api/internal/types"
-	"golodge/common/result"
+	"heart-trip/app/travel/cmd/api/internal/logic/homestayComment"
+	"heart-trip/app/travel/cmd/api/internal/svc"
+	"heart-trip/app/travel/cmd/api/internal/types"
+	"heart-trip/common/result"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 )

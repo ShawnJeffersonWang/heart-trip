@@ -4,9 +4,9 @@ import (
 	"flag"
 	"fmt"
 
-	"golodge/app/payment/cmd/api/internal/config"
-	"golodge/app/payment/cmd/api/internal/handler"
-	"golodge/app/payment/cmd/api/internal/svc"
+	"heart-trip/app/payment/cmd/api/internal/config"
+	"heart-trip/app/payment/cmd/api/internal/handler"
+	"heart-trip/app/payment/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"

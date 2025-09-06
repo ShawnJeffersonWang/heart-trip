@@ -3,11 +3,11 @@ package logic
 import (
 	"context"
 	"encoding/json"
-	"golodge/app/mqueue/cmd/job/internal/svc"
-	"golodge/app/mqueue/cmd/job/jobtype"
-	"golodge/app/order/cmd/rpc/order"
-	"golodge/app/order/model"
-	"golodge/common/xerr"
+	"heart-trip/app/order/cmd/rpc/order"
+	"heart-trip/app/order/model"
+	"heart-trip/common/xerr"
+	"heart-trip/app/mqueue/cmd/job/internal/svc"
+	"heart-trip/app/mqueue/cmd/job/jobtype"
 
 	"github.com/hibiken/asynq"
 	"github.com/pkg/errors"

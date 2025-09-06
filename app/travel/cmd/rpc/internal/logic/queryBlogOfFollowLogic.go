@@ -4,17 +4,17 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"golodge/app/travel/model"
-	upb "golodge/app/usercenter/cmd/rpc/pb"
-	"golodge/common/globalkey"
+	"heart-trip/app/travel/model"
+	upb "heart-trip/app/usercenter/cmd/rpc/pb"
+	"heart-trip/common/globalkey"
 	"strconv"
 	"strings"
 
 	"github.com/go-redis/redis/v8"
 	"github.com/jinzhu/copier"
 
-	"golodge/app/travel/cmd/rpc/internal/svc"
-	"golodge/app/travel/cmd/rpc/pb"
+	"heart-trip/app/travel/cmd/rpc/internal/svc"
+	"heart-trip/app/travel/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

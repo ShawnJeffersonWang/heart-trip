@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"github.com/go-redis/redis/v8"
 	"github.com/zeromicro/go-zero/core/logx"
-	"golodge/common/globalkey"
+	"heart-trip/common/globalkey"
 	"time"
 )
 

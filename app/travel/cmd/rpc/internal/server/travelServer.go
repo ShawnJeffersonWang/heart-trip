@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"golodge/app/travel/cmd/rpc/internal/logic"
-	"golodge/app/travel/cmd/rpc/internal/svc"
-	"golodge/app/travel/cmd/rpc/pb"
+	"heart-trip/app/travel/cmd/rpc/internal/logic"
+	"heart-trip/app/travel/cmd/rpc/internal/svc"
+	"heart-trip/app/travel/cmd/rpc/pb"
 )
 
 type TravelServer struct {

@@ -2,10 +2,10 @@ package homestay
 
 import (
 	"context"
-	"golodge/app/travel/cmd/rpc/pb"
+	"heart-trip/app/travel/cmd/rpc/pb"
 
-	"golodge/app/travel/cmd/api/internal/svc"
-	"golodge/app/travel/cmd/api/internal/types"
+	"heart-trip/app/travel/cmd/api/internal/svc"
+	"heart-trip/app/travel/cmd/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

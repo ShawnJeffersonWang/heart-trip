@@ -3,12 +3,12 @@ package kq
 import (
 	"context"
 	"encoding/json"
-	"golodge/app/order/cmd/mq/internal/svc"
-	"golodge/app/order/cmd/rpc/order"
-	"golodge/app/order/model"
-	paymentModel "golodge/app/payment/model"
-	"golodge/common/kqueue"
-	"golodge/common/xerr"
+	"heart-trip/app/order/cmd/mq/internal/svc"
+	"heart-trip/app/order/cmd/rpc/order"
+	"heart-trip/app/order/model"
+	paymentModel "heart-trip/app/payment/model"
+	"heart-trip/common/kqueue"
+	"heart-trip/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -27,8 +27,7 @@ func NewPaymentUpdateStatusMq(ctx context.Context, svcCtx *svc.ServiceContext) *
 	}
 }
 
-func (l *PaymentUpdateStatusMq) Consume(_, val string) error {
-
+func (l *PaymentUpdateStatusMq) Consume(ctx context.Context, key, val string) error {
 	var message kqueue.ThirdPaymentUpdatePayStatusNotifyMessage
 	if err := json.Unmarshal([]byte(val), &message); err != nil {
 		logx.WithContext(l.ctx).Error("PaymentUpdateStatusMq->Consume Unmarshal err : %v , val : %s", err, val)

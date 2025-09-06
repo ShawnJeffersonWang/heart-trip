@@ -1,9 +1,9 @@
 package svc
 
 import (
-	"golodge/app/mqueue/cmd/job/internal/config"
-	"golodge/app/order/cmd/rpc/order"
-	"golodge/app/usercenter/cmd/rpc/usercenter"
+	"heart-trip/app/mqueue/cmd/job/internal/config"
+	"heart-trip/app/order/cmd/rpc/order"
+	"heart-trip/app/usercenter/cmd/rpc/usercenter"
 
 	"github.com/hibiken/asynq"
 	"github.com/silenceper/wechat/v2/miniprogram"

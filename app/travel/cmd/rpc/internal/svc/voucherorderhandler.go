@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golodge/app/travel/cmd/rpc/internal/config"
-	"golodge/app/travel/cmd/rpc/pb"
+	"heart-trip/app/travel/cmd/rpc/internal/config"
+	"heart-trip/app/travel/cmd/rpc/pb"
 	"log"
 	"time"
 

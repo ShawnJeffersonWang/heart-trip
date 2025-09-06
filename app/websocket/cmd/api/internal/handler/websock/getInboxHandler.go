@@ -1,12 +1,12 @@
 package websock
 
 import (
-	"golodge/common/result"
+	"heart-trip/common/result"
 	"net/http"
 
-	"golodge/app/websocket/cmd/api/internal/logic/websock"
-	"golodge/app/websocket/cmd/api/internal/svc"
-	"golodge/app/websocket/cmd/api/internal/types"
+	"heart-trip/app/websocket/cmd/api/internal/logic/websock"
+	"heart-trip/app/websocket/cmd/api/internal/svc"
+	"heart-trip/app/websocket/cmd/api/internal/types"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 )

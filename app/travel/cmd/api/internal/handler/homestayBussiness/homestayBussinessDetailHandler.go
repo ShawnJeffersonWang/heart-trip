@@ -3,10 +3,10 @@ package homestayBussiness
 import (
 	"net/http"
 
-	"golodge/app/travel/cmd/api/internal/logic/homestayBussiness"
-	"golodge/app/travel/cmd/api/internal/svc"
-	"golodge/app/travel/cmd/api/internal/types"
-	"golodge/common/result"
+	"heart-trip/app/travel/cmd/api/internal/logic/homestayBussiness"
+	"heart-trip/app/travel/cmd/api/internal/svc"
+	"heart-trip/app/travel/cmd/api/internal/types"
+	"heart-trip/common/result"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 )

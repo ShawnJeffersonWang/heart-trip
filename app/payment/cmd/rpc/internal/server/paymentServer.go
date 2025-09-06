@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"golodge/app/payment/cmd/rpc/internal/logic"
-	"golodge/app/payment/cmd/rpc/internal/svc"
-	"golodge/app/payment/cmd/rpc/pb"
+	"heart-trip/app/payment/cmd/rpc/internal/logic"
+	"heart-trip/app/payment/cmd/rpc/internal/svc"
+	"heart-trip/app/payment/cmd/rpc/pb"
 )
 
 type PaymentServer struct {

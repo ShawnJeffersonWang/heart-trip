@@ -4,11 +4,11 @@ import (
 	"context"
 	"net/http"
 
-	"golodge/app/payment/cmd/api/internal/svc"
-	"golodge/app/payment/cmd/api/internal/types"
-	"golodge/app/payment/cmd/rpc/payment"
-	"golodge/app/payment/model"
-	"golodge/common/xerr"
+	"heart-trip/app/payment/cmd/api/internal/svc"
+	"heart-trip/app/payment/cmd/api/internal/types"
+	"heart-trip/app/payment/cmd/rpc/payment"
+	"heart-trip/app/payment/model"
+	"heart-trip/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/wechatpay-apiv3/wechatpay-go/core/auth/verifiers"

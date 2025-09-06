@@ -3,13 +3,13 @@ package main
 import (
 	"context"
 	"flag"
-	"golodge/app/mqueue/cmd/job/internal/logic"
-	"golodge/app/mqueue/cmd/job/internal/svc"
+	"heart-trip/app/mqueue/cmd/job/internal/logic"
+	"heart-trip/app/mqueue/cmd/job/internal/svc"
 	"os"
 
 	"github.com/zeromicro/go-zero/core/logx"
 
-	"golodge/app/mqueue/cmd/job/internal/config"
+	"heart-trip/app/mqueue/cmd/job/internal/config"
 
 	"github.com/zeromicro/go-zero/core/conf"
 )

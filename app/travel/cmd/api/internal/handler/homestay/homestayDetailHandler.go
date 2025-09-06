@@ -1,12 +1,12 @@
 package homestay
 
 import (
-	"golodge/app/travel/cmd/api/internal/logic/homestay"
+	"heart-trip/app/travel/cmd/api/internal/logic/homestay"
 	"net/http"
 
-	"golodge/app/travel/cmd/api/internal/svc"
-	"golodge/app/travel/cmd/api/internal/types"
-	"golodge/common/result"
+	"heart-trip/app/travel/cmd/api/internal/svc"
+	"heart-trip/app/travel/cmd/api/internal/types"
+	"heart-trip/common/result"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 )

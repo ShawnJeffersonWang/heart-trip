@@ -1,10 +1,10 @@
 package svc
 
 import (
-	"golodge/app/order/cmd/api/internal/config"
-	"golodge/app/order/cmd/rpc/order"
-	"golodge/app/payment/cmd/rpc/payment"
-	"golodge/app/travel/cmd/rpc/travel"
+	"heart-trip/app/order/cmd/api/internal/config"
+	"heart-trip/app/order/cmd/rpc/order"
+	"heart-trip/app/payment/cmd/rpc/payment"
+	"heart-trip/app/travel/cmd/rpc/travel"
 
 	"github.com/zeromicro/go-zero/zrpc"
 )

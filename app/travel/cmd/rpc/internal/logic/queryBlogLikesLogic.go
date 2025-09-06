@@ -3,13 +3,13 @@ package logic
 import (
 	"context"
 	"fmt"
-	"golodge/app/usercenter/model"
-	"golodge/common/globalkey"
+	"heart-trip/app/usercenter/model"
+	"heart-trip/common/globalkey"
 	"strconv"
 	"strings"
 
-	"golodge/app/travel/cmd/rpc/internal/svc"
-	"golodge/app/travel/cmd/rpc/pb"
+	"heart-trip/app/travel/cmd/rpc/internal/svc"
+	"heart-trip/app/travel/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

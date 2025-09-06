@@ -4,11 +4,11 @@ import (
 	"context"
 	"fmt"
 
-	"golodge/app/usercenter/cmd/api/internal/svc"
-	"golodge/app/usercenter/cmd/api/internal/types"
-	"golodge/app/usercenter/cmd/rpc/usercenter"
-	usercenterModel "golodge/app/usercenter/model"
-	"golodge/common/xerr"
+	"heart-trip/app/usercenter/cmd/api/internal/svc"
+	"heart-trip/app/usercenter/cmd/api/internal/types"
+	"heart-trip/app/usercenter/cmd/rpc/usercenter"
+	usercenterModel "heart-trip/app/usercenter/model"
+	"heart-trip/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/silenceper/wechat/v2"

@@ -5,9 +5,9 @@ import (
 
 	"github.com/Masterminds/squirrel"
 
-	"golodge/app/travel/cmd/api/internal/svc"
-	"golodge/app/travel/cmd/api/internal/types"
-	"golodge/common/xerr"
+	"heart-trip/app/travel/cmd/api/internal/types"
+	"heart-trip/common/xerr"
+	"heart-trip/app/travel/cmd/api/internal/svc"
 
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"

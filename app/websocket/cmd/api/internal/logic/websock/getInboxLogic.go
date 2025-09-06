@@ -3,9 +3,9 @@ package websock
 import (
 	"context"
 	"fmt"
-	"golodge/app/websocket/cmd/api/internal/svc"
-	"golodge/app/websocket/cmd/api/internal/types"
-	"golodge/common/ctxdata"
+	"heart-trip/app/websocket/cmd/api/internal/svc"
+	"heart-trip/app/websocket/cmd/api/internal/types"
+	"heart-trip/common/ctxdata"
 	"strconv"
 
 	"github.com/zeromicro/go-zero/core/logx"

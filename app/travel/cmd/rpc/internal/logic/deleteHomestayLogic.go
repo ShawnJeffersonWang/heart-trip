@@ -2,9 +2,9 @@ package logic
 
 import (
 	"context"
-	"golodge/app/travel/cmd/rpc/internal/svc"
-	"golodge/app/travel/cmd/rpc/pb"
-	"golodge/common/xerr"
+	"heart-trip/app/travel/cmd/rpc/internal/svc"
+	"heart-trip/app/travel/cmd/rpc/pb"
+	"heart-trip/common/xerr"
 	"time"
 
 	"github.com/Masterminds/squirrel"

@@ -3,13 +3,13 @@ package logic
 import (
 	"context"
 	"encoding/json"
-	"golodge/common/kqueue"
+	"heart-trip/common/kqueue"
 	"time"
 
-	"golodge/app/payment/cmd/rpc/internal/svc"
-	"golodge/app/payment/cmd/rpc/pb"
-	"golodge/app/payment/model"
-	"golodge/common/xerr"
+	"heart-trip/app/payment/cmd/rpc/internal/svc"
+	"heart-trip/app/payment/cmd/rpc/pb"
+	"heart-trip/app/payment/model"
+	"heart-trip/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -89,5 +89,5 @@ func (l *UpdateTradeStateLogic) pubKqPaySuccess(orderSn string, payStatus int64)
 		return errors.Wrapf(xerr.NewErrMsg("kq UpdateTradeStateLogic pushKqPaySuccess task marshal error "), "kq UpdateTradeStateLogic pushKqPaySuccess task marshal error  , v : %+v", m)
 	}
 
-	return l.svcCtx.KqueuePaymentUpdatePayStatusClient.Push(string(body))
+	return l.svcCtx.KqueuePaymentUpdatePayStatusClient.Push(context.Background(), string(body))
 }

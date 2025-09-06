@@ -1,7 +1,7 @@
 package svc
 
 import (
-	"golodge/app/travel/cmd/mq/internal/config"
+	"heart-trip/app/travel/cmd/mq/internal/config"
 )
 
 type ServiceContext struct {

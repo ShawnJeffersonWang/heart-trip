@@ -2,11 +2,11 @@ package homestay
 
 import (
 	"context"
-	"golodge/app/travel/cmd/api/internal/svc"
-	"golodge/app/travel/cmd/api/internal/types"
-	"golodge/app/travel/cmd/rpc/travel"
-	"golodge/common/ctxdata"
-	"golodge/common/xerr"
+	"heart-trip/app/travel/cmd/api/internal/svc"
+	"heart-trip/app/travel/cmd/api/internal/types"
+	"heart-trip/app/travel/cmd/rpc/travel"
+	"heart-trip/common/ctxdata"
+	"heart-trip/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"

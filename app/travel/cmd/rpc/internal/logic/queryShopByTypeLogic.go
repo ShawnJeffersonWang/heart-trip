@@ -5,9 +5,9 @@ package logic
 import (
 	"context"
 	"fmt"
-	"golodge/app/travel/cmd/rpc/internal/svc"
-	"golodge/app/travel/cmd/rpc/pb"
-	"golodge/common/globalkey"
+	"heart-trip/app/travel/cmd/rpc/internal/svc"
+	"heart-trip/app/travel/cmd/rpc/pb"
+	"heart-trip/common/globalkey"
 	"strconv"
 	"strings"
 

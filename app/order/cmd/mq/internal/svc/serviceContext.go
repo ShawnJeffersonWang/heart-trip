@@ -1,16 +1,15 @@
 package svc
 
 import (
-	"golodge/app/order/cmd/mq/internal/config"
-	"golodge/app/order/cmd/rpc/order"
-	"golodge/app/usercenter/cmd/rpc/usercenter"
+	"heart-trip/app/order/cmd/mq/internal/config"
+	"heart-trip/app/order/cmd/rpc/order"
+	"heart-trip/app/usercenter/cmd/rpc/usercenter"
 
 	"github.com/zeromicro/go-zero/zrpc"
 )
 
 type ServiceContext struct {
-	Config config.Config
-
+	Config        config.Config
 	OrderRpc      order.Order
 	UsercenterRpc usercenter.Usercenter
 }

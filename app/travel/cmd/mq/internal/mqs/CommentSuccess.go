@@ -3,7 +3,7 @@ package mqs
 import (
 	"context"
 	"fmt"
-	"golodge/app/travel/cmd/mq/internal/svc"
+	"heart-trip/app/travel/cmd/mq/internal/svc"
 )
 
 type CommentSuccess struct {
@@ -18,7 +18,7 @@ func NewCommentSuccess(ctx context.Context, svcCtx *svc.ServiceContext) *Comment
 	}
 }
 
-func (l *CommentSuccess) Consume(key, val string) error {
+func (l *CommentSuccess) Consume(ctx context.Context, key, val string) error {
 	//logx.Infof("CommentSuccess key: %s val: %s", key, val)
 	fmt.Printf("CommentSuccess key: %s val: %s", key, val)
 	return nil

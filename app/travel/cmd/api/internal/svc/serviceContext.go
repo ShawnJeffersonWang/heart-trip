@@ -1,10 +1,10 @@
 package svc
 
 import (
-	"golodge/app/travel/cmd/api/internal/config"
-	"golodge/app/travel/cmd/rpc/travel"
-	"golodge/app/travel/model"
-	"golodge/app/usercenter/cmd/rpc/usercenter"
+	"heart-trip/app/travel/cmd/api/internal/config"
+	"heart-trip/app/travel/cmd/rpc/travel"
+	"heart-trip/app/travel/model"
+	"heart-trip/app/usercenter/cmd/rpc/usercenter"
 
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"github.com/zeromicro/go-zero/zrpc"

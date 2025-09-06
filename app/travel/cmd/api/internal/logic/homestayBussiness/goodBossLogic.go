@@ -5,11 +5,11 @@ import (
 
 	"github.com/Masterminds/squirrel"
 
-	"golodge/app/travel/cmd/api/internal/svc"
-	"golodge/app/travel/cmd/api/internal/types"
-	"golodge/app/travel/model"
-	"golodge/app/usercenter/cmd/rpc/usercenter"
-	"golodge/common/xerr"
+	"heart-trip/app/travel/cmd/api/internal/types"
+	"heart-trip/app/travel/model"
+	"heart-trip/app/usercenter/cmd/rpc/usercenter"
+	"heart-trip/common/xerr"
+	"heart-trip/app/travel/cmd/api/internal/svc"
 
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"

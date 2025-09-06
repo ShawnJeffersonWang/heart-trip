@@ -1,8 +1,8 @@
 package svc
 
 import (
-	"golodge/app/payment/cmd/rpc/internal/config"
-	"golodge/app/payment/model"
+	"heart-trip/app/payment/cmd/rpc/internal/config"
+	"heart-trip/app/payment/model"
 
 	"github.com/zeromicro/go-queue/kq"
 

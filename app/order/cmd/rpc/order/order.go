@@ -6,7 +6,7 @@ package order
 import (
 	"context"
 
-	"golodge/app/order/cmd/rpc/pb"
+	"heart-trip/app/order/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"

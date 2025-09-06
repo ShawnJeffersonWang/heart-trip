@@ -3,16 +3,16 @@ package logic
 import (
 	"context"
 	"errors"
-	"golodge/app/travel/model"
-	"golodge/common/globalkey"
+	"heart-trip/app/travel/model"
+	"heart-trip/common/globalkey"
 	"strconv"
 	"time"
 
 	"github.com/go-redis/redis/v8"
 	"gorm.io/gorm"
 
-	"golodge/app/travel/cmd/rpc/internal/svc"
-	"golodge/app/travel/cmd/rpc/pb"
+	"heart-trip/app/travel/cmd/rpc/internal/svc"
+	"heart-trip/app/travel/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

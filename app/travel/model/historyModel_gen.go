@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"github.com/Masterminds/squirrel"
 	"github.com/pkg/errors"
-	"golodge/common/globalkey"
-	"golodge/deploy/script/mysql/genModel"
+	"heart-trip/common/globalkey"
+	"heart-trip/deploy/script/mysql/genModel"
 	"strings"
 	"time"
 

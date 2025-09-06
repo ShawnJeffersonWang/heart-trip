@@ -1,15 +1,15 @@
 package thirdPayment
 
 import (
-	"golodge/app/payment/cmd/api/internal/types"
-	"golodge/common/result"
+	"heart-trip/app/payment/cmd/api/internal/types"
+	"heart-trip/common/result"
 	"net/http"
 
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/rest/httpx"
 
-	"golodge/app/payment/cmd/api/internal/logic/thirdPayment"
-	"golodge/app/payment/cmd/api/internal/svc"
+	"heart-trip/app/payment/cmd/api/internal/logic/thirdPayment"
+	"heart-trip/app/payment/cmd/api/internal/svc"
 )
 
 func FakePayCallbackHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {

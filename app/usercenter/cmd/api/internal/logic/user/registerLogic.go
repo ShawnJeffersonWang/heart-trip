@@ -2,10 +2,10 @@ package user
 
 import (
 	"context"
-	"golodge/app/usercenter/cmd/api/internal/svc"
-	"golodge/app/usercenter/cmd/api/internal/types"
-	"golodge/app/usercenter/cmd/rpc/usercenter"
-	"golodge/app/usercenter/model"
+	"heart-trip/app/usercenter/cmd/api/internal/svc"
+	"heart-trip/app/usercenter/cmd/api/internal/types"
+	"heart-trip/app/usercenter/cmd/rpc/usercenter"
+	"heart-trip/app/usercenter/model"
 
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"

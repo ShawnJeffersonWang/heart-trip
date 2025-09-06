@@ -1,7 +1,7 @@
 package svc
 
 import (
-	"golodge/app/order/cmd/rpc/internal/config"
+	"heart-trip/app/order/cmd/rpc/internal/config"
 
 	"github.com/hibiken/asynq"
 )

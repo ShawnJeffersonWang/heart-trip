@@ -5,10 +5,10 @@ import (
 
 	"github.com/Masterminds/squirrel"
 
-	"golodge/app/order/cmd/rpc/internal/svc"
-	"golodge/app/order/cmd/rpc/pb"
-	"golodge/app/order/model"
-	"golodge/common/xerr"
+	"heart-trip/app/order/cmd/rpc/internal/svc"
+	"heart-trip/app/order/cmd/rpc/pb"
+	"heart-trip/app/order/model"
+	"heart-trip/common/xerr"
 
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"

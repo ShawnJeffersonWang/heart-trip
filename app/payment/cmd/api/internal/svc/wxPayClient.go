@@ -2,8 +2,8 @@ package svc
 
 import (
 	"context"
-	"golodge/app/payment/cmd/api/internal/config"
-	"golodge/common/xerr"
+	"heart-trip/app/payment/cmd/api/internal/config"
+	"heart-trip/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/wechatpay-apiv3/wechatpay-go/core"

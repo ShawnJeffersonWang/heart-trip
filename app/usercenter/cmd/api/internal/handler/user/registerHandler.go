@@ -3,10 +3,10 @@ package user
 import (
 	"net/http"
 
-	"golodge/app/usercenter/cmd/api/internal/logic/user"
-	"golodge/app/usercenter/cmd/api/internal/svc"
-	"golodge/app/usercenter/cmd/api/internal/types"
-	"golodge/common/result"
+	"heart-trip/app/usercenter/cmd/api/internal/logic/user"
+	"heart-trip/app/usercenter/cmd/api/internal/svc"
+	"heart-trip/app/usercenter/cmd/api/internal/types"
+	"heart-trip/common/result"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 )

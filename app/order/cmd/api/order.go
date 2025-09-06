@@ -3,9 +3,9 @@ package main
 import (
 	"flag"
 
-	"golodge/app/order/cmd/api/internal/config"
-	"golodge/app/order/cmd/api/internal/handler"
-	"golodge/app/order/cmd/api/internal/svc"
+	"heart-trip/app/order/cmd/api/internal/config"
+	"heart-trip/app/order/cmd/api/internal/handler"
+	"heart-trip/app/order/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"

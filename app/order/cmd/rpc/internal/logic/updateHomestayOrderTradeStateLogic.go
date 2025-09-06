@@ -3,14 +3,14 @@ package logic
 import (
 	"context"
 	"encoding/json"
-	"golodge/app/mqueue/cmd/job/jobtype"
+	"heart-trip/app/mqueue/cmd/job/jobtype"
 
 	"github.com/hibiken/asynq"
 
-	"golodge/app/order/cmd/rpc/internal/svc"
-	"golodge/app/order/cmd/rpc/pb"
-	"golodge/app/order/model"
-	"golodge/common/xerr"
+	"heart-trip/app/order/cmd/rpc/internal/svc"
+	"heart-trip/app/order/cmd/rpc/pb"
+	"heart-trip/app/order/model"
+	"heart-trip/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"

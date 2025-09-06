@@ -1,7 +1,7 @@
 package svc
 
 import (
-	"golodge/app/mqueue/cmd/job/internal/config"
+	"heart-trip/app/mqueue/cmd/job/internal/config"
 
 	"github.com/silenceper/wechat/v2"
 	"github.com/silenceper/wechat/v2/cache"

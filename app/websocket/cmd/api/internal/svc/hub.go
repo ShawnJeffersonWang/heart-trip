@@ -2,7 +2,7 @@ package svc
 
 import (
 	"encoding/json"
-	"golodge/app/websocket/cmd/api/internal/types"
+	"heart-trip/app/websocket/cmd/api/internal/types"
 	"log"
 )
 

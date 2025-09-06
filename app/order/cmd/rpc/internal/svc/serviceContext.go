@@ -1,9 +1,9 @@
 package svc
 
 import (
-	"golodge/app/order/cmd/rpc/internal/config"
-	"golodge/app/order/model"
-	"golodge/app/travel/cmd/rpc/travel"
+	"heart-trip/app/order/cmd/rpc/internal/config"
+	"heart-trip/app/order/model"
+	"heart-trip/app/travel/cmd/rpc/travel"
 
 	"github.com/hibiken/asynq"
 

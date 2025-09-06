@@ -3,10 +3,10 @@ package logic
 import (
 	"context"
 	"fmt"
-	"golodge/app/travel/cmd/rpc/internal/svc"
-	"golodge/app/travel/cmd/rpc/pb"
-	"golodge/app/travel/model"
-	"golodge/common/globalkey"
+	"heart-trip/app/travel/cmd/rpc/internal/svc"
+	"heart-trip/app/travel/cmd/rpc/pb"
+	"heart-trip/app/travel/model"
+	"heart-trip/common/globalkey"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

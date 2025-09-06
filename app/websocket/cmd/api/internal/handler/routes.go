@@ -4,8 +4,8 @@ package handler
 import (
 	"net/http"
 
-	websock "golodge/app/websocket/cmd/api/internal/handler/websock"
-	"golodge/app/websocket/cmd/api/internal/svc"
+	websock "heart-trip/app/websocket/cmd/api/internal/handler/websock"
+	"heart-trip/app/websocket/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )

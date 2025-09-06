@@ -4,11 +4,11 @@ import (
 	"flag"
 	"fmt"
 
-	"golodge/app/payment/cmd/rpc/internal/config"
-	"golodge/app/payment/cmd/rpc/internal/server"
-	"golodge/app/payment/cmd/rpc/internal/svc"
-	"golodge/app/payment/cmd/rpc/pb"
-	"golodge/common/interceptor/rpcserver"
+	"heart-trip/app/payment/cmd/rpc/internal/config"
+	"heart-trip/app/payment/cmd/rpc/internal/server"
+	"heart-trip/app/payment/cmd/rpc/internal/svc"
+	"heart-trip/app/payment/cmd/rpc/pb"
+	"heart-trip/common/interceptor/rpcserver"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"

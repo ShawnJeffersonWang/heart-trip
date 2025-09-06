@@ -3,7 +3,7 @@ package logic
 import (
 	"context"
 	"fmt"
-	"golodge/app/mqueue/cmd/job/internal/svc"
+	"heart-trip/app/mqueue/cmd/job/internal/svc"
 
 	"github.com/hibiken/asynq"
 )

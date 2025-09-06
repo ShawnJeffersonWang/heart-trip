@@ -2,10 +2,10 @@ package logic
 
 import (
 	"context"
-	"golodge/app/payment/cmd/rpc/internal/svc"
-	"golodge/app/payment/cmd/rpc/pb"
-	"golodge/app/payment/model"
-	"golodge/common/xerr"
+	"heart-trip/app/payment/cmd/rpc/internal/svc"
+	"heart-trip/app/payment/cmd/rpc/pb"
+	"heart-trip/app/payment/model"
+	"heart-trip/common/xerr"
 	"time"
 
 	"github.com/pkg/errors"

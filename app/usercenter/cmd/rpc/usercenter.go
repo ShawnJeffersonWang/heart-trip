@@ -7,11 +7,11 @@ import (
 	"github.com/zeromicro/go-zero/core/service"
 	"google.golang.org/grpc/reflection"
 
-	"golodge/app/usercenter/cmd/rpc/internal/config"
-	"golodge/app/usercenter/cmd/rpc/internal/server"
-	"golodge/app/usercenter/cmd/rpc/internal/svc"
-	"golodge/app/usercenter/cmd/rpc/pb"
-	"golodge/common/interceptor/rpcserver"
+	"heart-trip/app/usercenter/cmd/rpc/internal/config"
+	"heart-trip/app/usercenter/cmd/rpc/internal/server"
+	"heart-trip/app/usercenter/cmd/rpc/internal/svc"
+	"heart-trip/app/usercenter/cmd/rpc/pb"
+	"heart-trip/common/interceptor/rpcserver"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/zrpc"

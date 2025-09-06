@@ -3,12 +3,12 @@ package homestayOrder
 import (
 	"context"
 
-	"golodge/app/order/cmd/api/internal/svc"
-	"golodge/app/order/cmd/api/internal/types"
-	"golodge/app/order/cmd/rpc/order"
-	"golodge/common/ctxdata"
-	"golodge/common/tool"
-	"golodge/common/xerr"
+	"heart-trip/app/order/cmd/api/internal/svc"
+	"heart-trip/app/order/cmd/api/internal/types"
+	"heart-trip/app/order/cmd/rpc/order"
+	"heart-trip/common/ctxdata"
+	"heart-trip/common/tool"
+	"heart-trip/common/xerr"
 
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"

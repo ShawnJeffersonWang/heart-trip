@@ -2,8 +2,8 @@ package main
 
 import (
 	"flag"
-	"golodge/app/travel/cmd/mq/internal/config"
-	"golodge/app/travel/cmd/mq/internal/listen"
+	"heart-trip/app/travel/cmd/mq/internal/config"
+	"heart-trip/app/travel/cmd/mq/internal/listen"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"

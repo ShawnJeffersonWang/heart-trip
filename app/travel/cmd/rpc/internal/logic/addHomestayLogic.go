@@ -2,10 +2,10 @@ package logic
 
 import (
 	"context"
-	"golodge/app/travel/cmd/rpc/internal/svc"
-	"golodge/app/travel/cmd/rpc/pb"
-	"golodge/app/travel/cmd/rpc/travel"
-	"golodge/app/travel/model"
+	"heart-trip/app/travel/cmd/rpc/internal/svc"
+	"heart-trip/app/travel/cmd/rpc/pb"
+	"heart-trip/app/travel/cmd/rpc/travel"
+	"heart-trip/app/travel/model"
 	"strings"
 
 	"github.com/zeromicro/go-zero/core/logx"

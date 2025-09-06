@@ -2,12 +2,12 @@ package user
 
 import (
 	"context"
-	"golodge/app/usercenter/cmd/rpc/pb"
+	"heart-trip/app/usercenter/cmd/rpc/pb"
 
 	"github.com/jinzhu/copier"
 
-	"golodge/app/usercenter/cmd/api/internal/svc"
-	"golodge/app/usercenter/cmd/api/internal/types"
+	"heart-trip/app/usercenter/cmd/api/internal/svc"
+	"heart-trip/app/usercenter/cmd/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

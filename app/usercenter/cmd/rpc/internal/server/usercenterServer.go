@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"golodge/app/usercenter/cmd/rpc/internal/logic"
-	"golodge/app/usercenter/cmd/rpc/internal/svc"
-	"golodge/app/usercenter/cmd/rpc/pb"
+	"heart-trip/app/usercenter/cmd/rpc/internal/logic"
+	"heart-trip/app/usercenter/cmd/rpc/internal/svc"
+	"heart-trip/app/usercenter/cmd/rpc/pb"
 )
 
 type UsercenterServer struct {

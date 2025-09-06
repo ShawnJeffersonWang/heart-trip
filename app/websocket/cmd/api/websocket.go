@@ -3,9 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"golodge/app/websocket/cmd/api/internal/config"
-	"golodge/app/websocket/cmd/api/internal/handler"
-	"golodge/app/websocket/cmd/api/internal/svc"
+	"heart-trip/app/websocket/cmd/api/internal/config"
+	"heart-trip/app/websocket/cmd/api/internal/handler"
+	"heart-trip/app/websocket/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"

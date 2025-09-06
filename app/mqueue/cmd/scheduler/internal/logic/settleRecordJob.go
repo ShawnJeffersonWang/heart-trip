@@ -2,7 +2,7 @@ package logic
 
 import (
 	"fmt"
-	"golodge/app/mqueue/cmd/job/jobtype"
+	"heart-trip/app/mqueue/cmd/job/jobtype"
 
 	"github.com/hibiken/asynq"
 	"github.com/zeromicro/go-zero/core/logx"

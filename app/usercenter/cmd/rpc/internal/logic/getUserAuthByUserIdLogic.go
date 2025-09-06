@@ -3,11 +3,11 @@ package logic
 import (
 	"context"
 
-	"golodge/app/usercenter/cmd/rpc/internal/svc"
-	"golodge/app/usercenter/cmd/rpc/pb"
-	"golodge/app/usercenter/cmd/rpc/usercenter"
-	"golodge/app/usercenter/model"
-	"golodge/common/xerr"
+	"heart-trip/app/usercenter/cmd/rpc/internal/svc"
+	"heart-trip/app/usercenter/cmd/rpc/pb"
+	"heart-trip/app/usercenter/cmd/rpc/usercenter"
+	"heart-trip/app/usercenter/model"
+	"heart-trip/common/xerr"
 
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"

@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"golodge/app/order/cmd/rpc/internal/logic"
-	"golodge/app/order/cmd/rpc/internal/svc"
-	"golodge/app/order/cmd/rpc/pb"
+	"heart-trip/app/order/cmd/rpc/internal/logic"
+	"heart-trip/app/order/cmd/rpc/internal/svc"
+	"heart-trip/app/order/cmd/rpc/pb"
 )
 
 type OrderServer struct {

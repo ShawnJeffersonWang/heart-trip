@@ -2,8 +2,8 @@ package websock
 
 import (
 	"context"
-	"golodge/app/websocket/cmd/api/internal/svc"
-	"golodge/common/ctxdata"
+	"heart-trip/app/websocket/cmd/api/internal/svc"
+	"heart-trip/common/ctxdata"
 	"net/http"
 	"strconv"
 

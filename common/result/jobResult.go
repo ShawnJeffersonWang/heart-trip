@@ -3,7 +3,7 @@ package result
 import (
 	"context"
 
-	"golodge/common/xerr"
+	"heart-trip/common/xerr"
 
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"

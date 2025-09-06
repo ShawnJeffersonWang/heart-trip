@@ -4,10 +4,10 @@ package handler
 import (
 	"net/http"
 
-	homestay "golodge/app/travel/cmd/api/internal/handler/homestay"
-	homestayBussiness "golodge/app/travel/cmd/api/internal/handler/homestayBussiness"
-	homestayComment "golodge/app/travel/cmd/api/internal/handler/homestayComment"
-	"golodge/app/travel/cmd/api/internal/svc"
+	homestay "heart-trip/app/travel/cmd/api/internal/handler/homestay"
+	homestayBussiness "heart-trip/app/travel/cmd/api/internal/handler/homestayBussiness"
+	homestayComment "heart-trip/app/travel/cmd/api/internal/handler/homestayComment"
+	"heart-trip/app/travel/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )

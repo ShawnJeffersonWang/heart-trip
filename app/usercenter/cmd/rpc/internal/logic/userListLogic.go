@@ -2,9 +2,9 @@ package logic
 
 import (
 	"context"
-	"golodge/app/usercenter/cmd/rpc/internal/svc"
-	"golodge/app/usercenter/cmd/rpc/pb"
-	"golodge/app/usercenter/model"
+	"heart-trip/app/usercenter/cmd/rpc/internal/svc"
+	"heart-trip/app/usercenter/cmd/rpc/pb"
+	"heart-trip/app/usercenter/model"
 	"sort"
 
 	"github.com/Masterminds/squirrel"

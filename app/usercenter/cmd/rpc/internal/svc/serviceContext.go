@@ -1,8 +1,8 @@
 package svc
 
 import (
-	"golodge/app/usercenter/cmd/rpc/internal/config"
-	"golodge/app/usercenter/model"
+	"heart-trip/app/usercenter/cmd/rpc/internal/config"
+	"heart-trip/app/usercenter/model"
 
 	"github.com/go-redis/redis/v8"
 	"gorm.io/driver/mysql"

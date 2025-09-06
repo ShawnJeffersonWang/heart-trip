@@ -3,9 +3,9 @@ package main
 import (
 	"context"
 	"flag"
-	"golodge/app/mqueue/cmd/scheduler/internal/config"
-	"golodge/app/mqueue/cmd/scheduler/internal/logic"
-	"golodge/app/mqueue/cmd/scheduler/internal/svc"
+	"heart-trip/app/mqueue/cmd/scheduler/internal/config"
+	"heart-trip/app/mqueue/cmd/scheduler/internal/logic"
+	"heart-trip/app/mqueue/cmd/scheduler/internal/svc"
 	"os"
 
 	"github.com/zeromicro/go-zero/core/logx"

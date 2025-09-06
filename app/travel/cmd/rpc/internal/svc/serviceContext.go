@@ -3,10 +3,10 @@ package svc
 import (
 	"context"
 	"fmt"
-	"golodge/app/travel/cmd/rpc/internal/config"
-	"golodge/app/travel/model"
-	"golodge/app/usercenter/cmd/rpc/usercenter"
-	"golodge/common/tool"
+	"heart-trip/app/travel/cmd/rpc/internal/config"
+	"heart-trip/app/travel/model"
+	"heart-trip/app/usercenter/cmd/rpc/usercenter"
+	"heart-trip/common/tool"
 	"os"
 	"path/filepath"
 

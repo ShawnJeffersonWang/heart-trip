@@ -2,13 +2,13 @@ package logic
 
 import (
 	"context"
-	"golodge/app/travel/model"
+	"heart-trip/app/travel/model"
 	"strconv"
 
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 
-	"golodge/app/travel/cmd/rpc/internal/svc"
-	"golodge/app/travel/cmd/rpc/pb"
+	"heart-trip/app/travel/cmd/rpc/internal/svc"
+	"heart-trip/app/travel/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -44,7 +44,7 @@ func (l *AddCommentLogic) AddComment(in *pb.AddCommentReq) (*pb.AddCommentResp, 
 		FoodRating:     in.HomestayComment.FoodRating,
 	}
 	data := "zhangsan============"
-	if err := l.svcCtx.KqPusherClient.Push(data); err != nil {
+	if err := l.svcCtx.KqPusherClient.Push(context.Background(), data); err != nil {
 		l.Logger.Errorf("===========error: %v", err)
 	}
 	homestay, err := l.svcCtx.HomestayModel.FindOne(l.ctx, in.HomestayComment.HomestayId)

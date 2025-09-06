@@ -3,9 +3,9 @@ package user
 import (
 	"context"
 	"fmt"
-	"golodge/app/usercenter/cmd/api/internal/svc"
-	"golodge/app/usercenter/cmd/api/internal/types"
-	"golodge/common/ctxdata"
+	"heart-trip/app/usercenter/cmd/api/internal/svc"
+	"heart-trip/app/usercenter/cmd/api/internal/types"
+	"heart-trip/common/ctxdata"
 	"net/http"
 	"os"
 	"path/filepath"

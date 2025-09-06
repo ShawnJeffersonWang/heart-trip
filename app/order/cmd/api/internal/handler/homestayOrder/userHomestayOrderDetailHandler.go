@@ -3,10 +3,10 @@ package homestayOrder
 import (
 	"net/http"
 
-	"golodge/app/order/cmd/api/internal/logic/homestayOrder"
-	"golodge/app/order/cmd/api/internal/svc"
-	"golodge/app/order/cmd/api/internal/types"
-	"golodge/common/result"
+	"heart-trip/app/order/cmd/api/internal/logic/homestayOrder"
+	"heart-trip/app/order/cmd/api/internal/svc"
+	"heart-trip/app/order/cmd/api/internal/types"
+	"heart-trip/common/result"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 )

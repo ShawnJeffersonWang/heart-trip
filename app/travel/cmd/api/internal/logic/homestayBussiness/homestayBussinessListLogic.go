@@ -3,9 +3,9 @@ package homestayBussiness
 import (
 	"context"
 
-	"golodge/app/travel/cmd/api/internal/svc"
-	"golodge/app/travel/cmd/api/internal/types"
-	"golodge/common/xerr"
+	"heart-trip/common/xerr"
+	"heart-trip/app/travel/cmd/api/internal/svc"
+	"heart-trip/app/travel/cmd/api/internal/types"
 
 	"github.com/jinzhu/copier"
 	"github.com/pkg/errors"

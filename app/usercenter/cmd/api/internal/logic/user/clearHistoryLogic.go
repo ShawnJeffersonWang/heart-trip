@@ -2,11 +2,11 @@ package user
 
 import (
 	"context"
-	"golodge/app/travel/cmd/rpc/travel"
-	"golodge/common/ctxdata"
+	"heart-trip/app/travel/cmd/rpc/travel"
+	"heart-trip/common/ctxdata"
 
-	"golodge/app/usercenter/cmd/api/internal/svc"
-	"golodge/app/usercenter/cmd/api/internal/types"
+	"heart-trip/app/usercenter/cmd/api/internal/svc"
+	"heart-trip/app/usercenter/cmd/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
