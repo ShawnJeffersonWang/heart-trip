@@ -42,27 +42,34 @@ HeartTrip is a travel homestay app designed using a microservices architecture. 
 
 ### Installation
 
-1. **Clone the repository:**
+1. **Clone the repository**
 
     ```sh
     git clone https://github.com/ShawnJeffersonWang/heart-trip.git
     ```
 
-2. **Navigate to the project directory:**
+2. **Navigate to the project directory**
 
     ```sh
     cd heart-trip
     ```
 
-3. **Set up the development environment:**
+3. **Start the infrastructure environment**
 
     ```sh
-    docker-compose up -d
+    # Create a dedicated Docker network
+    docker network create heart_trip_net
+    # Use docker-compose to start all dependent middleware services
+    docker compose -f docker-compose-env.yml up -d
     ```
+4. **Start the application services**
 
-4. **Configure and run the application:**
+    ```sh
+    docker compose up -d
+    ```
+5. **Configure and run the application:**
 
-    Ensure all necessary services (MySQL, Redis, Kafka, Elasticsearch) are configured and running.
+    Ensure all necessary services (MySQL, Redis, Kafka) are configured and running.
 
 ## Contributing
 
